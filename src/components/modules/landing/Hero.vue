@@ -10,10 +10,11 @@
              rel="noopener noreferrer"
              class="inline-flex items-center gap-3 px-3 py-1.5 rounded-md bg-white/5 border border-white/10 hover:bg-white/10 transition-colors group cursor-pointer w-fit mb-4"
              :style="{ opacity: scrollProgress > 0.3 ? 1 : 0 }"
+             @mouseenter="startScramble"
            >
              <div class="w-2.5 h-2.5 bg-[#5B7553] rounded-sm"></div>
              <span class="text-[#F4FDFF] text-xs font-bold tracking-widest uppercase font-mono">
-               HELLO, I'M JAMES ESURENA
+               {{ displayedText }}
              </span>
              <ArrowUpRight class="w-3.5 h-3.5 text-gray-400 group-hover:text-white transition-colors" />
            </a>
@@ -136,6 +137,40 @@ const animationComplete = ref(false);
 const accumulatedScroll = ref(0);
 const h1Ref = ref<HTMLElement | null>(null);
 const h1Rect = ref({ top: 0, left: 0, width: 0, height: 0, fontSize: 0 });
+
+// Scramble Text Logic
+const originalText = "HELLO, I'M JAMES ESURENA";
+const displayedText = ref(originalText);
+const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
+
+let interval: number | null = null;
+
+const startScramble = () => {
+  let iteration = 0;
+  
+  if (interval) clearInterval(interval);
+  
+  interval = window.setInterval(() => {
+    displayedText.value = originalText
+      .split("")
+      .map((letter, index) => {
+        if (index < iteration) {
+          return originalText[index];
+        }
+        // Keep spaces as spaces for readability during scramble?
+        // Or scramble everything:
+        if (letter === " ") return " "; 
+        return characters[Math.floor(Math.random() * characters.length)];
+      })
+      .join("");
+    
+    if (iteration >= originalText.length) { 
+        if (interval) clearInterval(interval);
+    }
+    
+    iteration += 1 / 3; 
+  }, 60);
+};
 
 // Calculate scroll progress (0 to 1) based on viewport height
 const scrollProgress = computed(() => {
