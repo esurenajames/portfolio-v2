@@ -3,7 +3,7 @@
     class="sticky top-0 z-50 w-full border-b transition-all duration-300"
     :class="[
       isScrolledPastHero 
-        ? 'bg-black/80 backdrop-blur-md border-white/10' 
+        ? 'bg-white/80 backdrop-blur-md border-black/5' 
         : 'bg-transparent border-transparent'
     ]"
   >
@@ -15,9 +15,9 @@
           <!-- Logo (Button Style) -->
           <a 
             href="#" 
-            class="flex-shrink-0 px-3 py-2 bg-white/5 border border-white/10 rounded-md hover:bg-white/10 transition-colors flex items-center justify-center"
+            class="flex-shrink-0 px-3 py-2 bg-black/5 border border-black/5 rounded-md hover:bg-black/10 transition-colors flex items-center justify-center"
           >
-            <img src="@/assets/logo.svg" alt="Portfolio" class="h-6 w-auto" />
+            <img src="@/assets/logo.svg" alt="Portfolio" class="h-6 w-auto invert" />
           </a>
 
           <!-- Desktop Navigation (Left Aligned) -->
@@ -26,7 +26,7 @@
               v-for="item in navItems"
               :key="item.name"
               :href="item.href"
-              class="px-4 py-2 text-sm font-semibold text-gray-50 bg-white/5 border border-white/10 rounded-md hover:bg-white/10 hover:text-white transition-colors"
+              class="px-4 py-2 text-sm font-semibold text-[#040404] bg-black/5 border border-black/5 rounded-md hover:bg-black/10 transition-colors"
             >
               {{ item.name }}
             </a>
@@ -38,17 +38,17 @@
           <!-- Search Button (Hello Badge Style) -->
           <button 
             type="button"
-            class="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-gray-50 hover:text-white group cursor-pointer"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-black/5 border border-black/5 hover:bg-black/10 transition-colors text-[#040404] group cursor-pointer"
             @click="isSearchOpen = true"
           >
             <SearchIcon class="w-4 h-4" />
             <span class="text-xs font-mono font-bold tracking-widest uppercase">Search something...</span>
-            <span class="hidden lg:inline-block ml-2 text-[10px] text-gray-300 border border-white/10 rounded px-1.5 py-0.5">⌘K</span>
+            <span class="hidden lg:inline-block ml-2 text-[10px] text-gray-500 border border-black/10 rounded px-1.5 py-0.5">⌘K</span>
           </button>
 
           <a
             href="#contact"
-            class="px-4 py-2 text-sm font-semibold text-gray-50 bg-white/5 border border-white/10 rounded-md hover:bg-white/10 hover:text-white transition-colors"
+            class="px-4 py-2 text-sm font-semibold text-[#040404] bg-black/5 border border-black/5 rounded-md hover:bg-black/10 transition-colors"
           >
             Hire Me
           </a>
@@ -59,7 +59,7 @@
         <div class="flex md:hidden">
           <button
             type="button"
-            class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:text-white focus:outline-none"
+            class="inline-flex items-center justify-center rounded-md p-2 text-gray-600 hover:text-black focus:outline-none"
             @click="isMobileMenuOpen = !isMobileMenuOpen"
           >
             <span class="sr-only">Open main menu</span>
@@ -92,18 +92,18 @@
     >
       <div
         v-if="isMobileMenuOpen"
-        class="md:hidden fixed top-0 left-0 bottom-0 z-50 w-80 bg-black/95 backdrop-blur-xl border-r border-white/10 shadow-2xl overflow-y-auto"
+        class="md:hidden fixed top-0 left-0 bottom-0 z-50 w-80 bg-white/95 backdrop-blur-xl border-r border-black/5 shadow-2xl overflow-y-auto"
       >
         <!-- Sidebar Header -->
-        <div class="flex items-center justify-between px-6 py-6 border-b border-white/10">
+        <div class="flex items-center justify-between px-6 py-6 border-b border-black/5">
           <div class="flex items-center gap-3">
-            <div class="flex-shrink-0 px-3 py-2 bg-white/5 border border-white/10 rounded-md flex items-center justify-center">
-              <img src="@/assets/logo.svg" alt="Portfolio" class="h-6 w-auto" />
+            <div class="flex-shrink-0 px-3 py-2 bg-black/5 border border-black/5 rounded-md flex items-center justify-center">
+              <img src="@/assets/logo.svg" alt="Portfolio" class="h-6 w-auto invert" />
             </div>
           </div>
           <button
             type="button"
-            class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:text-white focus:outline-none"
+            class="inline-flex items-center justify-center rounded-md p-2 text-gray-600 hover:text-black focus:outline-none"
             @click="isMobileMenuOpen = false"
           >
             <span class="sr-only">Close menu</span>
@@ -128,29 +128,29 @@
           <!-- Search Button (Mobile) -->
           <button
             type="button"
-            class="w-full flex items-center gap-3 rounded-md px-4 py-3 text-base font-bold text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
+            class="w-full flex items-center gap-3 rounded-md px-4 py-3 text-base font-bold text-gray-600 hover:bg-black/5 hover:text-black transition-colors"
             @click="isSearchOpen = true; isMobileMenuOpen = false"
           >
             <SearchIcon class="w-5 h-5" />
             <span class="flex-1 text-left">Search</span>
-            <span class="text-[10px] text-gray-500 border border-white/10 rounded px-1.5 py-0.5">K</span>
+            <span class="text-[10px] text-gray-400 border border-black/10 rounded px-1.5 py-0.5">K</span>
           </button>
           
           <a
             v-for="item in navItems"
             :key="item.name"
             :href="item.href"
-            class="block rounded-md px-4 py-3 text-base font-bold text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
+            class="block rounded-md px-4 py-3 text-base font-bold text-gray-600 hover:bg-black/5 hover:text-black transition-colors"
             @click="isMobileMenuOpen = false"
           >
             {{ item.name }}
           </a>
 
           <!-- Hire Me Button -->
-          <div class="pt-4 mt-4 border-t border-white/10">
+          <div class="pt-4 mt-4 border-t border-black/5">
             <a
               href="#contact"
-              class="block w-full rounded-md border border-white bg-transparent px-4 py-3 text-center text-base font-semibold text-gray-50 hover:bg-white hover:text-black transition-colors"
+              class="block w-full rounded-md border border-[#040404] bg-transparent px-4 py-3 text-center text-base font-semibold text-[#040404] hover:bg-[#040404] hover:text-white transition-colors"
               @click="isMobileMenuOpen = false"
             >
               Hire Me
@@ -171,7 +171,7 @@
     >
       <div
         v-if="isMobileMenuOpen"
-        class="md:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+        class="md:hidden fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
         @click="isMobileMenuOpen = false"
       ></div>
     </transition>

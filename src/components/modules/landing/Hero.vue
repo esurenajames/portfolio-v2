@@ -1,46 +1,44 @@
 <template>
-  <section class="relative min-h-screen w-full bg-transparent overflow-hidden">
-    <!-- Main Content Container -->
-    <div class="relative z-10 container mx-auto px-6 min-h-screen flex flex-col justify-center">
-        <div class="pointer-events-auto">
-           <!-- Greeting text - fades in after the big text settles -->
+  <section 
+    ref="heroRef" 
+    class="relative h-[90vh] bg-transparent overflow-hidden"
+  >
+    <div class="relative z-10 container mx-auto min-h-screen flex flex-col justify-center pointer-events-none">
+        <div class="pointer-events-auto w-fit">
            <a 
              href="https://www.linkedin.com/in/esurenajames/"
              target="_blank"
              rel="noopener noreferrer"
-             class="inline-flex items-center gap-3 px-3 py-1.5 rounded-md bg-white/5 border border-white/10 hover:bg-white/10 transition-colors group cursor-pointer w-fit mb-4"
+             class="inline-flex items-center gap-3 px-3 py-1.5 rounded-md bg-black/5 border border-black/10 hover:bg-black/10 transition-colors group cursor-pointer w-fit mb-4"
              :style="{ opacity: scrollProgress > 0.3 ? 1 : 0 }"
              @mouseenter="startScramble"
            >
              <div class="w-2.5 h-2.5 bg-[#5B7553] rounded-sm"></div>
-             <span class="text-[#F4FDFF] text-xs font-bold tracking-widest uppercase font-mono">
+             <span class="text-[#040404] text-xs font-bold tracking-widest uppercase font-mono">
                {{ displayedText }}
              </span>
-             <ArrowUpRight class="w-3.5 h-3.5 text-gray-400 group-hover:text-white transition-colors" />
+             <ArrowUpRight class="w-3.5 h-3.5 text-gray-400 group-hover:text-black transition-colors" />
            </a>
            
-           <!-- Main heading with the transitioning text -->
            <div class="relative mb-6">
-             <!-- The actual h1 (hidden initially, shows when big text settles) -->
              <h1 
                ref="h1Ref"
-               class="text-[#F4FDFF] text-5xl md:text-7xl font-bold tracking-tighter transition-opacity duration-300"
+               class="text-[#040404] text-5xl md:text-7xl font-bold tracking-tighter transition-opacity duration-300"
                :style="{ opacity: scrollProgress >= 1 ? 1 : 0 }"
              >
-               <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#F4FDFF] to-[#5B7553]">FRONTEND</span><br>
+               <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#040404] to-[#5B7553]">FRONTEND</span><br>
                DEVELOPER
              </h1>
              
-             <!-- The big animated text that transitions from center to h1 position -->
              <div 
                class="pointer-events-none select-none"
                :style="bigTextStyle"
              >
-               <div class="flex flex-col">
-                 <span class="font-black text-[#F4FDFF] tracking-tighter leading-[0.85]">
+               <div class="flex flex-col font-roboto">
+                 <span class="font-black text-[#040404] tracking-tighter leading-[0.85]">
                    FRONTEND
                  </span>
-                 <span class="font-black text-[#F4FDFF] tracking-tighter leading-[0.85]">
+                 <span class="font-black text-[#040404] tracking-tighter leading-[0.85]">
                    DEVELOPER
                  </span>
                </div>
@@ -49,7 +47,7 @@
            
            <!-- Description - fades in after text settles -->
            <p 
-             class="text-gray-400 max-w-128 text-lg leading-relaxed tracking-wider mb-8 transition-opacity duration-700"
+             class="text-gray-600 max-w-128 text-lg leading-relaxed tracking-wider mb-8 transition-opacity duration-700 font-lato"
              :style="{ opacity: scrollProgress > 0.5 ? 1 : 0 }"
            >
             I create solutions with a strong focus on design and user experience. I build modern web applications that solve problems through clear, user-friendly interfaces.
@@ -60,59 +58,82 @@
              class="flex gap-4 transition-opacity duration-700"
              :style="{ opacity: scrollProgress > 0.6 ? 1 : 0 }"
            >
-              <button class="px-8 py-3 bg-[#5B7553] text-[#F4FDFF] font-bold rounded-md hover:bg-[#4a6143] transition-colors cursor-pointer border border-[#5B7553]">
+              <button class="px-8 py-3 bg-[#5B7553] text-white font-bold rounded-md hover:bg-[#4a6143] transition-colors cursor-pointer border border-[#5B7553]">
                  My Work
               </button>
-              <button class="px-8 py-3 bg-white/5 border border-white/10 text-[#F4FDFF] font-medium rounded-md hover:bg-white/10 transition-colors cursor-pointer">
+              <button class="px-8 py-3 bg-black/5 border border-black/10 text-[#040404] font-medium rounded-md hover:bg-black/10 transition-colors cursor-pointer">
                  Contact
               </button>
            </div>
         </div>
     </div>
 
-    <!-- Right Side Animation (Cards) -->
+    <!-- Right Side Animation (Horizontal Collage) -->
     <div 
-      class="absolute right-0 top-0 h-full w-1/2 flex items-center justify-center pointer-events-none z-0"
+      class="absolute right-0 top-0 h-full w-full lg:w-1/2 flex items-center justify-center z-0"
     >
       <div 
-        class="grid grid-cols-2 gap-4 transition-all duration-1000 ease-out transform"
+        class="relative w-full flex items-center justify-center transition-all duration-1000 ease-out transform"
         :class="animationComplete ? 'translate-y-0 opacity-100' : 'translate-y-24 opacity-0'"
       >
-        <!-- Card 1: Calls -->
-        <div class="w-40 h-40 bg-[#111] border border-[#333] rounded-xl p-4 flex flex-col items-center justify-center gap-3 shadow-2xl">
-          <span class="text-xs font-bold text-gray-400 tracking-widest uppercase">Calls</span>
-          <div class="flex gap-2">
-            <div class="p-2 bg-blue-500/20 rounded-lg text-blue-500"><VideoIcon class="w-5 h-5"/></div>
-            <div class="p-2 bg-indigo-500/20 rounded-lg text-indigo-500"><PhoneIcon class="w-5 h-5"/></div>
+          <!-- Handwritten Hint -->
+          <div 
+            class="absolute -top-4 left-[35%] -translate-x-1/2 flex flex-col items-center pointer-events-none transition-opacity duration-500 delay-1000 z-50 whitespace-nowrap"
+            :class="animationComplete ? 'opacity-100' : 'opacity-0'"
+          >
+            <span class="text-3xl font-bold text-gray-700 rotate-[-5deg] font-caveat">
+              "Hover over me to color"
+            </span>
+            <div class="relative w-16 h-12 -mt-2 -rotate-[15deg] ml-12">
+              <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-gray-700">
+                <path d="M10 10 Q 50 10 70 80 M 70 80 L 60 70 M 70 80 L 80 70" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
           </div>
-        </div>
 
-        <!-- Card 2: Tickets -->
-        <div class="w-40 h-40 bg-[#111] border border-[#333] rounded-xl p-4 flex flex-col items-center justify-center gap-3 shadow-2xl mt-8">
-          <span class="text-xs font-bold text-gray-400 tracking-widest uppercase">Tickets</span>
-          <div class="flex gap-2">
-            <div class="p-2 bg-green-500/20 rounded-lg text-green-500"><HeadphoneIcon class="w-5 h-5"/></div>
-            <div class="p-2 bg-orange-500/20 rounded-lg text-orange-500"><MessageIcon class="w-5 h-5"/></div>
+          <!-- Right composition -->
+          <div class="hidden lg:flex flex-1 relative min-h-[600px] items-center justify-center">
+            <div class="flex items-center -space-x-8">
+              <div 
+                v-for="(image, index) in collageImages" 
+                :key="index"
+                class="relative transition-transform duration-500 hover:scale-105 hover:z-30 cursor-pointer pointer-events-auto group"
+                :style="getImageStyle(index)"
+                @mousemove="handlePaint($event, index)"
+              >
+                <!-- Color Image (Bottom) -->
+                <img 
+                  :src="image.url" 
+                  :alt="image.alt"
+                  class="absolute inset-0 w-full h-full object-cover"
+                />
+                
+                <!-- Canvas Mask (Top - Grayscale layer to be erased) -->
+                <canvas 
+                  :ref="el => { if (el) masks[index] = el as HTMLCanvasElement }"
+                  class="absolute inset-0 w-full h-full object-cover z-10 pointer-events-none"
+                ></canvas>
+                
+                <!-- Center Typing Prompt Overlay -->
+                <div 
+                  v-if="index === 2"
+                  class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 pointer-events-auto"
+                >
+                  <div class="bg-white p-8 border border-black/10 shadow-[0_64px_128px_-32px_rgba(0,0,0,0.35)] flex flex-col gap-6 backdrop-blur-md w-[480px] h-[240px] rounded-2xl relative">
+                    <div class="flex-1 flex items-center">
+                      <h2 class="text-3xl font-bold text-[#040404] leading-tight min-h-[96px] font-roboto">
+                        {{ currentTypedText }}<span class="inline-block w-[3px] h-[1em] bg-[#040404] animate-pulse ml-1 align-middle"></span>
+                      </h2>
+                    </div>
+                    
+                    <button class="bg-[#5B7553] text-white px-8 py-3 text-sm font-bold hover:bg-[#4a6143] transition-colors self-start border border-[#5B7553] rounded-lg">
+                      Get started
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-
-        <!-- Card 3: Reviews -->
-        <div class="w-40 h-40 bg-[#111] border border-[#333] rounded-xl p-4 flex flex-col items-center justify-center gap-3 shadow-2xl">
-          <span class="text-xs font-bold text-gray-400 tracking-widest uppercase">Reviews</span>
-          <div class="flex gap-2">
-            <div class="p-2 bg-yellow-500/20 rounded-lg text-yellow-500"><StarIcon class="w-5 h-5"/></div>
-            <div class="p-2 bg-purple-500/20 rounded-lg text-purple-500"><HeartIcon class="w-5 h-5"/></div>
-          </div>
-        </div>
-
-        <!-- Card 4: Surveys -->
-        <div class="w-40 h-40 bg-[#111] border border-[#333] rounded-xl p-4 flex flex-col items-center justify-center gap-3 shadow-2xl mt-8">
-          <span class="text-xs font-bold text-gray-400 tracking-widest uppercase">Surveys</span>
-          <div class="flex gap-2">
-            <div class="p-2 bg-sky-500/20 rounded-lg text-sky-500"><BarChartIcon class="w-5 h-5"/></div>
-            <div class="p-2 bg-white/10 rounded-lg text-white"><PieChartIcon class="w-5 h-5"/></div>
-          </div>
-        </div>
       </div>
     </div>
   </section>
@@ -121,16 +142,167 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { 
-  Video as VideoIcon, 
-  Phone as PhoneIcon, 
-  Headphones as HeadphoneIcon, 
-  MessageSquare as MessageIcon, 
-  Star as StarIcon, 
-  Heart as HeartIcon, 
-  BarChart3 as BarChartIcon, 
-  PieChart as PieChartIcon,
   ArrowUpRight
 } from 'lucide-vue-next';
+import brushUrl from '@/assets/brush.svg';
+
+const heroRef = ref<HTMLElement | null>(null);
+
+const collageImages = [
+  { url: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&q=80&w=800', alt: 'Vibrant Orange Abstract' },
+  { url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800', alt: 'UI Dashboard Design' },
+  { url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1000', alt: 'Artistic Abstract Orange Gradient' },
+  { url: 'https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?auto=format&fit=crop&q=80&w=800', alt: 'Vibrant Orange Fluid Design' },
+  { url: 'https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&q=80&w=800', alt: 'Vibrant Technology Interface' },
+];
+
+const getImageStyle = (index: number) => {
+  const isCenter = index === 2;
+  const isOuter = index === 0 || index === 4;
+  
+  const width = isCenter ? 340 : isOuter ? 240 : 290;
+  const height = isCenter ? 460 : isOuter ? 340 : 400;
+  
+  return {
+    width: `${width}px`,
+    height: `${height}px`,
+    zIndex: isCenter ? 30 : isOuter ? 10 : 20,
+    opacity: isOuter ? 0.7 : 1,
+    scale: isCenter ? 1 : isOuter ? 0.8 : 0.9,
+    borderRadius: '0',
+    border: '1px solid rgba(0,0,0,0.05)',
+    boxShadow: '0 80px 160px -30px rgba(0,0,0,0.5)',
+    cursor: animationComplete.value 
+      ? `url("${brushUrl}") 16 16, pointer` 
+      : 'default'
+  };
+};
+
+// Continuous Reveal Painting Logic
+const masks = ref<HTMLCanvasElement[]>([]);
+const contexts = ref<(CanvasRenderingContext2D | null)[]>([]);
+
+const drawImageProp = (ctx: CanvasRenderingContext2D, img: HTMLImageElement, x: number, y: number, w: number, h: number) => {
+  const offsetX = 0.5;
+  const offsetY = 0.5;
+
+  let iw = img.width,
+      ih = img.height,
+      r = Math.min(w / iw, h / ih),
+      nw = iw * r,   // new prop. width
+      nh = ih * r,   // new prop. height
+      cx, cy, cw, ch, ar = 1;
+
+  // decide which gap to fill    
+  if (nw < w) ar = w / nw;                             
+  if (Math.abs(ar - 1) < 1e-14 && nh < h) ar = h / nh;  // updated
+  nw *= ar;
+  nh *= ar;
+
+  // calc source rectangle
+  cw = iw / (nw / w);
+  ch = ih / (nh / h);
+
+  cx = (iw - cw) * offsetX;
+  cy = (ih - ch) * offsetY;
+
+  // make sure source rectangle is valid
+  if (cx < 0) cx = 0;
+  if (cy < 0) cy = 0;
+  if (cw > iw) cw = iw;
+  if (ch > ih) ch = ih;
+
+  // fill image in dest. rectangle
+  ctx.drawImage(img, cx, cy, cw, ch, x, y, w, h);
+};
+
+const initCanvas = (i: number) => {
+  const canvas = masks.value[i];
+  if (!canvas) return;
+  
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width;
+  canvas.height = rect.height;
+  
+  const ctx = canvas.getContext('2d', { willReadFrequently: true });
+  if (!ctx || !collageImages[i]) return;
+  contexts.value[i] = ctx;
+
+  const img = new Image();
+  img.crossOrigin = "anonymous";
+  img.src = collageImages[i].url;
+  img.onload = () => {
+    ctx.filter = 'grayscale(100%)';
+    // Use drawImageProp to mimic object-cover
+    drawImageProp(ctx, img, 0, 0, canvas.width, canvas.height);
+  };
+};
+
+const handlePaint = (e: MouseEvent, index: number) => {
+  if (!animationComplete.value) return; // Only allow painting after lock-in
+  
+  let ctx = contexts.value[index];
+  if (!ctx) {
+     initCanvas(index);
+     ctx = contexts.value[index];
+  }
+  if (!ctx) return;
+  
+  const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  
+  ctx.globalCompositeOperation = 'destination-out';
+  
+  const radius = 50;
+  const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
+  gradient.addColorStop(0, 'rgba(0,0,0,1)');
+  gradient.addColorStop(1, 'rgba(0,0,0,0)');
+  
+  ctx.fillStyle = gradient;
+  ctx.beginPath();
+  ctx.arc(x, y, radius, 0, Math.PI * 2);
+  ctx.fill();
+};
+
+// Typing Animation Logic
+const phrases = [
+  "bring your best ideas to life.",
+  "use design to help you reach the right people.",
+  "build a website that actually makes an impact.",
+  "create products that grow your business"
+];
+
+const currentPhraseIndex = ref(0);
+const currentTypedText = ref("");
+const isDeleting = ref(false);
+
+const type = () => {
+  const currentFullText = phrases[currentPhraseIndex.value % phrases.length] || "";
+  
+  if (isDeleting.value) {
+    currentTypedText.value = currentFullText.substring(0, Math.max(0, currentTypedText.value.length - 1));
+  } else {
+    currentTypedText.value = currentFullText.substring(0, currentTypedText.value.length + 1);
+  }
+
+  let delta = 150 - Math.random() * 100;
+
+  if (isDeleting.value) { delta /= 2; }
+
+  if (!isDeleting.value && currentTypedText.value === currentFullText) {
+    isDeleting.value = true;
+    delta = 2000; // Wait at end
+  } else if (isDeleting.value && currentTypedText.value === "") {
+    isDeleting.value = false;
+    currentPhraseIndex.value++;
+    delta = 500;
+  }
+
+  setTimeout(() => {
+    type();
+  }, delta);
+};
 
 const scrollY = ref(0);
 const animationComplete = ref(false);
@@ -141,7 +313,7 @@ const h1Rect = ref({ top: 0, left: 0, width: 0, height: 0, fontSize: 0 });
 // Scramble Text Logic
 const originalText = "HELLO, I'M JAMES ESURENA";
 const displayedText = ref(originalText);
-const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
+const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 let interval: number | null = null;
 
@@ -202,7 +374,7 @@ const bigTextStyle = computed(() => {
   const windowHeight = typeof window !== 'undefined' ? window.innerHeight : 1000;
   
   // START STATE
-  const startFontSize = windowWidth * 0.18; // 18vw
+  const startFontSize = windowWidth * 0.19; 
   const startLeft = windowWidth * 0.5; // 50%
   const startTop = windowHeight * 0.5; // 50%
   const startTranslateX = -50; // %
@@ -299,6 +471,14 @@ onMounted(() => {
   // Listen to wheel events to control the animation
   window.addEventListener('wheel', handleWheel, { passive: false });
   window.addEventListener('scroll', handleScroll, { passive: true });
+
+  // Start typing animation
+  type();
+
+  // Initialize canvases individual as they become ready
+  collageImages.forEach((_, i) => {
+    setTimeout(() => initCanvas(i), 800);
+  });
 });
 
 onUnmounted(() => {
