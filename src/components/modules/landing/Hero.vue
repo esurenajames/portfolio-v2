@@ -3,30 +3,30 @@
     ref="heroRef" 
     class="relative h-[90vh] bg-transparent overflow-hidden"
   >
-    <div class="relative z-10 container mx-auto min-h-screen flex flex-col justify-center pointer-events-none">
-        <div class="pointer-events-auto w-fit">
-           <a 
-             href="https://www.linkedin.com/in/esurenajames/"
-             target="_blank"
-             rel="noopener noreferrer"
-             class="inline-flex items-center gap-3 px-3 py-1.5 rounded-md bg-black/5 border border-black/10 hover:bg-black/10 transition-colors group cursor-pointer w-fit mb-4"
-             :style="{ opacity: scrollProgress > 0.3 ? 1 : 0 }"
-             @mouseenter="startScramble"
-           >
-             <div class="w-2.5 h-2.5 bg-[#5B7553] rounded-sm"></div>
-             <span class="text-[#040404] text-xs font-bold tracking-widest uppercase font-mono">
-               {{ displayedText }}
-             </span>
-             <ArrowUpRight class="w-3.5 h-3.5 text-gray-400 group-hover:text-black transition-colors" />
-           </a>
+    <div class="relative z-10 container mx-auto px-6 md:px-12 h-full flex flex-col justify-center pointer-events-none">
+        <div class="pointer-events-auto w-full md:w-fit">
+            <a 
+              href="https://www.linkedin.com/in/esurenajames/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 md:gap-3 px-3 py-1.5 rounded-md bg-black/5 border border-black/10 hover:bg-black/10 transition-colors group cursor-pointer w-fit mb-4"
+              :style="{ opacity: scrollProgress > 0.3 ? 1 : 0 }"
+              @mouseenter="startScramble"
+            >
+              <div class="w-2 h-2 md:w-2.5 md:h-2.5 bg-[#5B7553] rounded-sm"></div>
+              <span class="text-slate-900 text-[10px] md:text-xs font-bold tracking-[0.1em] md:tracking-widest uppercase font-mono">
+                {{ displayedText }}
+              </span>
+              <ArrowUpRight class="w-3 md:w-3.5 h-3 md:h-3.5 text-gray-400 group-hover:text-slate-900 transition-colors" />
+            </a>
            
            <div class="relative mb-6">
              <h1 
                ref="h1Ref"
-               class="text-[#040404] text-5xl md:text-7xl font-bold tracking-tighter transition-opacity duration-300"
+               class="text-slate-900 text-5xl md:text-7xl font-bold tracking-tighter transition-opacity duration-300"
                :style="{ opacity: scrollProgress >= 1 ? 1 : 0 }"
              >
-               <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#040404] to-[#5B7553]">FRONTEND</span><br>
+               <span class="text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-[#5B7553]">FRONTEND</span><br>
                DEVELOPER
              </h1>
              
@@ -35,36 +35,36 @@
                :style="bigTextStyle"
              >
                <div class="flex flex-col font-roboto">
-                 <span class="font-black text-[#040404] tracking-tighter leading-[0.85]">
+                 <span class="font-black text-slate-900 tracking-tighter leading-[0.85]">
                    FRONTEND
                  </span>
-                 <span class="font-black text-[#040404] tracking-tighter leading-[0.85]">
+                 <span class="font-black text-slate-900 tracking-tighter leading-[0.85]">
                    DEVELOPER
                  </span>
                </div>
              </div>
            </div>
            
-           <!-- Description - fades in after text settles -->
-           <p 
-             class="text-gray-600 max-w-128 text-lg leading-relaxed tracking-wider mb-8 transition-opacity duration-700 font-lato"
-             :style="{ opacity: scrollProgress > 0.5 ? 1 : 0 }"
-           >
-            I create solutions with a strong focus on design and user experience. I build modern web applications that solve problems through clear, user-friendly interfaces.
-           </p>
+            <!-- Description - fades in after text settles -->
+            <p 
+              class="text-gray-600 max-w-128 text-base md:text-lg leading-relaxed tracking-normal md:tracking-wider mb-8 transition-opacity duration-700 font-lato"
+              :style="{ opacity: scrollProgress > 0.5 ? 1 : 0 }"
+            >
+             I create solutions with a strong focus on design and user experience. I build modern web applications that solve problems through clear, user-friendly interfaces.
+            </p>
            
-           <!-- Buttons - fade in last -->
-           <div 
-             class="flex gap-4 transition-opacity duration-700"
-             :style="{ opacity: scrollProgress > 0.6 ? 1 : 0 }"
-           >
-              <button class="px-8 py-3 bg-[#5B7553] text-white font-bold rounded-md hover:bg-[#4a6143] transition-colors cursor-pointer border border-[#5B7553]">
-                 My Work
-              </button>
-              <button class="px-8 py-3 bg-black/5 border border-black/10 text-[#040404] font-medium rounded-md hover:bg-black/10 transition-colors cursor-pointer">
-                 Contact
-              </button>
-           </div>
+            <!-- Buttons - fade in last -->
+            <div 
+              class="flex flex-col sm:flex-row gap-4 transition-opacity duration-700"
+              :style="{ opacity: scrollProgress > 0.6 ? 1 : 0 }"
+            >
+               <button class="px-6 md:px-8 py-2.5 md:py-3 bg-[#5B7553] text-gray-50 font-bold rounded-md hover:bg-[#4a6143] transition-colors cursor-pointer border border-[#5B7553] text-sm md:text-base">
+                  My Work
+               </button>
+               <button class="px-6 md:px-8 py-2.5 md:py-3 bg-black/5 border border-black/10 text-slate-900 font-medium rounded-md hover:bg-black/10 transition-colors cursor-pointer text-sm md:text-base">
+                  Contact
+               </button>
+            </div>
         </div>
     </div>
 
@@ -73,7 +73,7 @@
       class="absolute right-0 top-0 h-full w-full lg:w-1/2 flex items-center justify-center z-0"
     >
       <div 
-        class="relative w-full flex items-center justify-center transition-all duration-1000 ease-out transform"
+        class="hidden lg:flex relative w-full items-center justify-center transition-all duration-1000 ease-out transform"
         :class="animationComplete ? 'translate-y-0 opacity-100' : 'translate-y-24 opacity-0'"
       >
           <!-- Handwritten Hint -->
@@ -121,12 +121,12 @@
                 >
                   <div class="bg-white p-8 border border-black/10 shadow-[0_64px_128px_-32px_rgba(0,0,0,0.35)] flex flex-col gap-6 backdrop-blur-md w-[480px] h-[240px] rounded-2xl relative">
                     <div class="flex-1 flex items-center">
-                      <h2 class="text-3xl font-bold text-[#040404] leading-tight min-h-[96px] font-roboto">
-                        {{ currentTypedText }}<span class="inline-block w-[3px] h-[1em] bg-[#040404] animate-pulse ml-1 align-middle"></span>
+                      <h2 class="text-3xl font-bold text-slate-900 leading-tight min-h-[96px] font-roboto">
+                        {{ currentTypedText }}<span class="inline-block w-[3px] h-[1em] bg-slate-900 animate-pulse ml-1 align-middle"></span>
                       </h2>
                     </div>
                     
-                    <button class="bg-[#5B7553] text-white px-8 py-3 text-sm font-bold hover:bg-[#4a6143] transition-colors self-start border border-[#5B7553] rounded-lg">
+                    <button class="bg-[#5B7553] text-gray-50 px-8 py-3 text-sm font-bold hover:bg-[#4a6143] transition-colors self-start border border-[#5B7553] rounded-lg">
                       Get started
                     </button>
                   </div>
@@ -461,6 +461,32 @@ const handleScroll = () => {
   // If we just unlocked, we might need to sync up stuff, but accumulatedScroll drives the big text.
 };
 
+// Touch support for mobile swiping
+const touchStartY = ref(0);
+
+const handleTouchStart = (e: TouchEvent) => {
+  if (animationComplete.value || !e.touches[0]) return;
+  touchStartY.value = e.touches[0].clientY;
+};
+
+const handleTouchMove = (e: TouchEvent) => {
+  if (animationComplete.value || !e.touches[0]) return;
+  
+  const touchY = e.touches[0].clientY;
+  const deltaY = touchStartY.value - touchY;
+  
+  // We amplify swipe delta slightly for better feel
+  const amplifiedDelta = deltaY * 1.5;
+  
+  if (amplifiedDelta > 0 || accumulatedScroll.value > 0) {
+    accumulatedScroll.value = Math.max(0, accumulatedScroll.value + amplifiedDelta);
+    // Prevent default to stop actual page scroll during animation
+    if (e.cancelable) e.preventDefault();
+  }
+  
+  touchStartY.value = touchY;
+};
+
 onMounted(() => {
   // Lock scroll initially
   document.body.style.overflow = 'hidden';
@@ -471,6 +497,10 @@ onMounted(() => {
   // Listen to wheel events to control the animation
   window.addEventListener('wheel', handleWheel, { passive: false });
   window.addEventListener('scroll', handleScroll, { passive: true });
+  
+  // Mobile touch listeners
+  window.addEventListener('touchstart', handleTouchStart, { passive: true });
+  window.addEventListener('touchmove', handleTouchMove, { passive: false });
 
   // Start typing animation
   type();
@@ -488,6 +518,8 @@ onUnmounted(() => {
   window.removeEventListener('resize', updateH1Rect);
   window.removeEventListener('wheel', handleWheel);
   window.removeEventListener('scroll', handleScroll);
+  window.removeEventListener('touchstart', handleTouchStart);
+  window.removeEventListener('touchmove', handleTouchMove);
 });
 </script>
 

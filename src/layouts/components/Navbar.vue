@@ -1,9 +1,9 @@
 <template>
   <nav 
-    class="sticky top-0 z-50 w-full border-b transition-all duration-300"
+    class="sticky top-0 z-50 w-full transition-all duration-500 ease-in-out"
     :class="[
-      isScrolledPastHero 
-        ? 'bg-white/80 backdrop-blur-md border-black/5' 
+      navTheme === 'light' 
+        ? 'bg-white/80 backdrop-blur-md border-b border-black/5' 
         : 'bg-transparent border-transparent'
     ]"
   >
@@ -15,9 +15,19 @@
           <!-- Logo (Button Style) -->
           <a 
             href="#" 
-            class="flex-shrink-0 px-3 py-2 bg-black/5 border border-black/5 rounded-md hover:bg-black/10 transition-colors flex items-center justify-center"
+            class="flex-shrink-0 px-3 py-2 border transition-colors flex items-center justify-center rounded-md"
+            :class="[
+              (navTheme === 'dark' || navTheme === 'dark-transparent') 
+                ? 'bg-white/5 border-white/10 hover:bg-white/10' 
+                : 'bg-black/5 border-black/5 hover:bg-black/10'
+            ]"
           >
-            <img src="@/assets/logo.svg" alt="Portfolio" class="h-6 w-auto invert" />
+            <img 
+              src="@/assets/logo.svg" 
+              alt="Portfolio" 
+              class="h-6 w-auto transition-all duration-300" 
+              :class="{ 'invert': (navTheme !== 'dark' && navTheme !== 'dark-transparent') }"
+            />
           </a>
 
           <!-- Desktop Navigation (Left Aligned) -->
@@ -26,7 +36,12 @@
               v-for="item in navItems"
               :key="item.name"
               :href="item.href"
-              class="px-4 py-2 text-sm font-semibold text-[#040404] bg-black/5 border border-black/5 rounded-md hover:bg-black/10 transition-colors"
+              class="px-4 py-2 text-sm font-semibold border rounded-md transition-all duration-300"
+              :class="[
+                (navTheme === 'dark' || navTheme === 'dark-transparent')
+                  ? 'text-gray-50 bg-white/5 border-white/10 hover:bg-white/10'
+                  : 'text-slate-900 bg-black/5 border-black/5 hover:bg-black/10'
+              ]"
             >
               {{ item.name }}
             </a>
@@ -38,17 +53,30 @@
           <!-- Search Button (Hello Badge Style) -->
           <button 
             type="button"
-            class="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-black/5 border border-black/5 hover:bg-black/10 transition-colors text-[#040404] group cursor-pointer"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-md border transition-all duration-300 group cursor-pointer"
+            :class="[
+              (navTheme === 'dark' || navTheme === 'dark-transparent')
+                ? 'text-gray-50 bg-white/5 border-white/10 hover:bg-white/10'
+                : 'text-slate-900 bg-black/5 border-black/5 hover:bg-black/10'
+            ]"
             @click="isSearchOpen = true"
           >
             <SearchIcon class="w-4 h-4" />
             <span class="text-xs font-mono font-bold tracking-widest uppercase">Search something...</span>
-            <span class="hidden lg:inline-block ml-2 text-[10px] text-gray-500 border border-black/10 rounded px-1.5 py-0.5">⌘K</span>
+            <span 
+              class="hidden lg:inline-block ml-2 text-[10px] border rounded px-1.5 py-0.5 transition-colors"
+              :class="navTheme === 'dark' ? 'text-gray-400 border-white/20' : 'text-gray-500 border-black/10'"
+            >⌘K</span>
           </button>
 
           <a
             href="#contact"
-            class="px-4 py-2 text-sm font-semibold text-[#040404] bg-black/5 border border-black/5 rounded-md hover:bg-black/10 transition-colors"
+            class="px-4 py-2 text-sm font-semibold border rounded-md transition-all duration-300"
+            :class="[
+              (navTheme === 'dark' || navTheme === 'dark-transparent')
+                ? 'text-gray-50 bg-white/5 border-white/10 hover:bg-white/10'
+                : 'text-slate-900 bg-black/5 border-black/5 hover:bg-black/10'
+            ]"
           >
             Hire Me
           </a>
@@ -150,7 +178,7 @@
           <div class="pt-4 mt-4 border-t border-black/5">
             <a
               href="#contact"
-              class="block w-full rounded-md border border-[#040404] bg-transparent px-4 py-3 text-center text-base font-semibold text-[#040404] hover:bg-[#040404] hover:text-white transition-colors"
+              class="block w-full rounded-md border border-slate-900 bg-transparent px-4 py-3 text-center text-base font-semibold text-slate-900 hover:bg-slate-900 hover:text-gray-50 transition-colors"
               @click="isMobileMenuOpen = false"
             >
               Hire Me
@@ -186,7 +214,7 @@ import { Search as SearchIcon } from 'lucide-vue-next';
 import CommandMenu from '../../composables/CommandMenu.vue';
 
 const isMobileMenuOpen = ref(false);
-const isScrolledPastHero = ref(false);
+const navTheme = ref<'transparent' | 'light' | 'dark' | 'dark-transparent'>('transparent');
 const isSearchOpen = ref(false);
 
 const navItems = [
@@ -196,7 +224,35 @@ const navItems = [
 ];
 
 const handleScroll = () => {
-  isScrolledPastHero.value = window.scrollY > window.innerHeight - 100;
+  const scrollY = window.scrollY;
+  const viewportHeight = window.innerHeight;
+  const heroHeight = viewportHeight * 0.9;
+  
+  // About section is 1000vh tall, starting after hero
+  const aboutSectionHeight = viewportHeight * 10; // 1000vh
+  const aboutEndY = heroHeight + aboutSectionHeight;
+  
+  if (scrollY < 50) {
+    navTheme.value = 'transparent';
+  } else if (scrollY < heroHeight) {
+    navTheme.value = 'light';
+  } else if (scrollY < aboutEndY) {
+    // Within About section (1000vh total)
+    const aboutScrollStart = heroHeight;
+    const aboutInternalScroll = scrollY - aboutScrollStart;
+    const totalAboutInternalScroll = aboutSectionHeight - viewportHeight;
+    const progress = Math.min(Math.max(aboutInternalScroll / totalAboutInternalScroll, 0), 1);
+    
+    if (progress > 0.3) {
+      // Inside the dark expanded container
+      navTheme.value = 'dark-transparent';
+    } else {
+      navTheme.value = 'light';
+    }
+  } else {
+    // After About section (Projects section with white background)
+    navTheme.value = 'light';
+  }
 };
 
 const handleKeydown = (e: KeyboardEvent) => {

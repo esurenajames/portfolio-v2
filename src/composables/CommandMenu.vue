@@ -13,7 +13,7 @@
           ref="inputRef"
           type="text" 
           placeholder="Type a command or search..." 
-          class="flex-1 bg-transparent border-none outline-none text-white placeholder:text-gray-500 text-sm h-full"
+          class="flex-1 bg-transparent border-none outline-none text-gray-50 placeholder:text-gray-500 text-sm h-full"
           v-model="searchQuery"
           @keydown.enter="handleEnter"
         />
@@ -28,10 +28,10 @@
           <div class="text-[10px] text-gray-500 font-medium px-2 py-1.5 mb-1 uppercase tracking-wider">Navigation</div>
           
           <a v-for="link in filteredNavLinks" :key="link.name" :href="link.href"
-            class="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-white/10 text-gray-300 hover:text-white transition-colors group cursor-pointer text-sm"
+            class="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-white/10 text-gray-300 hover:text-gray-50 transition-colors group cursor-pointer text-sm"
             @click="$emit('close')"
           >
-            <component :is="link.icon" class="w-4 h-4 text-gray-500 group-hover:text-white transition-colors" />
+            <component :is="link.icon" class="w-4 h-4 text-gray-500 group-hover:text-gray-50 transition-colors" />
             <span class="flex-1">{{ link.name }}</span>
           </a>
         </div>
@@ -41,10 +41,10 @@
           <div class="text-[10px] text-gray-500 font-medium px-2 py-1.5 mb-1 uppercase tracking-wider">Socials</div>
           
           <a v-for="link in filteredSocialLinks" :key="link.name" :href="link.href" target="_blank" rel="noopener noreferrer"
-            class="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-white/10 text-gray-300 hover:text-white transition-colors group cursor-pointer text-sm"
+            class="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-white/10 text-gray-300 hover:text-gray-50 transition-colors group cursor-pointer text-sm"
             @click="$emit('close')"
           >
-            <component :is="link.icon" class="w-4 h-4 text-gray-500 group-hover:text-white transition-colors" />
+            <component :is="link.icon" class="w-4 h-4 text-gray-500 group-hover:text-gray-50 transition-colors" />
             <span class="flex-1">{{ link.name }}</span>
             <div class="text-xs text-gray-600 group-hover:text-gray-400 font-mono" v-if="link.shortcut">{{ link.shortcut }}</div>
           </a>
