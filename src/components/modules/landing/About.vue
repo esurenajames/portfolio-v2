@@ -208,7 +208,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useElementBounding, useWindowSize } from '@vueuse/core';
 import { ChevronDown } from 'lucide-vue-next';
 
@@ -337,11 +337,32 @@ const bigTextOpacity = computed(() => {
   return 1 - (p - 0.1) / 0.4;
 });
 
-const horizontalOffset = computed(() => {
+// Smoothed horizontal offset to prevent jitter on mobile
+const targetHorizontalOffset = computed(() => {
   const numBlocks = 4;
   const totalDistance = (numBlocks - 1) * windowWidth.value;
   return horizontalP.value * totalDistance;
 });
+
+const smoothedHorizontalOffset = ref(0);
+let animationFrameId: number | null = null;
+
+const updateSmoothOffset = () => {
+  const isMobile = windowWidth.value < 768;
+  const lerpFactor = isMobile ? 0.12 : 0.2; // Slower lerp on mobile for smoother feel
+  
+  const diff = targetHorizontalOffset.value - smoothedHorizontalOffset.value;
+  
+  if (Math.abs(diff) > 0.5) {
+    smoothedHorizontalOffset.value += diff * lerpFactor;
+  } else {
+    smoothedHorizontalOffset.value = targetHorizontalOffset.value;
+  }
+  
+  animationFrameId = requestAnimationFrame(updateSmoothOffset);
+};
+
+const horizontalOffset = computed(() => smoothedHorizontalOffset.value);
 
 const phases = [
   { title: "Thinking" },
@@ -376,6 +397,16 @@ const scrollToPhase = (index: number) => {
 const handleEmail = () => {
   window.open('mailto:esurenajames@gmail.com', '_blank');
 };
+
+onMounted(() => {
+  updateSmoothOffset();
+});
+
+onUnmounted(() => {
+  if (animationFrameId !== null) {
+    cancelAnimationFrame(animationFrameId);
+  }
+});
 </script>
 
 <script lang="ts">
