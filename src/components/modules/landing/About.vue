@@ -60,16 +60,18 @@
             opacity: contentFadeP,
             visibility: isFullPage ? 'visible' : 'hidden'
           }"
+          @touchstart="handleTouchStart"
+          @touchend="handleTouchEnd"
         >
           <!-- Block 1: The Vision -->
           <div class="w-screen h-full flex-shrink-0 flex items-center justify-center px-12 md:px-32">
             <div class="max-w-4xl grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <div class="space-y-6">
                 <span class="text-[#5B7553] font-mono text-sm tracking-[0.3em] uppercase">#01</span>
-                <h2 class="text-gray-50 text-5xl md:text-8xl font-black tracking-tighter leading-none font-roboto">
+                <h2 class="text-gray-50 text-3xl md:text-8xl font-black tracking-tighter leading-none font-roboto">
                   THINKING
                 </h2>
-                <p class="text-gray-400 text-lg md:text-xl leading-relaxed font-lato max-w-md">
+                <p class="text-gray-400 text-md md:text-xl leading-relaxed font-lato max-w-md">
                   Every pixel has a purpose, every interaction tells a story. I create simple, clear experiences that guide users naturally.
                 </p>
               </div>
@@ -91,18 +93,18 @@
               <div class="space-y-12">
                 <div>
                   <span class="text-[#5B7553] font-mono text-sm tracking-[0.3em] uppercase">#02</span>
-                  <h2 class="text-gray-50 text-5xl md:text-8xl font-black tracking-tighter leading-none font-roboto mb-8">
+                  <h2 class="text-gray-50 text-3xl md:text-8xl font-black tracking-tighter leading-none font-roboto mb-8">
                       BUILDING
                   </h2>
-                  <p class="text-gray-400 text-lg md:text-xl leading-relaxed font-lato max-w-md">
+                  <p class="text-gray-400 text-md md:text-xl leading-relaxed font-lato max-w-md">
                       I start by understanding the problem — the users, constraints, and goals. Then I design solutions that are simple, organized, and easy to maintain.
                   </p>
                 </div>
                 
                 <div class="flex flex-col gap-6">
-                  <div v-for="item in buildingBlocks" :key="item" class="p-4 border border-white/5 bg-white/[0.02] rounded-xl hover:bg-white/5 transition-colors group flex items-center gap-4">
+                  <div v-for="item in buildingBlocks" :key="item" class="p-2 md:p-4 border border-white/5 bg-white/[0.02] rounded-xl hover:bg-white/5 transition-colors group flex items-center gap-4">
                     <span class="w-2 h-2 bg-[#5B7553] rounded-full flex-shrink-0"></span>
-                    <span class="text-gray-200 font-bold text-xl tracking-tighter">{{ item }}</span>
+                    <span class="text-gray-200 font-bold text-md md:text-xl tracking-tighter">{{ item }}</span>
                   </div>
                 </div>
               </div>
@@ -141,11 +143,11 @@
                       <span class="text-[#5B7553] font-mono text-sm tracking-[0.3em] uppercase">#03</span>
                    </div>
                    
-                   <h2 class="text-gray-50 text-5xl md:text-8xl font-black tracking-tighter leading-none font-roboto mb-8">
+                   <h2 class="text-gray-50 text-3xl md:text-8xl font-black tracking-tighter leading-none font-roboto mb-8">
                      IMPACT
                    </h2>
                    
-                   <p class="text-gray-400 text-xl md:text-2xl leading-relaxed font-lato max-w-lg">
+                   <p class="text-gray-400 text-md md:text-xl leading-relaxed font-lato max-w-lg">
                      Bridging the gap between technology and design to help businesses connect with users.
                    </p>
 
@@ -193,7 +195,7 @@
       </div>
       <!-- Scroll Down Hint -->
       <div 
-        class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 transition-all duration-500 z-20"
+        class="absolute bottom-14 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 transition-all duration-500 z-20"
         :style="{ 
           opacity: scrollProgress < 0.05 ? 1 : 0,
           transform: `translateY(${scrollProgress * 100}px) translateX(-50%)`,
@@ -243,6 +245,18 @@ const contentFadeP = computed(() => {
 
 const horizontalP = computed(() => {
   const p = scrollProgress.value;
+  const isMobile = windowWidth.value < 768;
+
+  if (p < 0.3) return 0;
+
+  if (isMobile) {
+    // On mobile, hold the first phase until 0.45 (same as desktop) 
+    // so the user actually sees the first slide after expansion.
+    if (p < 0.45) return 0;
+    return Math.min(Math.max((p - 0.45) / 0.5, 0), 1);
+  }
+
+  // Desktop: Keep the locking for precise scroll wheel control
   if (p < 0.45) return 0; // Locked on P1
   
   if (p >= 0.45 && p < 0.55) {
@@ -363,6 +377,33 @@ const scrollToPhase = (index: number) => {
 
 const handleEmail = () => {
   window.open('mailto:esurenajames@gmail.com', '_blank');
+};
+
+let touchStartY = 0;
+const handleTouchStart = (e: TouchEvent) => {
+  if (windowWidth.value >= 768 || !isFullPage.value || !e.touches[0]) return;
+  touchStartY = e.touches[0].clientY;
+};
+
+const handleTouchEnd = (e: TouchEvent) => {
+  if (windowWidth.value >= 768 || !isFullPage.value || !e.changedTouches[0]) return;
+  const touchEndY = e.changedTouches[0].clientY;
+  const delta = touchStartY - touchEndY;
+  
+  // If swipe is meaningful (> 50px)
+  if (Math.abs(delta) > 50) {
+    if (delta > 0) {
+      // Swipe Up -> Next
+      if (currentPhaseIndex.value < phases.length - 1) {
+        scrollToPhase(currentPhaseIndex.value + 1);
+      }
+    } else {
+      // Swipe Down -> Prev
+      if (currentPhaseIndex.value > 0) {
+        scrollToPhase(currentPhaseIndex.value - 1);
+      }
+    }
+  }
 };
 </script>
 
