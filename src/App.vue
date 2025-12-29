@@ -1,13 +1,9 @@
 <template>
-  <Layout>
-    <Landing />
-  </Layout>
+  <RouterView />
 </template>
 
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import Layout from "@/layouts/Layout.vue";
-import Landing from "./pages/Landing.vue";
 
 onMounted(() => {
   // Prevent the browser from restoring the previous scroll position on refresh

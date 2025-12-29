@@ -13,8 +13,8 @@
         <!-- Left Side: Logo + Nav Links -->
         <div class="flex items-center gap-2 flex-1">
           <!-- Logo (Button Style) -->
-          <a 
-            href="#" 
+          <button 
+            @click="router.push('/')"
             class="flex-shrink-0 px-3 py-2 border transition-colors flex items-center justify-center rounded-md"
             :class="[
               (navTheme === 'dark' || navTheme === 'dark-transparent') 
@@ -28,14 +28,14 @@
               class="h-6 w-auto transition-all duration-300" 
               :class="{ 'invert': (navTheme !== 'dark' && navTheme !== 'dark-transparent') }"
             />
-          </a>
+          </button>
 
           <!-- Desktop Navigation (Left Aligned) -->
           <div class="hidden md:flex items-center gap-2">
-            <a
+            <router-link
               v-for="item in navItems"
               :key="item.name"
-              :href="item.href"
+              :to="(item.to ? item.to : item.href) as string"
               class="px-4 py-2 text-sm font-semibold border rounded-md transition-all duration-300"
               :class="[
                 (navTheme === 'dark' || navTheme === 'dark-transparent')
@@ -44,7 +44,7 @@
               ]"
             >
               {{ item.name }}
-            </a>
+            </router-link>
           </div>
         </div>
 
@@ -165,15 +165,15 @@
               <span class="text-[10px] text-gray-400 border border-black/10 rounded px-1.5 py-0.5">K</span>
             </button>
             
-            <a
+            <router-link
               v-for="item in navItems"
               :key="item.name"
-              :href="item.href"
+              :to="(item.to ? item.to : item.href) as string"
               class="block rounded-md px-4 py-3 text-base font-bold text-gray-600 hover:bg-black/5 hover:text-black transition-colors"
               @click="isMobileMenuOpen = false"
             >
               {{ item.name }}
-            </a>
+            </router-link>
 
             <!-- Hire Me Button -->
             <div class="pt-4 mt-4 border-t border-black/5">
@@ -215,13 +215,14 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import { Search as SearchIcon } from 'lucide-vue-next';
 import CommandMenu from '../../composables/CommandMenu.vue';
+import router from '@/router';
 
 const isMobileMenuOpen = ref(false);
 const navTheme = ref<'transparent' | 'light' | 'dark' | 'dark-transparent'>('transparent');
 const isSearchOpen = ref(false);
 
-const navItems = [
-  { name: "Projects", href: "#projects" },
+const navItems: Array<{ name: string; to?: string; href?: string }> = [
+  { name: "Projects", to: "/projects" },
   { name: "About", href: "#about" },
   { name: "Experience", href: "#experience" },
 ];
