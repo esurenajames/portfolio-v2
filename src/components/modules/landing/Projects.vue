@@ -67,9 +67,9 @@
                   :alt="`${project.title} logo`"
                   class="w-5 h-5 object-contain"
                 />
-                <span v-else class="text-xs font-black text-black uppercase">{{ project.title.charAt(0) }}</span>
+                <span v-else class="text-xs font-black text-slate-900 uppercase">{{ project.title.charAt(0) }}</span>
               </div>
-              <span class="text-lg font-black text-white tracking-tighter uppercase">{{ project.title }}</span>
+              <span class="text-lg font-slate-900 text-white tracking-tighter uppercase">{{ project.title }}</span>
             </div>
             
             <div class="flex items-center gap-4 text-sm font-black tracking-widest text-white/60 uppercase">
