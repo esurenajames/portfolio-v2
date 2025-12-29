@@ -60,8 +60,6 @@
             opacity: contentFadeP,
             visibility: isFullPage ? 'visible' : 'hidden'
           }"
-          @touchstart="handleTouchStart"
-          @touchend="handleTouchEnd"
         >
           <!-- Block 1: The Vision -->
           <div class="w-screen h-full flex-shrink-0 flex items-center justify-center px-12 md:px-32">
@@ -377,33 +375,6 @@ const scrollToPhase = (index: number) => {
 
 const handleEmail = () => {
   window.open('mailto:esurenajames@gmail.com', '_blank');
-};
-
-let touchStartY = 0;
-const handleTouchStart = (e: TouchEvent) => {
-  if (windowWidth.value >= 768 || !isFullPage.value || !e.touches[0]) return;
-  touchStartY = e.touches[0].clientY;
-};
-
-const handleTouchEnd = (e: TouchEvent) => {
-  if (windowWidth.value >= 768 || !isFullPage.value || !e.changedTouches[0]) return;
-  const touchEndY = e.changedTouches[0].clientY;
-  const delta = touchStartY - touchEndY;
-  
-  // If swipe is meaningful (> 50px)
-  if (Math.abs(delta) > 50) {
-    if (delta > 0) {
-      // Swipe Up -> Next
-      if (currentPhaseIndex.value < phases.length - 1) {
-        scrollToPhase(currentPhaseIndex.value + 1);
-      }
-    } else {
-      // Swipe Down -> Prev
-      if (currentPhaseIndex.value > 0) {
-        scrollToPhase(currentPhaseIndex.value - 1);
-      }
-    }
-  }
 };
 </script>
 
