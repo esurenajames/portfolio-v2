@@ -90,16 +90,6 @@
       <!-- Section 3: Impact -->
       <div class="relative min-h-[70vh] flex items-center justify-center px-6 py-12">
       <div class="max-w-4xl w-full grid grid-cols-1 gap-8 items-center">
-        <div class="relative group">
-          <div class="relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
-            <img 
-              src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200"
-              class="w-full aspect-[4/3] object-cover"
-              alt="Impact Showcase"
-            />
-          </div>
-        </div>
-
         <div class="space-y-6">
           <span class="text-[#5B7553] font-mono text-sm tracking-[0.3em] uppercase">#03</span>
           <h2 class="text-gray-50 text-3xl font-black tracking-tighter leading-none font-roboto">
@@ -120,13 +110,22 @@
             </div>
           </div>
         </div>
+        <div class="relative group">
+          <div class="relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
+            <img 
+              src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200"
+              class="w-full aspect-[4/3] object-cover"
+              alt="Impact Showcase"
+            />
+          </div>
+        </div>
       </div>
     </div>
     </div>
   </section>
 
   <!-- Desktop: Parallax Horizontal Scroll -->
-  <section v-else ref="sectionRef" class="relative min-h-[500vh] md:min-h-[1000vh] bg-white">
+  <section v-else ref="sectionRef" class="relative min-h-[500vh] md:min-h-[600vh] bg-white">
     <!-- Sticky Container -->
     <div class="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
       
@@ -382,57 +381,56 @@ const scrollProgress = computed(() => {
   return Math.min(Math.max(currentScroll / totalInternalScroll, 0), 1);
 });
 
-// Phase Logic for 1000vh:
-// 0.0 -> 0.3: Expansion to full screen
-// 0.3 -> 0.45: Lock on Phase 01
-// 0.45 -> 0.55: Transition to 02
-// 0.55 -> 0.65: Lock on Phase 02
-// 0.65 -> 0.75: Transition to 03
-// 0.75 -> 0.85: Lock on Phase 03
-// 0.85 -> 0.95: Transition to 04
-// 0.95 -> 1.0: Lock on Phase 04
+// Phase Logic for 600vh (Updated for shorter animation):
+// 0.00 -> 0.15: Expansion to full screen
+// 0.15 -> 0.25: Lock on Phase 01
+// 0.25 -> 0.40: Transition to 02
+// 0.40 -> 0.50: Lock on Phase 02
+// 0.50 -> 0.65: Transition to 03
+// 0.65 -> 0.75: Lock on Phase 03
+// 0.75 -> 0.90: Transition to 04
+// 0.90 -> 1.00: Lock on Phase 04
 
-const expansionP = computed(() => Math.min(scrollProgress.value / 0.3, 1));
+const expansionP = computed(() => Math.min(scrollProgress.value / 0.15, 1));
 const isFullPage = computed(() => expansionP.value === 1);
 
 const contentFadeP = computed(() => {
-  if (scrollProgress.value < 0.3) return 0;
-  return Math.min((scrollProgress.value - 0.3) / 0.1, 1);
+  if (scrollProgress.value < 0.15) return 0;
+  return Math.min((scrollProgress.value - 0.15) / 0.1, 1);
 });
 
 const horizontalP = computed(() => {
   const p = scrollProgress.value;
   const isMobile = windowWidth.value < 768;
 
-  if (p < 0.3) return 0;
+  if (p < 0.15) return 0;
 
   if (isMobile) {
-    // On mobile, hold the first phase until 0.45 (same as desktop) 
-    // so the user actually sees the first slide after expansion.
-    if (p < 0.45) return 0;
-    return Math.min(Math.max((p - 0.45) / 0.5, 0), 1);
+    // On mobile, hold the first phase until 0.25
+    if (p < 0.25) return 0;
+    return Math.min(Math.max((p - 0.25) / 0.5, 0), 1);
   }
 
-  // Desktop: Keep the locking for precise scroll wheel control
-  if (p < 0.45) return 0; // Locked on P1
+  // Desktop Logic
+  if (p < 0.25) return 0; // Locked on P1
   
-  if (p >= 0.45 && p < 0.55) {
-     // Transition 1 -> 2
-     const progress = (p - 0.45) / 0.1;
+  if (p >= 0.25 && p < 0.40) {
+     // Transition 1 -> 2 (0.15 span)
+     const progress = (p - 0.25) / 0.15;
      return 0 + (0.333) * progress;
   }
-  if (p >= 0.55 && p < 0.65) return 0.333; // Locked on P2
+  if (p >= 0.40 && p < 0.50) return 0.333; // Locked on P2
   
-  if (p >= 0.65 && p < 0.75) {
-     // Transition 2 -> 3
-     const progress = (p - 0.65) / 0.1;
+  if (p >= 0.50 && p < 0.65) {
+     // Transition 2 -> 3 (0.15 span)
+     const progress = (p - 0.50) / 0.15;
      return 0.333 + (0.333) * progress;
   }
-  if (p >= 0.75 && p < 0.85) return 0.666; // Locked on P3
+  if (p >= 0.65 && p < 0.75) return 0.666; // Locked on P3
   
-  if (p >= 0.85 && p < 0.95) {
-     // Transition 3 -> 4
-     const progress = (p - 0.85) / 0.1;
+  if (p >= 0.75 && p < 0.90) {
+     // Transition 3 -> 4 (0.15 span)
+     const progress = (p - 0.75) / 0.15;
      return 0.666 + (0.334) * progress;
   }
   
@@ -490,10 +488,11 @@ const containerStyle = computed(() => {
 
 const bigTextOpacity = computed(() => {
   const p = scrollProgress.value;
-  // Fade out background text as expansion completes (0.0 -> 0.5)
-  if (p < 0.1) return 1;
-  if (p > 0.5) return 0;
-  return 1 - (p - 0.1) / 0.4;
+  // Fade out background text as expansion completes (0.0 -> 0.15)
+  // Give it slightly longer to fade out fully so it doesn't snap off too abruptly at 0.15
+  if (p < 0.05) return 1;
+  if (p > 0.25) return 0;
+  return 1 - (p - 0.05) / 0.2;
 });
 
 // Smoothed horizontal offset to prevent jitter on mobile
@@ -549,8 +548,12 @@ const scrollToPhase = (index: number) => {
   
   const totalInternalScroll = height.value - windowHeight.value;
   // Map phase index to its lock center point
-  const centers = [0.375, 0.6, 0.8, 0.975];
-  const targetProgress = centers[index] || 0.375;
+  // P1 Center: (0.15 + 0.25)/2 = 0.20
+  // P2 Center: (0.40 + 0.50)/2 = 0.45
+  // P3 Center: (0.65 + 0.75)/2 = 0.70
+  // P4 Center: (0.90 + 1.00)/2 = 0.95
+  const centers = [0.20, 0.45, 0.70, 0.95];
+  const targetProgress = centers[index] || 0.20;
   
   // Find absolute top of section in document
   const rect = sectionRef.value.getBoundingClientRect();
