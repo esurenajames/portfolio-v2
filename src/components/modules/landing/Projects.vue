@@ -19,19 +19,20 @@
         :key="project.id"
         class="group relative bg-black p-3 rounded-lg shadow-2xl transition-all duration-500 hover:scale-[1.02]"
         :class="hoveredProject === project.id ? 'cursor-none' : 'cursor-pointer'"
-        @mouseenter="handleMouseEnter(project.id)"
-        @mouseleave="handleMouseLeave"
-        @mousemove="handleMouseMove($event, project.id)"
       >
         <!-- Project Image Container (Static) -->
         <div 
           ref="imageContainer"
           class="relative aspect-[16/9] rounded-lg overflow-hidden border border-white/10"
+          @mouseenter="handleMouseEnter(project.id)"
+          @mouseleave="handleMouseLeave"
+          @mousemove="handleMouseMove($event, project.id)"
         >
           <img 
             :src="project.image" 
             :alt="project.title"
-            class="w-full h-full object-cover transition-all duration-700 group-hover:blur-sm group-hover:scale-105"
+            class="w-full h-full object-cover transition-all duration-700"
+            :class="{ 'blur-sm scale-105': hoveredProject === project.id }"
           />
           
           <!-- Cursor-Following GIF Preview (Constrained within container) -->
@@ -130,12 +131,10 @@ const handleMouseLeave = () => {
 
 const handleMouseMove = (event, projectId) => {
   if (hoveredProject.value === projectId) {
-    const container = event.currentTarget.querySelector('.relative.aspect-\\[16\\/9\\]');
-    if (container) {
-      const rect = container.getBoundingClientRect();
-      cursorPosition.x = event.clientX - rect.left;
-      cursorPosition.y = event.clientY - rect.top;
-    }
+    const container = event.currentTarget;
+    const rect = container.getBoundingClientRect();
+    cursorPosition.x = event.clientX - rect.left;
+    cursorPosition.y = event.clientY - rect.top;
   }
 };
 

@@ -1,37 +1,37 @@
 <template>
   <Dialog :open="isOpen" @update:open="$emit('close')">
-    <DialogContent class="p-0 bg-[#0a0a0a] border-white/10 max-w-2xl shadow-2xl">
+    <DialogContent class="p-0 bg-white border border-gray-200 max-w-2xl shadow-2xl">
       <DialogHeader class="sr-only">
         <DialogTitle>Command Menu</DialogTitle>
         <DialogDescription>Search for commands and links.</DialogDescription>
       </DialogHeader>
       
       <!-- Search Header -->
-      <div class="flex items-center px-4 border-b border-white/10 h-14 shrink-0">
-        <SearchIcon class="w-5 h-5 text-gray-500 mr-3" />
+      <div class="flex items-center px-4 border-b border-gray-200 h-14 shrink-0">
+        <SearchIcon class="w-5 h-5 text-gray-400 mr-3" />
         <input 
           ref="inputRef"
           type="text" 
           placeholder="Type a command or search..." 
-          class="flex-1 bg-transparent border-none outline-none text-gray-50 placeholder:text-gray-500 text-sm h-full"
+          class="flex-1 bg-transparent border-none outline-none text-gray-700 placeholder:text-gray-400 text-sm h-full"
           v-model="searchQuery"
           @keydown.enter="handleEnter"
         />
-        <div class="text-[10px] bg-white/10 text-gray-400 px-1.5 py-0.5 rounded border border-white/10 font-mono">ESC</div>
+        <div class="text-[10px] bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded border border-gray-200 font-mono">ESC</div>
       </div>
 
       <!-- Content -->
-      <div class="p-2 ">
+      <div class="p-2">
         
         <!-- Navigation Section -->
         <div v-if="filteredNavLinks.length > 0" class="mb-2">
           <div class="text-[10px] text-gray-500 font-medium px-2 py-1.5 mb-1 uppercase tracking-wider">Navigation</div>
           
           <a v-for="link in filteredNavLinks" :key="link.name" :href="link.href"
-            class="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-white/10 text-gray-300 hover:text-gray-50 transition-colors group cursor-pointer text-sm"
+            class="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-gray-100 text-gray-700 hover:text-gray-900 transition-colors group cursor-pointer text-sm"
             @click="$emit('close')"
           >
-            <component :is="link.icon" class="w-4 h-4 text-gray-500 group-hover:text-gray-50 transition-colors" />
+            <component :is="link.icon" class="w-4 h-4 text-gray-600 group-hover:text-gray-900 transition-colors" />
             <span class="flex-1">{{ link.name }}</span>
           </a>
         </div>
@@ -41,12 +41,12 @@
           <div class="text-[10px] text-gray-500 font-medium px-2 py-1.5 mb-1 uppercase tracking-wider">Socials</div>
           
           <a v-for="link in filteredSocialLinks" :key="link.name" :href="link.href" target="_blank" rel="noopener noreferrer"
-            class="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-white/10 text-gray-300 hover:text-gray-50 transition-colors group cursor-pointer text-sm"
+            class="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-gray-100 text-gray-700 hover:text-gray-900 transition-colors group cursor-pointer text-sm"
             @click="$emit('close')"
           >
-            <component :is="link.icon" class="w-4 h-4 text-gray-500 group-hover:text-gray-50 transition-colors" />
+            <component :is="link.icon" class="w-4 h-4 text-gray-600 group-hover:text-gray-900 transition-colors" />
             <span class="flex-1">{{ link.name }}</span>
-            <div class="text-xs text-gray-600 group-hover:text-gray-400 font-mono" v-if="link.shortcut">{{ link.shortcut }}</div>
+            <div class="text-xs text-gray-500 group-hover:text-gray-600 font-mono" v-if="link.shortcut">{{ link.shortcut }}</div>
           </a>
         </div>
           

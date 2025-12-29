@@ -78,7 +78,7 @@
                 : 'text-slate-900 bg-black/5 border-black/5 hover:bg-black/10'
             ]"
           >
-            Hire Me
+            Get in touch
           </a>
         </div>
 
@@ -181,7 +181,7 @@
               class="block w-full rounded-md border border-slate-900 bg-transparent px-4 py-3 text-center text-base font-semibold text-slate-900 hover:bg-slate-900 hover:text-gray-50 transition-colors"
               @click="isMobileMenuOpen = false"
             >
-              Hire Me
+              Get in touch
             </a>
           </div>
         </div>
