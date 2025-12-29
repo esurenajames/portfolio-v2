@@ -2,8 +2,8 @@
   <Hero/>
   <About/>
   <Projects/>
-  <TechStack/>
   <Experience/>
+  <TechStack/>
 </template>
 
 <script setup lang="ts">

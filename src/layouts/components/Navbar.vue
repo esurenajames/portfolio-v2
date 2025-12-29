@@ -69,8 +69,8 @@
             >⌘K</span>
           </button>
 
-          <a
-            href="#contact"
+          <button
+            @click="handleEmail()"
             class="px-4 py-2 text-sm font-semibold border rounded-md transition-all duration-300"
             :class="[
               (navTheme === 'dark' || navTheme === 'dark-transparent')
@@ -79,7 +79,7 @@
             ]"
           >
             Get in touch
-          </a>
+          </button>
         </div>
 
 
@@ -177,7 +177,8 @@
           <!-- Hire Me Button -->
           <div class="pt-4 mt-4 border-t border-black/5">
             <a
-              href="#contact"
+              href="mailto:esurenajames@gmail.com"
+              target="_blank"
               class="block w-full rounded-md border border-slate-900 bg-transparent px-4 py-3 text-center text-base font-semibold text-slate-900 hover:bg-slate-900 hover:text-gray-50 transition-colors"
               @click="isMobileMenuOpen = false"
             >
@@ -220,7 +221,7 @@ const isSearchOpen = ref(false);
 const navItems = [
   { name: "Projects", href: "#projects" },
   { name: "About", href: "#about" },
-  { name: "Contact", href: "#contact" },
+  { name: "Experience", href: "#experience" },
 ];
 
 const handleScroll = () => {
@@ -278,6 +279,10 @@ onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
   window.removeEventListener('keydown', handleKeydown);
 });
+
+const handleEmail = () => {
+  window.open('mailto:esurenajames@gmail.com', '_blank');
+};
 </script>
 
 <style scoped>

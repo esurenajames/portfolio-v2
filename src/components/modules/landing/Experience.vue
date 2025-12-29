@@ -1,10 +1,10 @@
 <template>
-  <section class="relative min-h-screen bg-white px-6 md:px-12 py-8">
-    <div class="mx-0 lg:mx-8 bg-black rounded-[3rem] p-6 md:p-12 lg:p-16 overflow-hidden relative">
+  <section class="relative min-h-screen bg-white px-6 md:px-12 py-0 md:py-8">
+    <div class="mx-0 lg:mx-8 bg-black rounded-lg lg:rounded-4xl p-6 md:p-12 lg:p-16 overflow-hidden relative">
       <!-- Section Header -->
       <div class="mb-12">
         <span class="text-white/60 font-mono text-xs tracking-[0.2em] uppercase block mb-4">Experience</span>
-        <h2 class="text-white text-3xl md:text-3xl lg:text-5xl font-bold tracking-tighter max-w-6xl leading-[1.1]">
+        <h2 class="text-white text-2xl md:text-3xl lg:text-5xl font-bold tracking-tighter max-w-6xl leading-[1.1]">
           Contributing to tech communities and turning projects into user-friendly solutions. Each role helps me grow as a developer, designer, and leader.
         </h2>
       </div>
@@ -20,7 +20,7 @@
           <div class="lg:col-span-4 flex flex-col justify-between h-full">
             <div class="mb-3 lg:mb-0">
               <span class="text-white/30 font-mono text-xs tracking-widest mb-3 block">{{ item.id }}</span>
-              <h3 class="text-white text-2xl md:text-3xl font-bold tracking-tight group-hover:text-[#5B7553] transition-colors">
+              <h3 class="text-white text-xl md:text-2xl font-bold tracking-tight group-hover:text-[#5B7553] transition-colors">
                 {{ item.title }}
               </h3>
             </div>

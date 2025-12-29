@@ -61,7 +61,7 @@
                <button class="px-6 md:px-8 py-2.5 md:py-3 bg-[#5B7553] text-gray-50 font-bold rounded-md hover:bg-[#4a6143] transition-colors cursor-pointer border border-[#5B7553] text-sm md:text-base">
                   My Works
                </button>
-               <button class="px-6 md:px-8 py-2.5 md:py-3 bg-black/5 border border-black/10 text-slate-900 font-medium rounded-md hover:bg-black/10 transition-colors cursor-pointer text-sm md:text-base">
+               <button @click="handleEmail()" class="px-6 md:px-8 py-2.5 md:py-3 bg-black/5 border border-black/10 text-slate-900 font-medium rounded-md hover:bg-black/10 transition-colors cursor-pointer text-sm md:text-base flex items-center justify-center">
                   Contact
                </button>
             </div>
@@ -126,7 +126,7 @@
                       </h2>
                     </div>
                     
-                    <button class="bg-[#5B7553] text-gray-50 px-8 py-3 text-sm font-bold hover:bg-[#4a6143] transition-colors self-start border border-[#5B7553] rounded-lg">
+                    <button @click="handleEmail()" class="bg-[#5B7553] text-gray-50 px-8 py-3 text-sm font-bold hover:bg-[#4a6143] transition-colors self-start border border-[#5B7553] rounded-lg inline-block">
                       Get started
                     </button>
                   </div>
@@ -521,6 +521,10 @@ onUnmounted(() => {
   window.removeEventListener('touchstart', handleTouchStart);
   window.removeEventListener('touchmove', handleTouchMove);
 });
+
+const handleEmail = () => {
+  window.open('mailto:esurenajames@gmail.com', '_blank');
+};
 </script>
 
 <style scoped>
