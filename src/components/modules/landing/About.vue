@@ -346,10 +346,19 @@ const targetHorizontalOffset = computed(() => {
 
 const smoothedHorizontalOffset = ref(0);
 let animationFrameId: number | null = null;
+let previousScrollProgress = 0;
 
 const updateSmoothOffset = () => {
   const isMobile = windowWidth.value < 768;
-  const lerpFactor = isMobile ? 0.12 : 0.2; // Slower lerp on mobile for smoother feel
+  
+  // Detect scroll direction
+  const currentProgress = scrollProgress.value;
+  const isScrollingUp = currentProgress < previousScrollProgress;
+  previousScrollProgress = currentProgress;
+  
+  // Use stronger smoothing when scrolling up to prevent jitter
+  const baseLerpFactor = isMobile ? 0.12 : 0.2;
+  const lerpFactor = isScrollingUp ? baseLerpFactor * 0.6 : baseLerpFactor;
   
   const diff = targetHorizontalOffset.value - smoothedHorizontalOffset.value;
   
