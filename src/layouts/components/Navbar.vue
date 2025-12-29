@@ -110,100 +110,102 @@
     </div>
 
     <!-- Mobile Menu Sidebar -->
-    <transition
-      enter-active-class="transition duration-300 ease-out"
-      enter-from-class="-translate-x-full"
-      enter-to-class="translate-x-0"
-      leave-active-class="transition duration-250 ease-in"
-      leave-from-class="translate-x-0"
-      leave-to-class="-translate-x-full"
-    >
-      <div
-        v-if="isMobileMenuOpen"
-        class="md:hidden fixed top-0 left-0 bottom-0 z-50 w-80 bg-white/95 backdrop-blur-xl border-r border-black/5 shadow-2xl overflow-y-auto"
+    <Teleport to="body">
+      <transition
+        enter-active-class="transition duration-300 ease-out"
+        enter-from-class="-translate-x-full"
+        enter-to-class="translate-x-0"
+        leave-active-class="transition duration-250 ease-in"
+        leave-from-class="translate-x-0"
+        leave-to-class="-translate-x-full"
       >
-        <!-- Sidebar Header -->
-        <div class="flex items-center justify-between px-6 py-6 border-b border-black/5">
-          <div class="flex items-center gap-3">
-            <div class="flex-shrink-0 px-3 py-2 bg-black/5 border border-black/5 rounded-md flex items-center justify-center">
-              <img src="@/assets/logo.svg" alt="Portfolio" class="h-6 w-auto invert" />
+        <div
+          v-if="isMobileMenuOpen"
+          class="md:hidden fixed top-0 left-0 bottom-0 z-[999] w-80 bg-white/95 backdrop-blur-xl border-r border-black/5 shadow-2xl overflow-y-auto"
+        >
+          <!-- Sidebar Header -->
+          <div class="flex items-center justify-between px-6 py-6 border-b border-black/5">
+            <div class="flex items-center gap-3">
+              <div class="flex-shrink-0 px-3 py-2 bg-black/5 border border-black/5 rounded-md flex items-center justify-center">
+                <img src="@/assets/logo.svg" alt="Portfolio" class="h-6 w-auto invert" />
+              </div>
             </div>
-          </div>
-          <button
-            type="button"
-            class="inline-flex items-center justify-center rounded-md p-2 text-gray-600 hover:text-black focus:outline-none"
-            @click="isMobileMenuOpen = false"
-          >
-            <span class="sr-only">Close menu</span>
-            <svg
-              class="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
-
-        <!-- Sidebar Content -->
-        <div class="px-6 py-6 space-y-3">
-          <!-- Search Button (Mobile) -->
-          <button
-            type="button"
-            class="w-full flex items-center gap-3 rounded-md px-4 py-3 text-base font-bold text-gray-600 hover:bg-black/5 hover:text-black transition-colors"
-            @click="isSearchOpen = true; isMobileMenuOpen = false"
-          >
-            <SearchIcon class="w-5 h-5" />
-            <span class="flex-1 text-left">Search</span>
-            <span class="text-[10px] text-gray-400 border border-black/10 rounded px-1.5 py-0.5">K</span>
-          </button>
-          
-          <a
-            v-for="item in navItems"
-            :key="item.name"
-            :href="item.href"
-            class="block rounded-md px-4 py-3 text-base font-bold text-gray-600 hover:bg-black/5 hover:text-black transition-colors"
-            @click="isMobileMenuOpen = false"
-          >
-            {{ item.name }}
-          </a>
-
-          <!-- Hire Me Button -->
-          <div class="pt-4 mt-4 border-t border-black/5">
-            <a
-              href="mailto:esurenajames@gmail.com"
-              target="_blank"
-              class="block w-full rounded-md border border-slate-900 bg-transparent px-4 py-3 text-center text-base font-semibold text-slate-900 hover:bg-slate-900 hover:text-gray-50 transition-colors"
+            <button
+              type="button"
+              class="inline-flex items-center justify-center rounded-md p-2 text-gray-600 hover:text-black focus:outline-none"
               @click="isMobileMenuOpen = false"
             >
-              Get in touch
+              <span class="sr-only">Close menu</span>
+              <svg
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Sidebar Content -->
+          <div class="px-6 py-6 space-y-3">
+            <!-- Search Button (Mobile) -->
+            <button
+              type="button"
+              class="w-full flex items-center gap-3 rounded-md px-4 py-3 text-base font-bold text-gray-600 hover:bg-black/5 hover:text-black transition-colors"
+              @click="isSearchOpen = true; isMobileMenuOpen = false"
+            >
+              <SearchIcon class="w-5 h-5" />
+              <span class="flex-1 text-left">Search</span>
+              <span class="text-[10px] text-gray-400 border border-black/10 rounded px-1.5 py-0.5">K</span>
+            </button>
+            
+            <a
+              v-for="item in navItems"
+              :key="item.name"
+              :href="item.href"
+              class="block rounded-md px-4 py-3 text-base font-bold text-gray-600 hover:bg-black/5 hover:text-black transition-colors"
+              @click="isMobileMenuOpen = false"
+            >
+              {{ item.name }}
             </a>
+
+            <!-- Hire Me Button -->
+            <div class="pt-4 mt-4 border-t border-black/5">
+              <a
+                href="mailto:esurenajames@gmail.com"
+                target="_blank"
+                class="block w-full rounded-md border border-slate-900 bg-transparent px-4 py-3 text-center text-base font-semibold text-slate-900 hover:bg-slate-900 hover:text-gray-50 transition-colors"
+                @click="isMobileMenuOpen = false"
+              >
+                Get in touch
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-    </transition>
+      </transition>
 
-    <!-- Overlay -->
-    <transition
-      enter-active-class="transition duration-300 ease-out"
-      enter-from-class="opacity-0"
-      enter-to-class="opacity-100"
-      leave-active-class="transition duration-250 ease-in"
-      leave-from-class="opacity-100"
-      leave-to-class="opacity-0"
-    >
-      <div
-        v-if="isMobileMenuOpen"
-        class="md:hidden fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
-        @click="isMobileMenuOpen = false"
-      ></div>
-    </transition>
+      <!-- Overlay -->
+      <transition
+        enter-active-class="transition duration-300 ease-out"
+        enter-from-class="opacity-0"
+        enter-to-class="opacity-100"
+        leave-active-class="transition duration-250 ease-in"
+        leave-from-class="opacity-100"
+        leave-to-class="opacity-0"
+      >
+        <div
+          v-if="isMobileMenuOpen"
+          class="md:hidden fixed inset-0 bg-black/20 backdrop-blur-sm z-[998]"
+          @click="isMobileMenuOpen = false"
+        ></div>
+      </transition>
+    </Teleport>
 
     <CommandMenu :is-open="isSearchOpen" @close="isSearchOpen = false" />
   </nav>

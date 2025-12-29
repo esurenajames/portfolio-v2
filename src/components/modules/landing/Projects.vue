@@ -5,15 +5,6 @@
     :class="{ 'bg-white': windowWidth >= 768 }"
     :style="windowWidth < 768 ? { backgroundColor: mobileSectionBg } : {}"
   >
-    <!-- Mobile: Dynamic Gradient Transition Overlay (Black to White) -->
-    <div 
-      v-if="windowWidth < 768"
-      class="absolute inset-x-0 top-0 h-[50vh] z-10 pointer-events-none transition-all duration-1000"
-      :style="{ 
-        background: mobileGradientBackground
-      }"
-    ></div>
-
     <!-- Section Header -->
     <div class="relative z-20 mx-0 lg:mx-8 mb-4">
       <div class="flex items-end justify-between pb-4">
@@ -149,60 +140,6 @@ const { y: scrollY } = useScroll(window);
 const projectsSectionRef = ref(null);
 const hoveredProject = ref(null);
 const cursorPosition = reactive({ x: 0, y: 0 });
-
-// Mobile scroll tracking - black to white transition
-const mobileScrollProgress = computed(() => {
-  if (!projectsSectionRef.value || windowWidth.value >= 768) return 0;
-  
-  // Access scrollY to make this computed reactive to scroll
-  const _scroll = scrollY.value;
-  
-  const rect = projectsSectionRef.value.getBoundingClientRect();
-  const sectionTop = rect.top;
-  const viewportHeight = windowHeight.value;
-  
-  // Start transitioning when the section enters the viewport
-  const triggerPoint = viewportHeight * 0.8;
-  
-  if (sectionTop > triggerPoint) return 0;
-  if (sectionTop <= 0) return 1;
-  
-  return 1 - (sectionTop / triggerPoint);
-});
-
-const mobileGradientBackground = computed(() => {
-  const progress = mobileScrollProgress.value;
-  
-  // Interpolate from black (0,0,0) to white (255,255,255)
-  const r = Math.round(255 * progress);
-  const g = Math.round(255 * progress);
-  const b = Math.round(255 * progress);
-  
-  // Create gradient from interpolated color to transparent
-  return `linear-gradient(to bottom, rgb(${r}, ${g}, ${b}) 0%, rgb(${r}, ${g}, ${b}) 30%, transparent 100%)`;
-});
-
-const mobileSectionBg = computed(() => {
-  const progress = mobileScrollProgress.value;
-  
-  // Interpolate from black to white
-  const r = Math.round(255 * progress);
-  const g = Math.round(255 * progress);
-  const b = Math.round(255 * progress);
-  
-  return `rgb(${r}, ${g}, ${b})`;
-});
-
-const mobileTextColor = computed(() => {
-  const progress = mobileScrollProgress.value;
-  
-  // Interpolate text color from white (255) to dark gray (17 for gray-900)
-  const start = 255;
-  const end = 17;
-  const value = Math.round(start + (end - start) * progress);
-  
-  return `rgb(${value}, ${value}, ${value})`;
-});
 
 const handleMouseEnter = (projectId) => {
   hoveredProject.value = projectId;
