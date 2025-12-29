@@ -1,18 +1,27 @@
 <template>
   <!-- Mobile: Simple Vertical Stack -->
-  <section v-if="windowWidth < 768" class="relative bg-white">
-    <!-- Gradient Transition Overlay -->
-    <div class="absolute inset-x-0 top-0 h-[70vh] bg-gradient-to-b from-white via-gray-200/50 to-transparent z-10 pointer-events-none"></div>
+  <section 
+    v-if="windowWidth < 768" 
+    class="relative transition-colors duration-1000"
+    :style="{ backgroundColor: mobileSectionBg }"
+  >
+    <!-- Dynamic Gradient Transition Overlay -->
+    <div 
+      class="absolute inset-x-0 top-0 h-[70vh] z-10 pointer-events-none transition-all duration-1000"
+      :style="{ 
+        background: mobileGradientBackground
+      }"
+    ></div>
     
     <!-- Black Background Container with Blobs -->
-    <div class="relative bg-black overflow-hidden">
+    <div ref="thinkingSectionRef" class="relative bg-black overflow-hidden">
       <!-- Animated Blobs -->
       <div class="absolute inset-0 overflow-hidden pointer-events-none">
         <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#5B7553]/20 rounded-full blur-[120px] animate-blob"></div>
         <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-[#7A996F]/15 rounded-full blur-[120px] animate-blob animation-delay-2000"></div>
       </div>
       <!-- About Me Header -->
-      <div class="relative flex flex-col items-center justify-center px-6 py-12">
+      <div class="relative z-20 flex flex-col items-center justify-center px-6 py-12">
         <div class="text-center space-y-8">
           <h1 class="text-gray-50 text-6xl font-black tracking-tighter uppercase leading-none font-roboto">
             ABOUT ME
@@ -315,11 +324,56 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
-import { useElementBounding, useWindowSize } from '@vueuse/core';
+import { useElementBounding, useWindowSize, useScroll } from '@vueuse/core';
 
 const sectionRef = ref<HTMLElement | null>(null);
+const thinkingSectionRef = ref<HTMLElement | null>(null);
 const { top, height } = useElementBounding(sectionRef);
 const { height: windowHeight, width: windowWidth } = useWindowSize();
+const { y: scrollY } = useScroll(window);
+
+// Mobile scroll tracking - uses scrollY to trigger reactivity
+const mobileScrollProgress = computed(() => {
+  if (!thinkingSectionRef.value || windowWidth.value >= 768) return 0;
+  
+  // Access scrollY to make this computed reactive to scroll
+  const _scroll = scrollY.value;
+  
+  const rect = thinkingSectionRef.value.getBoundingClientRect();
+  const thinkingTop = rect.top;
+  const viewportHeight = windowHeight.value;
+  
+  // Start transitioning when the thinking section enters the viewport
+  const triggerPoint = viewportHeight * 0.8;
+  
+  if (thinkingTop > triggerPoint) return 0;
+  if (thinkingTop <= 0) return 1;
+  
+  return 1 - (thinkingTop / triggerPoint);
+});
+
+const mobileGradientBackground = computed(() => {
+  const progress = mobileScrollProgress.value;
+  
+  // Interpolate gradient colors from white to black
+  const r = Math.round(255 * (1 - progress));
+  const g = Math.round(255 * (1 - progress));
+  const b = Math.round(255 * (1 - progress));
+  
+  // Create solid gradient from interpolated color to transparent
+  return `linear-gradient(to bottom, rgb(${r}, ${g}, ${b}) 0%, rgb(${r}, ${g}, ${b}) 30%, transparent 100%)`;
+});
+
+const mobileSectionBg = computed(() => {
+  const progress = mobileScrollProgress.value;
+  
+  // Interpolate section background from white to black
+  const r = Math.round(255 * (1 - progress));
+  const g = Math.round(255 * (1 - progress));
+  const b = Math.round(255 * (1 - progress));
+  
+  return `rgb(${r}, ${g}, ${b})`;
+});
 
 const scrollProgress = computed(() => {
   if (!sectionRef.value) return 0;
