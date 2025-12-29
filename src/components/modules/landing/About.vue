@@ -1,8 +1,11 @@
 <template>
   <!-- Mobile: Simple Vertical Stack -->
   <section v-if="windowWidth < 768" class="relative bg-white">
+    <!-- Gradient Transition Overlay -->
+    <div class="absolute inset-x-0 top-0 h-[70vh] bg-gradient-to-b from-white via-gray-200/50 to-transparent z-10 pointer-events-none"></div>
+    
     <!-- Black Background Container with Blobs -->
-    <div class="relative bg-[#040404] overflow-hidden">
+    <div class="relative bg-black overflow-hidden">
       <!-- Animated Blobs -->
       <div class="absolute inset-0 overflow-hidden pointer-events-none">
         <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#5B7553]/20 rounded-full blur-[120px] animate-blob"></div>
@@ -65,7 +68,7 @@
           </div>
         </div>
 
-        <div class="relative w-full aspect-video bg-[#0a0a0a] rounded-2xl border border-white/5 overflow-hidden flex items-center justify-center">
+        <div class="relative w-full aspect-video bg-zinc-900 rounded-2xl border border-white/5 overflow-hidden flex items-center justify-center">
           <img 
             src="@/assets/gifs/bike.gif" 
             class="w-full h-full object-cover"
@@ -313,7 +316,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useElementBounding, useWindowSize } from '@vueuse/core';
-import { ChevronDown } from 'lucide-vue-next';
 
 const sectionRef = ref<HTMLElement | null>(null);
 const { top, height } = useElementBounding(sectionRef);
