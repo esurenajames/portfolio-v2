@@ -1,19 +1,41 @@
 <template>
-  <section class="relative min-h-screen bg-white py-24 px-6 md:px-12">
+  <section 
+    ref="projectsSectionRef"
+    class="relative min-h-screen py-24 px-6 md:px-12 transition-colors duration-1000"
+    :class="{ 'bg-white': windowWidth >= 768 }"
+    :style="windowWidth < 768 ? { backgroundColor: mobileSectionBg } : {}"
+  >
+    <!-- Mobile: Dynamic Gradient Transition Overlay (Black to White) -->
+    <div 
+      v-if="windowWidth < 768"
+      class="absolute inset-x-0 top-0 h-[50vh] z-10 pointer-events-none transition-all duration-1000"
+      :style="{ 
+        background: mobileGradientBackground
+      }"
+    ></div>
+
     <!-- Section Header -->
-    <div class="mx-0 lg:mx-8 mb-4">
+    <div class="relative z-20 mx-0 lg:mx-8 mb-4">
       <div class="flex items-end justify-between pb-4">
-        <h2 class="text-5xl md:text-9xl font-black tracking-tighter text-gray-900 font-roboto uppercase leading-none">
+        <h2 
+          class="text-5xl md:text-9xl font-black tracking-tighter font-roboto uppercase leading-none transition-colors duration-1000"
+          :class="windowWidth < 768 ? '' : 'text-gray-900'"
+          :style="windowWidth < 768 ? { color: mobileTextColor } : {}"
+        >
           PROJECT
         </h2>
-        <span class="text-5xl md:text-9xl font-black tracking-tighter text-gray-900 font-roboto leading-none">
+        <span 
+          class="text-5xl md:text-9xl font-black tracking-tighter font-roboto leading-none transition-colors duration-1000"
+          :class="windowWidth < 768 ? '' : 'text-gray-900'"
+          :style="windowWidth < 768 ? { color: mobileTextColor } : {}"
+        >
           '25
         </span>
       </div>
     </div>
 
     <!-- Projects Grid -->
-    <div class="mx-0 lg:mx-8 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-16">
+    <div class="relative z-20 mx-0 lg:mx-8 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-16">
       <div 
         v-for="project in projects" 
         :key="project.id"
@@ -101,10 +123,12 @@
     </div>
 
     <!-- See All Button -->
-    <div class="mt-12 flex justify-center">
+    <div class="relative z-20 mt-12 flex justify-center">
       <a 
         href="#projects" 
-        class="group flex items-center gap-2 tracking-tighter text-lg font-bold text-gray-900"
+        class="group flex items-center gap-2 tracking-tighter text-lg font-bold transition-colors duration-1000"
+        :class="windowWidth < 768 ? '' : 'text-gray-900'"
+        :style="windowWidth < 768 ? { color: mobileTextColor } : {}"
       >
         <span>SEE ALL</span>
         <ArrowRight class="w-5 h-5" />
@@ -114,12 +138,71 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue';
+import { ref, reactive, computed } from 'vue';
 import { ArrowRight } from 'lucide-vue-next';
+import { useWindowSize, useScroll } from '@vueuse/core';
 import bikeGif from '@/assets/gifs/bike.gif';
 
+const { width: windowWidth, height: windowHeight } = useWindowSize();
+const { y: scrollY } = useScroll(window);
+
+const projectsSectionRef = ref(null);
 const hoveredProject = ref(null);
 const cursorPosition = reactive({ x: 0, y: 0 });
+
+// Mobile scroll tracking - black to white transition
+const mobileScrollProgress = computed(() => {
+  if (!projectsSectionRef.value || windowWidth.value >= 768) return 0;
+  
+  // Access scrollY to make this computed reactive to scroll
+  const _scroll = scrollY.value;
+  
+  const rect = projectsSectionRef.value.getBoundingClientRect();
+  const sectionTop = rect.top;
+  const viewportHeight = windowHeight.value;
+  
+  // Start transitioning when the section enters the viewport
+  const triggerPoint = viewportHeight * 0.8;
+  
+  if (sectionTop > triggerPoint) return 0;
+  if (sectionTop <= 0) return 1;
+  
+  return 1 - (sectionTop / triggerPoint);
+});
+
+const mobileGradientBackground = computed(() => {
+  const progress = mobileScrollProgress.value;
+  
+  // Interpolate from black (0,0,0) to white (255,255,255)
+  const r = Math.round(255 * progress);
+  const g = Math.round(255 * progress);
+  const b = Math.round(255 * progress);
+  
+  // Create gradient from interpolated color to transparent
+  return `linear-gradient(to bottom, rgb(${r}, ${g}, ${b}) 0%, rgb(${r}, ${g}, ${b}) 30%, transparent 100%)`;
+});
+
+const mobileSectionBg = computed(() => {
+  const progress = mobileScrollProgress.value;
+  
+  // Interpolate from black to white
+  const r = Math.round(255 * progress);
+  const g = Math.round(255 * progress);
+  const b = Math.round(255 * progress);
+  
+  return `rgb(${r}, ${g}, ${b})`;
+});
+
+const mobileTextColor = computed(() => {
+  const progress = mobileScrollProgress.value;
+  
+  // Interpolate text color from white (255) to dark gray (17 for gray-900)
+  const start = 255;
+  const end = 17;
+  const value = Math.round(start + (end - start) * progress);
+  
+  return `rgb(${value}, ${value}, ${value})`;
+});
 
 const handleMouseEnter = (projectId) => {
   hoveredProject.value = projectId;
