@@ -1,5 +1,120 @@
 <template>
-  <section ref="sectionRef" class="relative min-h-[500vh] md:min-h-[1000vh] bg-white">
+  <!-- Mobile: Simple Vertical Stack -->
+  <section v-if="windowWidth < 768" class="relative bg-white">
+    <!-- Black Background Container with Blobs -->
+    <div class="relative bg-[#040404] overflow-hidden">
+      <!-- Animated Blobs -->
+      <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#5B7553]/20 rounded-full blur-[120px] animate-blob"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-[#7A996F]/15 rounded-full blur-[120px] animate-blob animation-delay-2000"></div>
+      </div>
+      <!-- About Me Header -->
+      <div class="relative flex flex-col items-center justify-center px-6 py-12">
+        <div class="text-center space-y-8">
+          <h1 class="text-gray-50 text-6xl font-black tracking-tighter uppercase leading-none font-roboto">
+            ABOUT ME
+          </h1>
+          <p class="text-gray-400 text-lg max-w-md mx-auto">
+            Discover more about me and how i do things.
+          </p>
+        </div>
+      </div>
+
+      <!-- Section 1: The Vision -->
+      <div class="relative min-h-[70vh] flex items-center justify-center px-6 py-12">
+      <div class="max-w-4xl grid grid-cols-1 gap-8 items-center">
+        <div class="space-y-6">
+          <span class="text-[#5B7553] font-mono text-sm tracking-[0.3em] uppercase">#01</span>
+          <h2 class="text-gray-50 text-3xl font-black tracking-tighter leading-none font-roboto">
+            THINKING
+          </h2>
+          <p class="text-gray-400 text-md leading-relaxed font-lato">
+            Every pixel has a purpose, every interaction tells a story. I create simple, clear experiences that guide users naturally.
+          </p>
+        </div>
+        <div class="relative group">
+          <div class="absolute inset-0 bg-gray-100 translate-x-4 translate-y-4 rounded-2xl"></div>
+          <img 
+            src="@/assets/images/profile.jpg" 
+            class="relative w-full aspect-[4/5] object-cover rounded-2xl"
+            alt="Vision"
+          />
+        </div>
+      </div>
+    </div>
+
+      <!-- Section 2: Building -->
+      <div class="relative min-h-[70vh] flex items-center justify-center px-6 py-12">
+      <div class="max-w-4xl w-full grid grid-cols-1 gap-8 items-center">
+        <div class="space-y-8">
+          <div>
+            <span class="text-[#5B7553] font-mono text-sm tracking-[0.3em] uppercase">#02</span>
+            <h2 class="text-gray-50 text-3xl font-black tracking-tighter leading-none font-roboto mb-4">
+              BUILDING
+            </h2>
+            <p class="text-gray-400 text-md leading-relaxed font-lato">
+              I start by understanding the problem — the users, constraints, and goals. Then I design solutions that are simple, organized, and easy to maintain.
+            </p>
+          </div>
+          
+          <div class="flex flex-col gap-3">
+            <div v-for="item in buildingBlocks" :key="item" class="p-3 border border-white/5 bg-white/[0.02] rounded-xl flex items-center gap-4">
+              <span class="w-2 h-2 bg-[#5B7553] rounded-full flex-shrink-0"></span>
+              <span class="text-gray-200 font-bold text-md tracking-tighter">{{ item }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative w-full aspect-video bg-[#0a0a0a] rounded-2xl border border-white/5 overflow-hidden flex items-center justify-center">
+          <img 
+            src="@/assets/gifs/bike.gif" 
+            class="w-full h-full object-cover"
+            alt="Building"
+          />
+        </div>
+      </div>
+    </div>
+
+      <!-- Section 3: Impact -->
+      <div class="relative min-h-[70vh] flex items-center justify-center px-6 py-12">
+      <div class="max-w-4xl w-full grid grid-cols-1 gap-8 items-center">
+        <div class="relative group">
+          <div class="relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
+            <img 
+              src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200"
+              class="w-full aspect-[4/3] object-cover"
+              alt="Impact Showcase"
+            />
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <span class="text-[#5B7553] font-mono text-sm tracking-[0.3em] uppercase">#03</span>
+          <h2 class="text-gray-50 text-3xl font-black tracking-tighter leading-none font-roboto">
+            IMPACT
+          </h2>
+          <p class="text-gray-400 text-md leading-relaxed">
+            Bridging the gap between technology and design to help businesses connect with users.
+          </p>
+
+          <div class="grid grid-cols-2 gap-6 pt-4">
+            <div class="space-y-2">
+              <div class="text-[#5B7553] text-3xl font-black font-roboto">10+</div>
+              <div class="text-gray-500 text-sm uppercase tracking-wider">Projects</div>
+            </div>
+            <div class="space-y-2">
+              <div class="text-[#5B7553] text-3xl font-black font-roboto">100%</div>
+              <div class="text-gray-500 text-sm uppercase tracking-wider">Satisfaction</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <!-- Desktop: Parallax Horizontal Scroll -->
+  <section v-else ref="sectionRef" class="relative min-h-[500vh] md:min-h-[1000vh] bg-white">
     <!-- Sticky Container -->
     <div class="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
       
@@ -190,18 +305,6 @@
            class="h-full bg-[#5B7553] transition-all duration-300 ease-out"
            :style="{ width: `${horizontalP * 100}%` }"
          ></div>
-      </div>
-      <!-- Scroll Down Hint -->
-      <div 
-        class="absolute bottom-14 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 transition-all duration-500 z-20"
-        :style="{ 
-          opacity: scrollProgress < 0.05 ? 1 : 0,
-          transform: `translateY(${scrollProgress * 100}px) translateX(-50%)`,
-          pointerEvents: 'none'
-        }"
-      >
-        <span class="text-[#5B7553] font-mono text-[10px] tracking-[0.3em] uppercase">Scroll to explore</span>
-        <ChevronDown class="w-5 h-5 text-[#5B7553] animate-bounce" />
       </div>
     </div>
   </section>
