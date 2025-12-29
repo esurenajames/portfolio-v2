@@ -86,9 +86,9 @@
 
           <!-- Block 2: Building (Updated Layout with GIF placeholder) -->
           <div class="w-screen h-full flex-shrink-0 flex items-center justify-center px-12 md:px-32 bg-slate-900/10">
-            <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
               <!-- Left: Text and Blocks -->
-              <div class="space-y-12">
+              <div class="space-y-8">
                 <div>
                   <span class="text-[#5B7553] font-mono text-sm tracking-[0.3em] uppercase">#02</span>
                   <h2 class="text-gray-50 text-3xl md:text-8xl font-black tracking-tighter leading-none font-roboto mb-8">
@@ -99,7 +99,7 @@
                   </p>
                 </div>
                 
-                <div class="flex flex-col gap-6">
+                <div class="flex flex-col gap-3 md:gap-6">
                   <div v-for="item in buildingBlocks" :key="item" class="p-2 md:p-4 border border-white/5 bg-white/[0.02] rounded-xl hover:bg-white/5 transition-colors group flex items-center gap-4">
                     <span class="w-2 h-2 bg-[#5B7553] rounded-full flex-shrink-0"></span>
                     <span class="text-gray-200 font-bold text-md md:text-xl tracking-tighter">{{ item }}</span>
