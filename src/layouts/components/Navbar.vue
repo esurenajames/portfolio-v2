@@ -126,9 +126,12 @@
           <!-- Sidebar Header -->
           <div class="flex items-center justify-between px-6 py-6 border-b border-black/5">
             <div class="flex items-center gap-3">
-              <div class="flex-shrink-0 px-3 py-2 bg-black/5 border border-black/5 rounded-md flex items-center justify-center">
-                <img src="@/assets/logo.svg" alt="Portfolio" class="h-6 w-auto invert" />
-              </div>
+            <button 
+              @click="router.push('/'); isMobileMenuOpen = false"
+              class="flex-shrink-0 px-3 py-2 bg-black/5 border border-black/5 rounded-md flex items-center justify-center hover:bg-black/10 transition-colors"
+            >
+              <img src="@/assets/logo.svg" alt="Portfolio" class="h-6 w-auto invert" />
+            </button>
             </div>
             <button
               type="button"
