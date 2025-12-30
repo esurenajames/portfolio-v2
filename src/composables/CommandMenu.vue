@@ -137,8 +137,8 @@ import {
   Instagram as InstagramIcon,
   Home as HomeIcon,
   Folder as ProjectIcon,
-  User as AboutIcon,
-  Send as ContactIcon
+  Briefcase as BriefcaseIcon,
+  Cpu as CpuIcon
 } from 'lucide-vue-next';
 
 const props = withDefaults(defineProps<{
@@ -155,9 +155,9 @@ const inputRef = ref<HTMLInputElement | null>(null);
 
 const navLinks = [
   { name: "Home", href: "/", icon: HomeIcon },
-  { name: "Projects", href: "#projects", icon: ProjectIcon },
-  { name: "About", href: "#about", icon: AboutIcon },
-  { name: "Contact", href: "#contact", icon: ContactIcon },
+  { name: "Projects", href: "/projects", icon: ProjectIcon },
+  { name: "Experience", href: "/#experience", icon: BriefcaseIcon },
+  { name: "Skills", href: "/#skills", icon: CpuIcon },
 ];
 
 const socialLinks = [

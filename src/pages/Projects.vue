@@ -46,10 +46,14 @@
       <!-- Projects Grid -->
       <div class="relative z-20 mx-0 lg:mx-8 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-16">
         <div 
-          v-for="project in allProjects" 
+          v-for="(project, index) in allProjects" 
           :key="project.id"
           class="group relative bg-black p-3 rounded-lg shadow-2xl transition-all duration-500 hover:scale-[1.02]"
-          :class="hoveredProject === project.id ? 'cursor-none' : 'cursor-pointer'"
+          :class="[
+            hoveredProject === project.id ? 'cursor-none' : 'cursor-pointer',
+            isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-16 opacity-0'
+          ]"
+          :style="{ transitionDelay: `${index * 100}ms` }"
           @click="openProjectDetails(project)"
         >
           <!-- Project Image Container (Static) -->
@@ -143,7 +147,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed } from 'vue';
+import { ref, reactive, computed, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import Layout from '@/layouts/Layout.vue';
 import ProjectDetails from '@/components/modules/projects/ProjectDetails.vue';
@@ -156,6 +160,15 @@ const cursorPosition = reactive({ x: 0, y: 0 });
 
 // Show back button based on route query parameter
 const showBackButton = computed(() => route.query.showBack === 'true');
+
+// Animation state
+const isLoaded = ref(false);
+
+onMounted(() => {
+  setTimeout(() => {
+    isLoaded.value = true;
+  }, 100);
+});
 
 interface Project {
   id: number;

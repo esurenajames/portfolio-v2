@@ -1,5 +1,5 @@
 <template>
-  <section ref="sectionRef" id="techstack" class="relative bg-white py-16 px-6 md:px-12">
+  <section ref="sectionRef" id="skills" class="relative bg-white py-16 px-6 md:px-12">
     <!-- Title -->
     <div class="mx-0 lg:mx-8 mb-16 select-none cursor-default text-center perspective-1000">
       <h2 
@@ -199,6 +199,16 @@ const topRow = ref([
 
 const bottomRow = ref([
   {
+    name: 'JavaScript',
+    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg',
+    url: 'https://www.javascript.com'
+  },
+  {
+    name: 'PHP',
+    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg',
+    url: 'https://www.php.net'
+  },
+  {
     name: 'Tailwind CSS',
     logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg',
     url: 'https://tailwindcss.com'
@@ -222,16 +232,6 @@ const bottomRow = ref([
     name: 'MySQL',
     logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg',
     url: 'https://www.mysql.com'
-  },
-  {
-    name: 'Canva',
-    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/canva/canva-original.svg',
-    url: 'https://www.canva.com'
-  },
-  {
-    name: 'GSAP',
-    logo: 'https://cdn.worldvectorlogo.com/logos/gsap-greensock.svg',
-    url: 'https://greensock.com/gsap/'
   },
   {
     name: 'Git',

@@ -1,5 +1,6 @@
 <template>
   <section 
+    id="hero-section"
     ref="heroRef" 
     class="relative h-[90vh] bg-transparent overflow-hidden"
   >
@@ -73,7 +74,7 @@
       class="absolute right-0 top-0 h-full w-full lg:w-1/2 flex items-center justify-center z-0"
     >
       <div 
-        class="hidden lg:flex relative w-full items-center justify-center transition-all duration-1000 ease-out transform"
+        class="hidden xl:flex relative w-full items-center justify-center transition-all duration-1000 ease-out transform"
         :class="animationComplete ? 'translate-y-0 opacity-100' : 'translate-y-24 opacity-0'"
       >
           <!-- Handwritten Hint -->

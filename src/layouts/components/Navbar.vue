@@ -14,7 +14,7 @@
         <div class="flex items-center gap-2 flex-1">
           <!-- Logo (Button Style) -->
           <button 
-            @click="router.push('/')"
+            @click="handleLogoClick"
             class="flex-shrink-0 px-3 py-2 border transition-colors flex items-center justify-center rounded-md"
             :class="[
               (navTheme === 'dark' || navTheme === 'dark-transparent') 
@@ -32,10 +32,10 @@
 
           <!-- Desktop Navigation (Left Aligned) -->
           <div class="hidden md:flex items-center gap-2">
-            <router-link
+            <button
               v-for="item in navItems"
               :key="item.name"
-              :to="(item.to ? item.to : item.href) as string"
+              @click="handleNavigation(item)"
               class="px-4 py-2 text-sm font-semibold border rounded-md transition-all duration-300"
               :class="[
                 (navTheme === 'dark' || navTheme === 'dark-transparent')
@@ -44,7 +44,7 @@
               ]"
             >
               {{ item.name }}
-            </router-link>
+            </button>
           </div>
         </div>
 
@@ -69,8 +69,8 @@
             >⌘K</span>
           </button>
 
-          <button
-            @click="handleEmail()"
+          <router-link
+            to="/chat"
             class="px-4 py-2 text-sm font-semibold border rounded-md transition-all duration-300"
             :class="[
               (navTheme === 'dark' || navTheme === 'dark-transparent')
@@ -78,8 +78,8 @@
                 : 'text-slate-900 bg-black/5 border-black/5 hover:bg-black/10'
             ]"
           >
-            Get in touch
-          </button>
+            Chat with AI
+          </router-link>
         </div>
 
 
@@ -168,26 +168,24 @@
               <span class="text-[10px] text-gray-400 border border-black/10 rounded px-1.5 py-0.5">K</span>
             </button>
             
-            <router-link
+            <button
               v-for="item in navItems"
               :key="item.name"
-              :to="(item.to ? item.to : item.href) as string"
-              class="block rounded-md px-4 py-3 text-base font-bold text-gray-600 hover:bg-black/5 hover:text-black transition-colors"
-              @click="isMobileMenuOpen = false"
+              @click="handleNavigation(item)"
+              class="block w-full text-left rounded-md px-4 py-3 text-base font-bold text-gray-600 hover:bg-black/5 hover:text-black transition-colors"
             >
               {{ item.name }}
-            </router-link>
+            </button>
 
             <!-- Hire Me Button -->
             <div class="pt-4 mt-4 border-t border-black/5">
-              <a
-                href="mailto:esurenajames@gmail.com"
-                target="_blank"
+              <router-link
+                to="/chat"
                 class="block w-full rounded-md border border-slate-900 bg-transparent px-4 py-3 text-center text-base font-semibold text-slate-900 hover:bg-slate-900 hover:text-gray-50 transition-colors"
                 @click="isMobileMenuOpen = false"
               >
-                Get in touch
-              </a>
+                Chat with AI
+              </router-link>
             </div>
           </div>
         </div>
@@ -230,9 +228,74 @@ const isSearchOpen = ref(false);
 
 const navItems: Array<{ name: string; to?: string; href?: string }> = [
   { name: "Projects", to: "/projects" },
-  { name: "About", href: "#about" },
   { name: "Experience", href: "#experience" },
+  { name: "Skills", href: "#skills" },
 ];
+
+const handleLogoClick = () => {
+  if (router.currentRoute.value.path === '/') {
+    // Already on home, scroll to hero
+    const heroSection = document.getElementById('hero-section');
+    if (heroSection) {
+      heroSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  } else {
+    // Navigate to home
+    router.push('/');
+  }
+};
+
+const handleNavigation = async (item: { name: string; to?: string; href?: string }) => {
+  if (item.to) {
+    router.push(item.to);
+    return;
+  }
+  
+  if (item.href) {
+    // If not on home page, go there first
+    if (router.currentRoute.value.path !== '/') {
+      await router.push('/');
+      // Wait for DOM to be ready
+      await new Promise(resolve => setTimeout(resolve, 500));
+    }
+    
+    // Find target element
+    const elementId = item.href.replace('#', '');
+    const element = document.getElementById(elementId);
+    
+    if (element) {
+      // Special handling for About section on Desktop to showing "opened" state
+      if (elementId === 'about' && window.innerWidth >= 768) {
+        const rect = element.getBoundingClientRect();
+        const scrollTop = window.scrollY + rect.top;
+        const windowHeight = window.innerHeight;
+        const sectionHeight = rect.height;
+        const totalInternalScroll = sectionHeight - windowHeight;
+        
+        // Target 17% progress (just past the 15% expansion phase)
+        const targetProgress = 0.17; 
+        const targetScroll = scrollTop + (targetProgress * totalInternalScroll);
+        
+        window.scrollTo({
+          top: targetScroll,
+          behavior: 'smooth'
+        });
+      } else {
+        // Standard scroll for Experience or Mobile About
+        const offset = 80; // Navbar offset if needed
+        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+        
+        // For mobile about, we just go there. For experience, standard scroll.
+        window.scrollTo({
+          top: elementId === 'about' ? elementPosition : elementPosition - offset,
+          behavior: 'smooth'
+        });
+      }
+    }
+  }
+  
+  isMobileMenuOpen.value = false;
+};
 
 const handleScroll = () => {
   const scrollY = window.scrollY;
@@ -301,9 +364,7 @@ onUnmounted(() => {
   window.removeEventListener('keydown', handleKeydown);
 });
 
-const handleEmail = () => {
-  window.open('mailto:esurenajames@gmail.com', '_blank');
-};
+
 </script>
 
 <style scoped>
