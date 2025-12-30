@@ -1,5 +1,5 @@
 <template>
-  <section class="relative min-h-screen bg-white px-6 md:px-12 py-0 md:py-8">
+  <section id="experience" class="relative min-h-screen bg-white px-6 md:px-12 py-0 md:py-8">
     <div class="mx-0 lg:mx-8 bg-black rounded-lg lg:rounded-4xl p-6 md:p-12 lg:p-16 overflow-hidden relative">
       <!-- Section Header -->
       <div class="mb-12">

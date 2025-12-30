@@ -1,5 +1,5 @@
 <template>
-  <section ref="sectionRef" class="relative bg-white py-16 px-6 md:px-12">
+  <section ref="sectionRef" id="techstack" class="relative bg-white py-16 px-6 md:px-12">
     <!-- Title -->
     <div class="mx-0 lg:mx-8 mb-16 select-none cursor-default text-center perspective-1000">
       <h2 

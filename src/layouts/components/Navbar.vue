@@ -229,34 +229,44 @@ const navItems: Array<{ name: string; to?: string; href?: string }> = [
 
 const handleScroll = () => {
   const scrollY = window.scrollY;
-  const viewportHeight = window.innerHeight;
-  const heroHeight = viewportHeight * 0.9;
-  
-  // About section is 1000vh tall, starting after hero
-  const aboutSectionHeight = viewportHeight * 10; // 1000vh
-  const aboutEndY = heroHeight + aboutSectionHeight;
   
   if (scrollY < 50) {
     navTheme.value = 'transparent';
-  } else if (scrollY < heroHeight) {
-    navTheme.value = 'light';
-  } else if (scrollY < aboutEndY) {
-    // Within About section (1000vh total)
-    const aboutScrollStart = heroHeight;
-    const aboutInternalScroll = scrollY - aboutScrollStart;
-    const totalAboutInternalScroll = aboutSectionHeight - viewportHeight;
-    const progress = Math.min(Math.max(aboutInternalScroll / totalAboutInternalScroll, 0), 1);
-    
-    if (progress > 0.3) {
-      // Inside the dark expanded container
-      navTheme.value = 'dark-transparent';
-    } else {
-      navTheme.value = 'light';
-    }
-  } else {
-    // After About section (Projects section with white background)
-    navTheme.value = 'light';
+    return;
   }
+
+  const aboutSection = document.getElementById('about');
+  
+  if (aboutSection) {
+    const rect = aboutSection.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    
+    // Check if we are within the About section
+    // Added a small buffer to handle sticky container behavior
+    if (rect.top <= 0 && rect.bottom > 0) {
+      // Logic for dark-transparent transition within About
+      // On desktop, the horizontal scroll starts after expansion (0.15 progress)
+      // The total height of About is rect.height
+      const aboutProgress = Math.abs(rect.top) / (rect.height - windowHeight);
+      
+      // If we're on desktop and expansion is well under way
+      if (window.innerWidth >= 768) {
+        if (aboutProgress > 0.1) {
+          navTheme.value = 'dark-transparent';
+        } else {
+          navTheme.value = 'light';
+        }
+      } else {
+        // Mobile behavior: switch to dark when background starts turning black
+        // The mobile About header starts after hero
+        navTheme.value = 'dark-transparent';
+      }
+      return;
+    }
+  }
+
+  // Default to light theme for other sections (Projects, Experience, TechStack)
+  navTheme.value = 'light';
 };
 
 const handleKeydown = (e: KeyboardEvent) => {
@@ -274,6 +284,7 @@ const handleKeydown = (e: KeyboardEvent) => {
 };
 
 onMounted(() => {
+  handleScroll();
   window.addEventListener('scroll', handleScroll);
   window.addEventListener('keydown', handleKeydown);
 });

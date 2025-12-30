@@ -2,6 +2,7 @@
   <!-- Mobile: Simple Vertical Stack -->
   <section 
     v-if="windowWidth < 768" 
+    id="about"
     class="relative transition-colors duration-1000"
     :style="{ backgroundColor: mobileSectionBg }"
   >
@@ -125,7 +126,7 @@
   </section>
 
   <!-- Desktop: Parallax Horizontal Scroll -->
-  <section v-else ref="sectionRef" class="relative min-h-[500vh] md:min-h-[600vh] bg-white">
+  <section v-else ref="sectionRef" id="about" class="relative min-h-[500vh] md:min-h-[600vh] bg-white">
     <!-- Sticky Container -->
     <div class="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
       
@@ -336,7 +337,7 @@ const mobileScrollProgress = computed(() => {
   if (!thinkingSectionRef.value || windowWidth.value >= 768) return 0;
   
   // Access scrollY to make this computed reactive to scroll
-  const _scroll = scrollY.value;
+  scrollY.value;
   
   const rect = thinkingSectionRef.value.getBoundingClientRect();
   const thinkingTop = rect.top;
