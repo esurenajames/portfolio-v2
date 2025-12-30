@@ -207,7 +207,11 @@
       </transition>
     </Teleport>
 
-    <CommandMenu :is-open="isSearchOpen" @close="isSearchOpen = false" />
+    <CommandMenu 
+      :is-open="isSearchOpen" 
+      :theme="(navTheme === 'dark' || navTheme === 'dark-transparent') ? 'dark' : 'light'" 
+      @close="isSearchOpen = false" 
+    />
   </nav>
 </template>
 
