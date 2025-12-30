@@ -4,11 +4,15 @@
     <div class="fixed inset-0 bg-[linear-gradient(to_right,#0000000a_1px,transparent_1px),linear-gradient(to_bottom,#0000000a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
     
     <div class="relative z-10 flex flex-col min-h-screen">
-      <Navbar />
-      <main class="flex-1">
-        <slot />
-      </main>
-      <Footer />
+      <Loading v-if="showLoading" @complete="handleLoadingComplete" />
+      
+      <div v-if="!isLoading" class="flex flex-col min-h-screen">
+        <Navbar />
+        <main class="flex-1">
+          <slot />
+        </main>
+        <Footer />
+      </div>
     </div>
 
     <button 
@@ -27,8 +31,16 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import { ArrowUp } from 'lucide-vue-next';
 import Navbar from './components/Navbar.vue';
 import Footer from './components/Footer.vue';
+import Loading from '@/pages/Loading.vue';
 
 const showScrollTop = ref(false);
+const isLoading = ref(true);
+const showLoading = ref(false);
+
+const handleLoadingComplete = () => {
+  isLoading.value = false;
+  sessionStorage.setItem('hasSeenLoading', 'true');
+};
 
 const handleScroll = () => {
   // Show button after scrolling down 80% of viewport (approx past hero)
@@ -43,6 +55,16 @@ const scrollToTop = () => {
 };
 
 onMounted(() => {
+  const hasSeenLoading = sessionStorage.getItem('hasSeenLoading');
+  
+  if (hasSeenLoading) {
+    showLoading.value = false;
+    isLoading.value = false;
+  } else {
+    showLoading.value = true;
+  }
+  
+  window.scrollTo(0, 0);
   window.addEventListener('scroll', handleScroll, { passive: true });
 });
 

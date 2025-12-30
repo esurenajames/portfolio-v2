@@ -238,6 +238,46 @@ const initCanvas = (i: number) => {
   };
 };
 
+const savePaintState = () => {
+  const paintStates: string[] = [];
+  masks.value.forEach((canvas, index) => {
+    if (canvas) {
+      try {
+        const dataUrl = canvas.toDataURL();
+        paintStates[index] = dataUrl;
+      } catch (e) {
+        console.warn('Could not save paint state for canvas', index, e);
+      }
+    }
+  });
+  sessionStorage.setItem('heroPaintState', JSON.stringify(paintStates));
+};
+
+const loadPaintState = () => {
+  try {
+    const saved = sessionStorage.getItem('heroPaintState');
+    if (!saved) return;
+    
+    const paintStates = JSON.parse(saved) as string[];
+    paintStates.forEach((dataUrl, index) => {
+      if (dataUrl && masks.value[index]) {
+        const canvas = masks.value[index];
+        const ctx = canvas.getContext('2d', { willReadFrequently: true });
+        if (!ctx) return;
+        
+        const img = new Image();
+        img.onload = () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(img, 0, 0);
+        };
+        img.src = dataUrl;
+      }
+    });
+  } catch (e) {
+    console.warn('Could not load paint state', e);
+  }
+};
+
 const handlePaint = (e: MouseEvent, index: number) => {
   if (!animationComplete.value) return; // Only allow painting after lock-in
   
@@ -263,6 +303,9 @@ const handlePaint = (e: MouseEvent, index: number) => {
   ctx.beginPath();
   ctx.arc(x, y, radius, 0, Math.PI * 2);
   ctx.fill();
+  
+  // Save paint state after each paint action
+  savePaintState();
 };
 
 // Typing Animation Logic
@@ -424,6 +467,7 @@ watch(scrollProgress, (newProgress) => {
     animationComplete.value = true;
     // Allow normal scrolling to resume
     document.body.style.overflow = 'auto';
+    sessionStorage.setItem('hasSeenHeroAnimation', 'true');
   } else if (newProgress < 1 && animationComplete.value) {
      // Re-lock if they scroll back up!
      animationComplete.value = false;
@@ -488,8 +532,31 @@ const handleTouchMove = (e: TouchEvent) => {
 };
 
 onMounted(() => {
-  // Lock scroll initially
-  document.body.style.overflow = 'hidden';
+  const hasSeenHero = sessionStorage.getItem('hasSeenHeroAnimation');
+  if (hasSeenHero) {
+    const maxScroll = window.innerHeight * 0.8;
+    accumulatedScroll.value = maxScroll;
+    animationComplete.value = true;
+    document.body.style.overflow = 'auto';
+    
+    // Initialize canvases immediately in stale mode (no delay)
+    collageImages.forEach((_, i) => {
+      initCanvas(i);
+    });
+    
+    // Load saved paint state after a short delay to ensure canvases are ready
+    setTimeout(() => {
+      loadPaintState();
+    }, 100);
+  } else {
+    // Lock scroll initially
+    document.body.style.overflow = 'hidden';
+    
+    // Initialize canvases with delay for animation
+    collageImages.forEach((_, i) => {
+      setTimeout(() => initCanvas(i), 800);
+    });
+  }
   
   updateH1Rect();
   window.addEventListener('resize', updateH1Rect);
@@ -504,11 +571,6 @@ onMounted(() => {
 
   // Start typing animation
   type();
-
-  // Initialize canvases individual as they become ready
-  collageImages.forEach((_, i) => {
-    setTimeout(() => initCanvas(i), 800);
-  });
 });
 
 onUnmounted(() => {
