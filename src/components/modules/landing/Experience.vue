@@ -114,23 +114,29 @@ const experienceItems = ref([
     location: 'Quezon City, PH',
     skills: [
       'Team Leadership',
-      'Tech Strategy',
+      'Stakeholder Communication',
+      'Partner Relations',
+      'Event Planning',
       'Project Management',
-      'Collaboration',
-      'Problem Solving'
+      'Public Speaking',
+      'Decision-Making',
+      'Collaboration'
     ]
   },
   {
     id: '05',
     title: 'Chief Operations Officer',
-    company: 'GDSC NU Fairview',
+    company: 'Google Developer Student Club - NU Fairview',
     duration: '2023 – 2024',
     location: 'Quezon City, PH',
     skills: [
-      'Event Planning', 
-      'Team Leadership', 
-      'Technical Management', 
-      'Live Streaming', 
+      'Operational Planning',
+      'People Management',
+      'Partnership Development',
+      'Team Coordination',
+      'Event Execution',
+      'Process Management',
+      'Community Engagement',
       'Project Coordination'
     ]
   }

@@ -26,38 +26,37 @@
       leave-from-class="translate-y-0"
       leave-to-class="translate-y-full"
     >
-      <div
-        v-if="isOpen && project"
-        class="fixed inset-0 z-[999] bg-white overflow-hidden"
-      >
-        <!-- Close Button (Top Left) -->
-        <button
-          @click="closeModal"
-          class="absolute top-8 left-8 z-[1000] p-3 rounded-full bg-black/5 hover:bg-black/10 transition-colors group"
-        >
-          <svg
-            class="w-6 h-6 text-black"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+      <div v-if="isOpen && project" class="fixed inset-0 z-[999]">
+        <!-- MOBILE LAYOUT (Full Scrollable Page) -->
+        <div class="md:hidden bg-white overflow-y-auto h-full">
+          <!-- Close Button (Mobile - Top Right) -->
+          <button
+            @click="closeModal"
+            class="absolute top-6 right-6 z-[1000] inline-flex items-center justify-center rounded-md p-2 text-gray-600 hover:text-black focus:outline-none"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
+            <span class="sr-only">Close</span>
+            <svg
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
 
-        <!-- Main Content Container -->
-        <div class="h-full w-full flex flex-col md:flex-row">
-          <!-- Left Side: Sticky Project Info -->
-          <div class="w-full md:w-[40%] lg:w-[35%] flex-shrink-0 border-r border-black/5">
-            <div class="h-full overflow-y-auto">
-              <div class="min-h-full flex flex-col justify-center p-8 md:p-12 lg:p-16 xl:p-20">
+          <!-- Mobile Content (Single Column) -->
+          <div class="w-full">
+            <!-- Project Info Section -->
+            <div class="w-full border-b border-black/5">
+              <div class="p-8 pt-16">
                 <!-- Project Title -->
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-black mb-6 leading-[0.9]">
+                <h1 class="text-4xl font-black tracking-tight text-black mb-6 leading-[0.9]">
                   {{ project.title }}
                 </h1>
 
@@ -69,14 +68,14 @@
                 </div>
 
                 <!-- Project Description -->
-                <div class="space-y-4 mb-12 text-black/70 leading-relaxed">
+                <div class="space-y-4 mb-8 text-black/70 leading-relaxed">
                   <p>
                     {{ project.description || 'A beautifully crafted project showcasing modern design and development practices.' }}
                   </p>
                 </div>
 
                 <!-- Tech Stack -->
-                <div class="mb-10">
+                <div class="mb-8">
                   <h3 class="text-xs font-bold tracking-wider text-black/40 uppercase mb-4">Technologies</h3>
                   <div class="flex flex-wrap gap-2">
                     <span
@@ -110,50 +109,182 @@
                 </div>
               </div>
             </div>
+
+            <!-- Image Gallery Section -->
+            <div class="w-full bg-gray-50">
+              <div class="p-8">
+                <!-- Image Grid -->
+                <div class="grid grid-cols-1 gap-6">
+                  <!-- Main Project Image (Full Width) -->
+                  <div class="relative aspect-video rounded-xl overflow-hidden shadow-lg">
+                    <img 
+                      :src="project.image" 
+                      :alt="project.title"
+                      class="w-full h-full object-cover"
+                    />
+                  </div>
+
+                  <!-- Gallery Images -->
+                  <div
+                    v-for="(image, index) in project.gallery"
+                    :key="index"
+                    class="relative aspect-video rounded-xl overflow-hidden shadow-lg"
+                  >
+                    <img 
+                      :src="image" 
+                      :alt="`${project.title} screenshot ${index + 1}`"
+                      class="w-full h-full object-cover"
+                    />
+                  </div>
+
+                  <!-- GIF Preview (if available) -->
+                  <div
+                    v-if="project.gif"
+                    class="relative aspect-video rounded-xl overflow-hidden shadow-lg"
+                  >
+                    <img 
+                      :src="project.gif" 
+                      :alt="`${project.title} demo`"
+                      class="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+
+                <!-- Bottom Spacer -->
+                <div class="h-20"></div>
+              </div>
+            </div>
           </div>
+        </div>
 
-          <!-- Right Side: Scrollable Image Grid -->
-          <div class="w-full md:w-[60%] lg:w-[65%] overflow-y-auto bg-gray-50">
-            <div class="p-8 md:p-12 lg:p-16">
-              <!-- Image Grid -->
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Main Project Image (Full Width) -->
-                <div class="md:col-span-2 relative aspect-video rounded-xl overflow-hidden shadow-lg">
-                  <img 
-                    :src="project.image" 
-                    :alt="project.title"
-                    class="w-full h-full object-cover"
-                  />
-                </div>
+        <!-- DESKTOP LAYOUT (Split Screen) -->
+        <div class="hidden md:block bg-white overflow-hidden h-full">
+          <!-- Close Button (Desktop - Top Left) -->
+          <button
+            @click="closeModal"
+            class="absolute top-8 left-8 z-[1000] inline-flex items-center justify-center rounded-md p-2 text-gray-600 hover:text-black focus:outline-none"
+          >
+            <span class="sr-only">Close</span>
+            <svg
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
 
-                <!-- Gallery Images (2 columns) -->
-                <div
-                  v-for="(image, index) in project.gallery"
-                  :key="index"
-                  class="relative aspect-video rounded-xl overflow-hidden shadow-lg"
-                >
-                  <img 
-                    :src="image" 
-                    :alt="`${project.title} screenshot ${index + 1}`"
-                    class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
+          <!-- Desktop Content (Split Screen) -->
+          <div class="h-full w-full flex flex-row">
+            <!-- Left Side: Sticky Project Info -->
+            <div class="w-[40%] lg:w-[35%] flex-shrink-0 border-r border-black/5">
+              <div class="h-full overflow-y-auto">
+                <div class="min-h-full flex flex-col justify-center p-12 lg:p-16 xl:p-20">
+                  <!-- Project Title -->
+                  <h1 class="text-5xl lg:text-6xl font-black tracking-tight text-black mb-6 leading-[0.9]">
+                    {{ project.title }}
+                  </h1>
 
-                <!-- GIF Preview (if available) -->
-                <div
-                  v-if="project.gif"
-                  class="md:col-span-2 relative aspect-video rounded-xl overflow-hidden shadow-lg"
-                >
-                  <img 
-                    :src="project.gif" 
-                    :alt="`${project.title} demo`"
-                    class="w-full h-full object-cover"
-                  />
+                  <!-- Project Meta -->
+                  <div class="flex items-center gap-3 mb-8 text-sm">
+                    <span class="text-black/60">{{ project.category || 'Product' }}</span>
+                    <span class="text-black/20">•</span>
+                    <span class="text-black/60">{{ project.year }}</span>
+                  </div>
+
+                  <!-- Project Description -->
+                  <div class="space-y-4 mb-12 text-black/70 leading-relaxed">
+                    <p>
+                      {{ project.description || 'A beautifully crafted project showcasing modern design and development practices.' }}
+                    </p>
+                  </div>
+
+                  <!-- Tech Stack -->
+                  <div class="mb-10">
+                    <h3 class="text-xs font-bold tracking-wider text-black/40 uppercase mb-4">Technologies</h3>
+                    <div class="flex flex-wrap gap-2">
+                      <span
+                        v-for="tech in project.techStack"
+                        :key="tech"
+                        class="px-3 py-1.5 bg-black/5 hover:bg-black/10 rounded-md text-sm font-medium text-black/80 transition-colors"
+                      >
+                        {{ tech }}
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Project Links -->
+                  <div v-if="project.liveUrl || project.githubUrl" class="flex gap-3">
+                    <a
+                      v-if="project.liveUrl"
+                      :href="project.liveUrl"
+                      target="_blank"
+                      class="px-6 py-3 bg-black text-white font-bold rounded-full hover:bg-black/90 transition-all hover:scale-105 text-sm"
+                    >
+                      View Live
+                    </a>
+                    <a
+                      v-if="project.githubUrl"
+                      :href="project.githubUrl"
+                      target="_blank"
+                      class="px-6 py-3 bg-black/5 border border-black/10 text-black font-bold rounded-full hover:bg-black/10 transition-all hover:scale-105 text-sm"
+                    >
+                      GitHub
+                    </a>
+                  </div>
                 </div>
               </div>
+            </div>
 
-              <!-- Bottom Spacer -->
-              <div class="h-20"></div>
+            <!-- Right Side: Scrollable Image Grid -->
+            <div class="w-[60%] lg:w-[65%] overflow-y-auto bg-gray-50">
+              <div class="p-12 lg:p-16">
+                <!-- Image Grid -->
+                <div class="grid grid-cols-2 gap-6">
+                  <!-- Main Project Image (Full Width) -->
+                  <div class="col-span-2 relative aspect-video rounded-xl overflow-hidden shadow-lg">
+                    <img 
+                      :src="project.image" 
+                      :alt="project.title"
+                      class="w-full h-full object-cover"
+                    />
+                  </div>
+
+                  <!-- Gallery Images (2 columns) -->
+                  <div
+                    v-for="(image, index) in project.gallery"
+                    :key="index"
+                    class="relative aspect-video rounded-xl overflow-hidden shadow-lg"
+                  >
+                    <img 
+                      :src="image" 
+                      :alt="`${project.title} screenshot ${index + 1}`"
+                      class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+
+                  <!-- GIF Preview (if available) -->
+                  <div
+                    v-if="project.gif"
+                    class="col-span-2 relative aspect-video rounded-xl overflow-hidden shadow-lg"
+                  >
+                    <img 
+                      :src="project.gif" 
+                      :alt="`${project.title} demo`"
+                      class="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+
+                <!-- Bottom Spacer -->
+                <div class="h-20"></div>
+              </div>
             </div>
           </div>
         </div>
