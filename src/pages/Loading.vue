@@ -13,7 +13,7 @@
         />
         
         <div 
-          class="absolute inset-0 w-full h-full transition-all duration-300"
+          class="absolute inset-0 w-full h-full"
           :style="{ 
             clipPath: `inset(${100 - progress}% 0 0 0)`,
           }"
@@ -38,27 +38,29 @@ const progress = ref(0);
 const emit = defineEmits(['complete']);
 
 onMounted(() => {
-  // Guarantee scroll to top on every refresh
   window.scrollTo(0, 0);
+  const duration = 3000; 
+  const startTime = Date.now();
+  
+  const animate = () => {
+    const elapsed = Date.now() - startTime;
+    const rawProgress = Math.min(elapsed / duration, 1);
 
-  const duration = 1800; 
-  const interval = 16;
-  const steps = duration / interval;
-  const increment = 100 / steps;
-
-  const timer = setInterval(() => {
-    progress.value += increment;
-    if (progress.value >= 100) {
+    progress.value = rawProgress * 100;
+    
+    if (rawProgress < 1) {
+      requestAnimationFrame(animate);
+    } else {
       progress.value = 100;
-      clearInterval(timer);
-      
-      // Delay to show the final black state
+
       setTimeout(() => {
         isLoaded.value = true;
         emit('complete');
       }, 600);
     }
-  }, interval);
+  };
+  
+  requestAnimationFrame(animate);
 });
 </script>
 
