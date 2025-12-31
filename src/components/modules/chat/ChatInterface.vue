@@ -13,23 +13,20 @@
 
     <!-- Welcome Section (shown when no messages) -->
     <div v-if="messages.length === 0" class="flex-1 flex flex-col items-center justify-center px-6 py-12">
-      <!-- Avatar -->
-      <!-- <div class="mb-6">
-        <Avatar class="w-16 h-16">
-          <AvatarImage src="" alt="Sha AI" />
-          <AvatarFallback class="bg-purple-600 text-white text-2xl font-bold">
-            S
-          </AvatarFallback>
-        </Avatar>
-      </div> -->
-
-      <!-- Welcome Text -->
-      <h1 class="text-xl md:text-4xl font-bold text-gray-900 mb-3 text-center">
-        Hi i am Bench
-      </h1>
-      <p class="text-gray-600 text-sm md:text-lg text-center max-w-xs md:max-w-md mb-12">
-        Your AI assistant to learn more about James Esurena. Ask me anything!
-      </p>
+      <div class="flex flex-col md:flex-row items-center gap-6 md:gap-10 mb-8 md:mb-12">
+        <!-- Avatar/Greeting Image -->
+        <img src="@/assets/images/bot.png" alt="Bench AI" class="w-32 h-32 md:w-56 md:h-56 object-contain" />
+        
+        <div class="text-center md:text-left">
+          <!-- Welcome Text -->
+          <h1 class="text-3xl md:text-6xl font-bold text-gray-900 mb-3">
+            Hi, I'm Bench
+          </h1>
+          <p class="text-gray-600 text-sm md:text-xl max-w-xs md:max-w-md">
+            Your AI assistant to learn more about James Esurena. Ask me anything!
+          </p>
+        </div>
+      </div>
 
       <!-- Suggestion Cards -->
       <div class="w-full max-w-4xl px-3 md:px-6">
@@ -66,12 +63,11 @@
           :timestamp="message.timestamp"
         />
         
-        <!-- Typing Indicator -->
         <div v-if="isTyping" class="flex items-start gap-3">
-          <Avatar class="w-8 h-8">
-            <AvatarImage src="" alt="Sha AI" />
-            <AvatarFallback class="bg-purple-600 text-white text-sm font-bold">
-              S
+          <Avatar class="w-8 h-8 bg-transparent">
+            <AvatarImage src="/src/assets/images/bot-icon.png" alt="Bench AI" />
+            <AvatarFallback class="bg-gray-100 text-black text-sm font-bold">
+              B
             </AvatarFallback>
           </Avatar>
           <div class="bg-gray-100 rounded-2xl px-4 py-2">
@@ -79,6 +75,43 @@
               <div class="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
               <div class="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 150ms"></div>
               <div class="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 300ms"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Questions -->
+    <div v-if="messages.length > 0" class="w-full px-6 mb-4 flex justify-center">
+      <div class="max-w-4xl w-full">
+        <div class="flex items-center justify-center mb-2">
+          <button 
+            @click="showQuickQuestions = !showQuickQuestions"
+            class="text-xs font-medium text-gray-400 hover:text-gray-700 flex items-center gap-1.5 transition-colors duration-200"
+          >
+            {{ showQuickQuestions ? 'Hide' : 'Show' }} Quick Questions
+            <ChevronDown 
+              class="w-3.5 h-3.5 transition-transform duration-300"
+              :class="showQuickQuestions ? 'rotate-0' : 'rotate-180'"
+            />
+          </button>
+        </div>
+
+        <div 
+          class="grid overflow-hidden transition-[grid-template-rows,opacity] duration-300 ease-out"
+          :class="showQuickQuestions ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'"
+        >
+          <div class="min-h-0">
+            <div class="flex flex-wrap justify-center gap-2 pb-2">
+              <Badge
+                v-for="q in quickQuestions"
+                :key="q.label"
+                variant="secondary"
+                class="cursor-pointer hover:bg-gray-200 hover:scale-105 transition-all duration-200 py-1.5 px-3 text-[11px] rounded-full font-medium bg-gray-100 text-gray-600 border-none shadow-none"
+                @click="handleSendMessage(q.prompt)"
+              >
+                {{ q.label }}
+              </Badge>
             </div>
           </div>
         </div>
@@ -96,11 +129,12 @@
 <script setup lang="ts">
 import { ref, nextTick, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { ArrowLeft, Briefcase, Code, User } from 'lucide-vue-next';
+import { ArrowLeft, Briefcase, Code, User, ChevronDown } from 'lucide-vue-next';
 import MessageBubble from './MessageBubble.vue';
 import ChatInput from './ChatInput.vue';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 
 const router = useRouter();
 
@@ -112,6 +146,15 @@ interface Message {
 
 const messages = ref<Message[]>([]);
 const isTyping = ref(false);
+const showQuickQuestions = ref(true);
+
+const quickQuestions = [
+  { label: 'Skills', prompt: 'What are your technical skills?' },
+  { label: 'Projects', prompt: 'Tell me about your featured projects' },
+  { label: 'Contact', prompt: 'How can I contact James?' },
+  { label: 'Education', prompt: 'Where did James study?' },
+  { label: 'Experience', prompt: 'Tell me about your work history' }
+];
 const messagesContainer = ref<HTMLElement | null>(null);
 
 const suggestions = [
@@ -129,7 +172,7 @@ const suggestions = [
   },
   {
     title: 'About James',
-    description: 'Get to know James Esurena and his passion for development.',
+    description: 'Get to know James Esurena and more about his life.',
     icon: User,
     prompt: 'Tell me about James Esurena'
   }
@@ -237,5 +280,15 @@ export default {
 
 .overflow-y-auto::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 0, 0, 0.2);
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
 }
 </style>

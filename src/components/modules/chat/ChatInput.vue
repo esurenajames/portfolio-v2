@@ -12,9 +12,9 @@
               @input="adjustHeight"
               @keydown.enter.exact.prevent="handleSend"
               :disabled="isDisabled"
-              placeholder="Ask Sha about James"
+              placeholder="Ask Bench about James..."
               rows="1"
-              class="w-full resize-none bg-transparent border-none outline-none text-gray-900 placeholder-gray-400 text-base max-h-32 overflow-y-auto"
+              class="w-full resize-none px-2 bg-transparent border-none outline-none text-gray-900 placeholder-gray-400 text-base max-h-32 overflow-y-auto"
               :class="{ 'opacity-50 cursor-not-allowed': isDisabled }"
             ></textarea>
           </div>
