@@ -14,40 +14,40 @@
     <!-- Welcome Section (shown when no messages) -->
     <div v-if="messages.length === 0" class="flex-1 flex flex-col items-center justify-center px-6 py-12">
       <!-- Avatar -->
-      <div class="mb-6">
+      <!-- <div class="mb-6">
         <Avatar class="w-16 h-16">
           <AvatarImage src="" alt="Sha AI" />
           <AvatarFallback class="bg-purple-600 text-white text-2xl font-bold">
             S
           </AvatarFallback>
         </Avatar>
-      </div>
+      </div> -->
 
       <!-- Welcome Text -->
-      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3 text-center">
-        Meet Sha
+      <h1 class="text-xl md:text-4xl font-bold text-gray-900 mb-3 text-center">
+        Hi i am Bench
       </h1>
-      <p class="text-gray-600 text-center max-w-md mb-12">
+      <p class="text-gray-600 text-sm md:text-lg text-center max-w-xs md:max-w-md mb-12">
         Your AI assistant to learn more about James Esurena. Ask me anything!
       </p>
 
       <!-- Suggestion Cards -->
-      <div class="w-full max-w-4xl px-6">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+      <div class="w-full max-w-4xl px-3 md:px-6">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-2.5 md:gap-4 mb-6 md:mb-8">
           <Card
             v-for="suggestion in suggestions"
             :key="suggestion.title"
             @click="handleSuggestionClick(suggestion.prompt)"
-            class="bg-white cursor-pointer hover:shadow-md transition-all duration-200 hover:border-gray-300"
+            class="bg-white cursor-pointer hover:shadow-md transition-all duration-200 hover:border-gray-300 shadow-sm"
           >
-            <CardHeader class="pb-3">
-              <CardTitle class="flex items-center gap-2 text-base text-slate-600">
-                <component :is="suggestion.icon" class="w-5 h-5 text-slate-700" />
-                {{ suggestion.title }}
+            <CardHeader class="px-2.5 md:px-6 py-2 md:py-6 pb-1 md:pb-3">
+              <CardTitle class="flex items-center gap-1.5 text-[12px] md:text-base text-slate-700 font-bold">
+                <component :is="suggestion.icon" class="w-3.5 h-3.5 md:w-5 md:h-5 text-slate-800 shrink-0" />
+                <span class="truncate">{{ suggestion.title }}</span>
               </CardTitle>
             </CardHeader>
-            <CardContent class="pt-0">
-              <CardDescription class="text-sm leading-relaxed">
+            <CardContent class="px-2.5 md:px-6 pb-2.5 md:pb-6 pt-0">
+              <CardDescription class="text-[10px] md:text-sm leading-[1.3] md:leading-relaxed line-clamp-2 md:line-clamp-none text-slate-500">
                 {{ suggestion.description }}
               </CardDescription>
             </CardContent>
@@ -74,11 +74,11 @@
               S
             </AvatarFallback>
           </Avatar>
-          <div class="bg-gray-100 rounded-2xl px-4 py-3">
+          <div class="bg-gray-100 rounded-2xl px-4 py-2">
             <div class="flex gap-1">
-              <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
-              <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 150ms"></div>
-              <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 300ms"></div>
+              <div class="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
+              <div class="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 150ms"></div>
+              <div class="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 300ms"></div>
             </div>
           </div>
         </div>
