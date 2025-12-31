@@ -320,7 +320,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       console.log('✅ SUCCESS with fallback model:', model);
     }
 
+    console.log('Full response object:', JSON.stringify(response, null, 2));
+    console.log('Choices array:', response.choices);
+    console.log('First choice:', response.choices[0]);
+    console.log('Message object:', response.choices[0].message);
+    
     const assistantMessage = response.choices[0].message.content;
+    console.log('Content value:', assistantMessage);
+    console.log('Content type:', typeof assistantMessage);
     console.log('Response length:', assistantMessage?.length, 'characters');
     console.log('Tokens used:', response.usage);
     console.log('=== CHAT REQUEST END ===\n');
