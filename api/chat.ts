@@ -32,7 +32,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const response = await openai.chat.completions.create({
-      model: 'gpt-5-nano',
+      model: 'gpt-5-nano-2025-08-07',
       messages: [{
         role: 'system',
         content: `
@@ -162,7 +162,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         ...messages
       ],
       temperature: 0.7,
-      max_tokens: 500,
+      max_completion_tokens: 500,
     });
 
     const assistantMessage = response.choices[0].message.content;
