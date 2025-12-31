@@ -4,7 +4,7 @@
     leave-from-class="opacity-100"
     leave-to-class="opacity-0"
   >
-    <div v-if="!isLoaded" class="fixed inset-0 z-[100] flex items-center justify-center bg-white">
+    <div v-if="!isLoaded" class="fixed inset-0 h-dvh z-[100] flex items-center justify-center bg-white">
       <div class="relative w-32 h-32 md:w-48 md:h-48 flex items-center justify-center">
         <img 
           src="@/assets/logo.png" 

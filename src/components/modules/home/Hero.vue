@@ -2,7 +2,7 @@
   <section 
     id="hero-section"
     ref="heroRef" 
-    class="relative h-[90vh] bg-transparent overflow-hidden"
+    class="relative h-[90dvh] bg-transparent overflow-hidden"
   >
     <div class="relative z-10 container mx-auto px-6 md:px-12 h-full flex flex-col justify-center pointer-events-none">
         <div class="pointer-events-auto w-full md:w-fit">

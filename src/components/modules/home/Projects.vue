@@ -2,7 +2,7 @@
   <section 
     ref="projectsSectionRef"
     id="projects"
-    class="relative min-h-screen py-24 px-6 md:px-12 transition-colors duration-1000"
+    class="relative min-h-dvh py-24 px-6 md:px-12 transition-colors duration-1000"
     :class="{ 'bg-white': windowWidth >= 768 }"
     :style="windowWidth < 768 ? { backgroundColor: mobileSectionBg } : {}"
   >

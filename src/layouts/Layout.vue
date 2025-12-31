@@ -1,12 +1,12 @@
 <template>
-  <div class="min-h-screen flex flex-col bg-white text-slate-900 relative">
+  <div class="min-h-dvh flex flex-col bg-white text-slate-900 relative">
     <!-- Global Grid Background -->
     <div class="fixed inset-0 bg-[linear-gradient(to_right,#0000000a_1px,transparent_1px),linear-gradient(to_bottom,#0000000a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
     
-    <div class="relative z-10 flex flex-col min-h-screen">
+    <div class="relative z-10 flex flex-col min-h-dvh">
       <Loading v-if="showLoading" @complete="handleLoadingComplete" />
       
-      <div v-if="!isLoading" class="flex flex-col min-h-screen">
+      <div v-if="!isLoading" class="flex flex-col min-h-dvh">
         <Navbar />
         <main class="flex-1">
           <slot />

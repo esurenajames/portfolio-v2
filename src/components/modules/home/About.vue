@@ -128,7 +128,7 @@
   <!-- Desktop: Parallax Horizontal Scroll -->
   <section v-else ref="sectionRef" id="about" class="relative min-h-[500vh] md:min-h-[600vh] bg-white">
     <!-- Sticky Container -->
-    <div class="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+    <div class="sticky top-0 h-dvh w-full flex items-center justify-center overflow-hidden">
       
       <!-- Big About Me Background Texts (Visible during initial growth) -->
       <div 

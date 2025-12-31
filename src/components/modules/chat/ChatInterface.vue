@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-[100vh] bg-white">
+  <div class="flex flex-col h-dvh w-full bg-white overflow-hidden relative">
     <!-- Back Button (Upper Left) -->
     <div class="px-6 py-4">
       <button

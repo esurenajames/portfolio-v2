@@ -1,5 +1,5 @@
 <template>
-  <section class="relative min-h-screen py-16 px-6 md:px-12 transition-colors duration-1000 bg-white">
+  <section class="relative min-h-dvh py-16 px-6 md:px-12 transition-colors duration-1000 bg-white">
     <!-- Back Button (Conditional) -->
     <div v-if="showBackButton" class="relative z-20 mx-0 lg:mx-8 mb-8">
       <button
