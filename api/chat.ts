@@ -69,7 +69,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         JAMES'S PROFESSIONAL INFORMATION (Use this as your knowledge base):
         ═══════════════════════════════════════════════════════════════
 
-        ${resumeContext}
+        ${resumeContext.content}
         `
         },
         ...messages
