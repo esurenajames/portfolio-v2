@@ -191,13 +191,13 @@ const messagesContainer = ref<HTMLElement | null>(null);
 const suggestions = [
   {
     title: 'Work Experience',
-    description: 'Learn about James\'s professional background and career journey.',
+    description: 'Learn about James\'s professional background.',
     icon: Briefcase,
     prompt: 'Tell me about James\'s work experience'
   },
   {
     title: 'Technical Skills',
-    description: 'Discover the technologies and tools James works with.',
+    description: 'Discover the tools James works with.',
     icon: Code,
     prompt: 'What are James\'s technical skills?'
   },
@@ -245,8 +245,11 @@ const handleSendMessage = async (text: string) => {
     }
   }, 1000);
 
-  // Show typing indicator
-  isTyping.value = true;
+  // Show typing indicator after 1.2 seconds to sync with sending animation
+  setTimeout(() => {
+    isTyping.value = true;
+    nextTick(() => scrollToBottom());
+  }, 1200);
 
   try {
     // Format messages for OpenAI API
