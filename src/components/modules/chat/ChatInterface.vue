@@ -87,7 +87,7 @@
         />
         
         <div v-if="isTyping" class="flex items-start gap-3">
-          <Avatar class="w-8 h-8 bg-transparent">
+          <Avatar class="w-12 h-12 bg-transparent">
             <AvatarImage :src="botIcon" alt="Bench AI" />
             <AvatarFallback class="bg-gray-100 text-black text-sm font-bold">
               B
