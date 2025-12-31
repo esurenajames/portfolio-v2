@@ -84,6 +84,7 @@
           :message="message.text"
           :is-user="message.isUser"
           :timestamp="message.timestamp"
+          :status="message.status"
         />
         
         <div v-if="isTyping" class="flex items-center gap-3">
@@ -171,6 +172,7 @@ interface Message {
   text: string;
   isUser: boolean;
   timestamp: Date;
+  status?: 'sending' | 'sent' | 'delivered';
 }
 
 const messages = ref<Message[]>([]);
@@ -223,16 +225,25 @@ const handleSuggestionClick = (prompt: string) => {
 const handleSendMessage = async (text: string) => {
   if (!text.trim()) return;
 
-  // Add user message to UI
+  // Add user message to UI with 'sending' status
+  const messageIndex = messages.value.length;
   messages.value.push({
     text,
     isUser: true,
-    timestamp: new Date()
+    timestamp: new Date(),
+    status: 'sending'
   });
 
   // Scroll to bottom
   await nextTick();
   scrollToBottom();
+
+  // After 1 second, change to 'sent' status
+  setTimeout(() => {
+    if (messages.value[messageIndex]) {
+      messages.value[messageIndex].status = 'sent';
+    }
+  }, 1000);
 
   // Show typing indicator
   isTyping.value = true;
@@ -257,6 +268,11 @@ const handleSendMessage = async (text: string) => {
     }
 
     const data = await response.json();
+    
+    // Update user message status to 'delivered' (double checkmark)
+    if (messages.value[messageIndex]) {
+      messages.value[messageIndex].status = 'delivered';
+    }
     
     // Add AI response to UI
     messages.value.push({

@@ -21,29 +21,44 @@
         <p class="text-sm leading-relaxed whitespace-pre-wrap">{{ message }}</p>
       </div>
       
-      <!-- Timestamp -->
-      <span class="text-xs text-gray-500 mt-1 px-2">
-        {{ formattedTime }}
-      </span>
+      <!-- Timestamp and Status -->
+      <div class="flex items-center gap-1.5 mt-1 px-2">
+        <span class="text-xs text-gray-500">
+          {{ formattedTime }}
+        </span>
+        
+        <!-- Status indicator for user messages -->
+        <div v-if="isUser" class="flex items-center">
+          <!-- Loading spinner -->
+          <div v-if="status === 'sending'" class="animate-spin">
+            <Loader2 class="w-3 h-3 text-gray-400" />
+          </div>
+          <!-- Single check (sent) -->
+          <Check v-else-if="status === 'sent'" class="w-3 h-3 text-gray-400" />
+          <!-- Double check (delivered/read) -->
+          <CheckCheck v-else class="w-3.5 h-3.5 text-gray-400" />
+        </div>
+      </div>
     </div>
-
-    <!-- User Avatar -->
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { MessageSquare } from 'lucide-vue-next';
+import { MessageSquare, Loader2, Check, CheckCheck } from 'lucide-vue-next';
 import botIcon from '@/assets/images/bot-icon.png';
 
 interface Props {
   message: string;
   isUser: boolean;
   timestamp: Date;
+  status?: 'sending' | 'sent' | 'delivered';
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  status: 'delivered'
+});
 
 const formattedTime = computed(() => {
   const hours = props.timestamp.getHours();
