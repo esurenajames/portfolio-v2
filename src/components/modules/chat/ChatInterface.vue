@@ -151,7 +151,7 @@ const handleSuggestionClick = (prompt: string) => {
 const handleSendMessage = async (text: string) => {
   if (!text.trim()) return;
 
-  // Add user message
+  // Add user message to UI
   messages.value.push({
     text,
     isUser: true,
@@ -165,19 +165,46 @@ const handleSendMessage = async (text: string) => {
   // Show typing indicator
   isTyping.value = true;
 
-  // Simulate AI response (replace with actual API call)
-  setTimeout(() => {
+  try {
+    // Format messages for OpenAI API
+    const apiMessages = messages.value.map(m => ({
+      role: m.isUser ? 'user' : 'assistant',
+      content: m.text
+    }));
+
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ messages: apiMessages }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to get response from AI');
+    }
+
+    const data = await response.json();
+    
+    // Add AI response to UI
     messages.value.push({
-      text: "Hi! I'm Sha, James Esurena's AI assistant. I'm here to help you learn more about James's work, skills, and experience. In a real implementation, I would be connected to an AI API to provide detailed information about James's portfolio.",
+      text: data.reply,
       isUser: false,
       timestamp: new Date()
     });
+  } catch (error) {
+    console.error('Chat Error:', error);
+    messages.value.push({
+      text: "I'm sorry, I'm having trouble connecting right now. Please try again later.",
+      isUser: false,
+      timestamp: new Date()
+    });
+  } finally {
     isTyping.value = false;
-    
     nextTick(() => {
       scrollToBottom();
     });
-  }, 1500);
+  }
 };
 
 const scrollToBottom = () => {
