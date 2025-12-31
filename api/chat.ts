@@ -147,8 +147,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         - Other Skills: Basic SEO, AI Integration, Tool Calling
 
         ═══════════════════════════════════════════════════════════════
-
-        // ${resumeContext.content}
         `
         },
         ...messages
