@@ -173,7 +173,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           ...messages
         ],
         temperature: 1,
-        max_completion_tokens: 500,
+        max_completion_tokens: 5000,
       });
       console.log('✅ SUCCESS with', model);
     } catch (modelError: any) {
@@ -315,7 +315,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           ...messages
         ],
         temperature: 1,
-        max_completion_tokens: 500,
+        max_completion_tokens: 5000,
       });
       console.log('✅ SUCCESS with fallback model:', model);
     }
