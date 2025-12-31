@@ -110,7 +110,8 @@
         <div class="flex items-center justify-center mb-2">
           <button 
             @click="showQuickQuestions = !showQuickQuestions"
-            class="text-xs font-medium text-gray-400 hover:text-gray-700 flex items-center gap-1.5 transition-colors duration-200"
+            :disabled="isTyping"
+            class="text-xs font-medium text-gray-400 hover:text-gray-700 flex items-center gap-1.5 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:text-gray-400"
           >
             {{ showQuickQuestions ? 'Hide' : 'Show' }} Quick Questions
             <ChevronDown 
@@ -130,8 +131,13 @@
                 v-for="q in quickQuestions"
                 :key="q.label"
                 variant="secondary"
-                class="cursor-pointer hover:bg-gray-200 hover:scale-105 transition-all duration-200 py-1.5 px-3 text-[11px] rounded-full font-medium bg-gray-100 text-gray-600 border-none shadow-none"
-                @click="handleSendMessage(q.prompt)"
+                :class="[
+                  'transition-all duration-200 py-1.5 px-3 text-[11px] rounded-full font-medium bg-gray-100 text-gray-600 border-none shadow-none',
+                  isTyping 
+                    ? 'opacity-50 cursor-not-allowed' 
+                    : 'cursor-pointer hover:bg-gray-200 hover:scale-105'
+                ]"
+                @click="!isTyping && handleSendMessage(q.prompt)"
               >
                 {{ q.label }}
               </Badge>
