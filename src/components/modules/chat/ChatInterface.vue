@@ -86,18 +86,18 @@
           :timestamp="message.timestamp"
         />
         
-        <div v-if="isTyping" class="flex items-start gap-3">
+        <div v-if="isTyping" class="flex items-center gap-3">
           <Avatar class="w-12 h-12 bg-transparent">
             <AvatarImage :src="botIcon" alt="Bench AI" />
             <AvatarFallback class="bg-gray-100 text-black text-sm font-bold">
               B
             </AvatarFallback>
           </Avatar>
-          <div class="bg-gray-100 rounded-2xl px-4 py-2">
-            <div class="flex gap-1">
-              <div class="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
-              <div class="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 150ms"></div>
-              <div class="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 300ms"></div>
+          <div class="bg-gray-100 rounded-2xl px-4 py-3">
+            <div class="flex gap-1.5">
+              <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
+              <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 150ms"></div>
+              <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 300ms"></div>
             </div>
           </div>
         </div>
