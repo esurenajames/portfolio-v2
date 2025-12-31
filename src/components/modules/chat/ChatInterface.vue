@@ -15,7 +15,7 @@
     <div v-if="messages.length === 0" class="flex-1 flex flex-col items-center justify-center px-6 py-12">
       <div class="flex flex-col md:flex-row items-center gap-6 md:gap-10 mb-8 md:mb-12">
         <!-- Avatar/Greeting Image -->
-        <img src="@/assets/images/bot.png" alt="Bench AI" class="w-32 h-32 md:w-56 md:h-56 object-contain" />
+        <img :src="botImage" alt="Bench AI" class="w-32 h-32 md:w-56 md:h-56 object-contain" />
         
         <div class="text-center md:text-left">
           <!-- Welcome Text -->
@@ -65,7 +65,7 @@
         
         <div v-if="isTyping" class="flex items-start gap-3">
           <Avatar class="w-8 h-8 bg-transparent">
-            <AvatarImage src="/src/assets/images/bot-icon.png" alt="Bench AI" />
+            <AvatarImage :src="botIcon" alt="Bench AI" />
             <AvatarFallback class="bg-gray-100 text-black text-sm font-bold">
               B
             </AvatarFallback>
@@ -135,6 +135,8 @@ import ChatInput from './ChatInput.vue';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
+import botImage from '@/assets/images/bot.png';
+import botIcon from '@/assets/images/bot-icon.png';
 
 const router = useRouter();
 
