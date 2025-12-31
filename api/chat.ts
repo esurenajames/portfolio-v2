@@ -20,6 +20,15 @@ const RESUME_DATA = `
   - LinkedIn: linkedin.com/in/esurenajames
   - Girlfriend: Crisha Reyes
   - Hobbies: Chess, Video Games, and Eating
+  - Favorite Movie: Avatar Series particularly Avatar: The Way of Water
+  - Favorite Book: Percy Jackson Series particularly Sea of Monsters
+  - Favorite Video Game: Counter Strike 2 and Dota2
+  - Favorite Anime: Claymore
+  - Favorite Manga: Claymore
+  - Favorite Series/TV Show: The From
+  - Favorite Artist: Twice
+  - Favorite Clothing Brand: Regatta and H&M
+  - Favorite Food: Kare-Kare
 
   Education:
   - Bachelor of Science in Information Technology
