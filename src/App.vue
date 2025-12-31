@@ -9,11 +9,10 @@ import { useRoute } from 'vue-router';
 const route = useRoute();
 
 const updateTheme = () => {
-  const isHome = route.path === '/';
-  // Use black for home page, white for others
-  const themeColor = isHome ? '#000000' : '#ffffff';
-  const colorScheme = isHome ? 'dark' : 'light';
-  const statusBar = isHome ? 'black' : 'default';
+  // Always use white for theme color and status bar as requested
+  const themeColor = '#ffffff';
+  const colorScheme = 'light';
+  const statusBar = 'default';
 
   // Update Meta Theme Color
   let metaTheme = document.querySelector('meta[name="theme-color"]');
@@ -30,12 +29,8 @@ const updateTheme = () => {
   // Update HTML style
   document.documentElement.style.colorScheme = colorScheme;
   
-  // Update body background specifically for Home to help with bottom bar coloring
-  if (isHome) {
-    document.body.style.backgroundColor = 'black';
-  } else {
-    document.body.style.backgroundColor = 'white';
-  }
+  // Set body background to white
+  document.body.style.backgroundColor = 'white';
 };
 
 watch(() => route.path, updateTheme);

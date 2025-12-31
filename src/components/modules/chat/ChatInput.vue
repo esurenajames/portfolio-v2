@@ -14,7 +14,7 @@
               :disabled="isDisabled"
               placeholder="Ask Sha about James"
               rows="1"
-              class="w-full resize-none bg-transparent border-none outline-none text-gray-900 placeholder-gray-400 text-base sm:text-sm max-h-32 overflow-y-auto"
+              class="w-full resize-none bg-transparent border-none outline-none text-gray-900 placeholder-gray-400 text-sm max-h-32 overflow-y-auto"
               :class="{ 'opacity-50 cursor-not-allowed': isDisabled }"
             ></textarea>
           </div>
