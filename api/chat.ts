@@ -19,7 +19,6 @@ const RESUME_DATA = `
   - Portfolio Website: https://esurenajames.software
   - LinkedIn: linkedin.com/in/esurenajames
   - Girlfriend: Crisha Reyes
-  - Married: No
   - Hobbies: Chess, Video Games, and Eating
 
   Education:
