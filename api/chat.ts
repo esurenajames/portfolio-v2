@@ -32,7 +32,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const response = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
+      model: 'gpt-5-nano',
       messages: [{
         role: 'system',
         content: `
@@ -63,6 +63,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
         WHAT TO AVOID:
         - Numbered lists and bullet points (unless specifically requested)
+        - Long paragraphs unless the user explicitly asks for details
         - Overly structured or formal language
         - Repeating the same information across messages
         - Making up details not in the provided context
