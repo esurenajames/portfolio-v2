@@ -132,7 +132,7 @@
                 :key="q.label"
                 variant="secondary"
                 :class="[
-                  'transition-all duration-200 py-1.5 px-3 text-[11px] rounded-full font-medium bg-gray-100 text-gray-600 border-none shadow-none',
+                  'transition-all duration-200 py-1.5 px-3 text-[11px] md:text-xs rounded-full font-medium bg-gray-100 text-gray-600 border-none shadow-none',
                   isTyping 
                     ? 'opacity-50 cursor-not-allowed' 
                     : 'cursor-pointer hover:bg-gray-200 hover:scale-105'
