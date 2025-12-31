@@ -110,8 +110,7 @@
         <div class="flex items-center justify-center mb-2">
           <button 
             @click="showQuickQuestions = !showQuickQuestions"
-            :disabled="isTyping"
-            class="text-xs font-medium text-gray-400 hover:text-gray-700 flex items-center gap-1.5 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:text-gray-400"
+            class="text-xs font-medium text-gray-400 hover:text-gray-700 flex items-center gap-1.5 transition-colors duration-200"
           >
             {{ showQuickQuestions ? 'Hide' : 'Show' }} Quick Questions
             <ChevronDown 
