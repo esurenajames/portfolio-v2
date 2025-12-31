@@ -105,7 +105,7 @@
     </div>
 
     <!-- Quick Questions -->
-    <div v-if="messages.length > 0" class="w-full px-6 mb-4 flex justify-center">
+    <div v-if="messages.length > 0" class="w-full px-6 pt-2 mb-4 flex justify-center">
       <div class="max-w-4xl w-full">
         <div class="flex items-center justify-center mb-2">
           <button 
