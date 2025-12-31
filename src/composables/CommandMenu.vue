@@ -26,7 +26,7 @@
           ref="inputRef"
           type="text" 
           placeholder="Type a command or search..." 
-          class="flex-1 bg-transparent border-none outline-none text-sm h-full"
+          class="flex-1 bg-transparent border-none outline-none text-base h-full"
           :class="[
             theme === 'dark' 
               ? 'text-gray-100 placeholder:text-gray-600' 
