@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-start gap-3 mb-4" :class="isUser ? 'flex-row-reverse' : 'flex-row'">
     <!-- Avatar -->
-    <Avatar v-if="!isUser" class="w-10 h-10 flex-shrink-0 bg-transparent">
+    <Avatar v-if="!isUser" class="w-12 h-12 flex-shrink-0 bg-transparent">
       <AvatarImage :src="botIcon" alt="Bench AI" />
       <AvatarFallback class="bg-gray-100 text-black">
         <MessageSquare :size="16" />
