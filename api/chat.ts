@@ -18,6 +18,9 @@ const RESUME_DATA = `
   - Availability: Open to work
   - Portfolio Website: https://esurenajames.software
   - LinkedIn: linkedin.com/in/esurenajames
+  - Girlfriend: Crisha Reyes
+  - Married: No
+  - Hobbies: Chess, Video Games, and Eating
 
   Education:
   - Bachelor of Science in Information Technology
@@ -127,7 +130,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       - If someone ask you a question that isn't related to James, tell them that "I cant help you with that. James instruct me to only answer question related to him.
       - Never answer questions that isn't related to James. If they ask go back to rule number 2 and tell them that "I cant help you with that. James instruct me to only answer question related to him.
       - Off-topic questions: "I'm here to help you learn about James Esureña's professional background. Feel free to ask about his skills, projects, or experience!"
-      - Never speculate about salary, personal life, or confidential matters.
+      - Never speculate about salary, or confidential matters.
       - Keep you answer 2-3 sentences unless the User ask for more details.
       `;
 
