@@ -22,6 +22,14 @@ const router = createRouter({
       component: Chat
     }
   ],
+  scrollBehavior(_to, _from, savedPosition) {
+    // Always scroll to top when navigating to a new route
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { top: 0, behavior: 'instant' };
+    }
+  }
 });
 
 export default router;

@@ -353,6 +353,7 @@ const animationComplete = ref(false);
 const accumulatedScroll = ref(0);
 const h1Ref = ref<HTMLElement | null>(null);
 const h1Rect = ref({ top: 0, left: 0, width: 0, height: 0, fontSize: 0 });
+const isHeroInView = ref(true);
 
 // Scramble Text Logic
 const originalText = "HELLO, I'M JAMES ESURENA";
@@ -441,12 +442,8 @@ const bigTextStyle = computed(() => {
   const currentTranslateY = startTranslateY * (1 - progress);
 
   // Opacity: Always 1 until completed, then 0
-  // Or fade out slightly at the very end to smooth the swap? 
-  // User asked for "hidden from the start" (meaning destination).
-  // "when done scrolling it was placing in the left side".
-  // "since there are two frontend word showing... hidden".
-  // We swap at progress == 1.
-  const opacity = progress >= 1 ? 0 : 1;
+  // Also hide if Hero section is not in view
+  const opacity = (progress >= 1 || !isHeroInView.value) ? 0 : 1;
 
   return {
     position: 'fixed' as 'fixed',
@@ -454,7 +451,7 @@ const bigTextStyle = computed(() => {
     left: `${currentLeft}px`,
     top: `${currentTop}px`,
     transform: `translate(${currentTranslateX}%, ${currentTranslateY}%)`,
-    opacity: opacity, // Hide when swapped
+    opacity: opacity, // Hide when swapped or Hero not in view
     pointerEvents: 'none' as 'none',
     transition: 'none', // We drive this frame-by-frame with scroll
     willChange: 'transform, font-size, left, top',
@@ -503,7 +500,13 @@ const handleWheel = (e: WheelEvent) => {
 
 const handleScroll = () => {
   scrollY.value = window.scrollY;
-  // If we just unlocked, we might need to sync up stuff, but accumulatedScroll drives the big text.
+  
+  // Check if Hero section is in viewport
+  if (heroRef.value) {
+    const heroRect = heroRef.value.getBoundingClientRect();
+    // Hero is in view if its bottom is above 0 (still visible)
+    isHeroInView.value = heroRect.bottom > 0;
+  }
 };
 
 // Touch support for mobile swiping

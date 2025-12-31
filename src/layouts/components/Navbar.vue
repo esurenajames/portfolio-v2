@@ -234,11 +234,11 @@ const navItems: Array<{ name: string; to?: string; href?: string }> = [
 
 const handleLogoClick = () => {
   if (router.currentRoute.value.path === '/') {
-    // Already on home, scroll to hero
-    const heroSection = document.getElementById('hero-section');
-    if (heroSection) {
-      heroSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    // Already on home, scroll to top of page
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   } else {
     // Navigate to home
     router.push('/');
@@ -281,15 +281,25 @@ const handleNavigation = async (item: { name: string; to?: string; href?: string
           behavior: 'smooth'
         });
       } else {
-        // Standard scroll for Experience or Mobile About
-        const offset = 80; // Navbar offset if needed
+        // For Experience and Skills, scroll to the section with navbar offset
+        // Hero section is 90vh, so we need to ensure we scroll past it completely
         const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+        const navbarHeight = 80; // Navbar height
         
-        // For mobile about, we just go there. For experience, standard scroll.
-        window.scrollTo({
-          top: elementId === 'about' ? elementPosition : elementPosition - offset,
-          behavior: 'smooth'
-        });
+        // For sections after Hero (Experience, Skills), ensure Hero is completely scrolled past
+        if (elementId === 'experience' || elementId === 'skills') {
+          // Scroll to element position minus navbar height
+          window.scrollTo({
+            top: elementPosition - navbarHeight,
+            behavior: 'smooth'
+          });
+        } else {
+          // For mobile about or other sections
+          window.scrollTo({
+            top: elementId === 'about' ? elementPosition : elementPosition - navbarHeight,
+            behavior: 'smooth'
+          });
+        }
       }
     }
   }
@@ -299,6 +309,12 @@ const handleNavigation = async (item: { name: string; to?: string; href?: string
 
 const handleScroll = () => {
   const scrollY = window.scrollY;
+  
+  // Always show light theme on Projects page
+  if (router.currentRoute.value.path === '/projects') {
+    navTheme.value = 'light';
+    return;
+  }
   
   if (scrollY < 50) {
     navTheme.value = 'transparent';

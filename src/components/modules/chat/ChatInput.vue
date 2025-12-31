@@ -24,11 +24,9 @@
             <button
               @click="handleSend"
               :disabled="!inputText.trim() || isDisabled"
-              class="p-2 bg-gray-700 text-white rounded-full hover:bg-gray-800 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all duration-200"
+              class="p-1 bg-gray-700 text-white rounded-full hover:bg-gray-800 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all duration-200"
             >
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-              </svg>
+              <ArrowUp class="w-3 h-3" />
             </button>
           </div>
         </div>
@@ -39,6 +37,7 @@
 
 <script setup lang="ts">
 import { ref, nextTick } from 'vue';
+import { ArrowUp } from 'lucide-vue-next';
 
 interface Props {
   isDisabled?: boolean;

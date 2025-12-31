@@ -55,14 +55,16 @@
             :class="theme === 'dark' ? 'text-gray-600' : 'text-gray-500'"
           >Navigation</div>
           
-          <a v-for="link in filteredNavLinks" :key="link.name" :href="link.href"
-            class="flex items-center gap-3 px-2 py-2 rounded-md transition-colors group cursor-pointer text-sm"
+          <button 
+            v-for="link in filteredNavLinks" 
+            :key="link.name" 
+            @click="handleNavClick(link)"
+            class="flex items-center gap-3 px-2 py-2 rounded-md transition-colors group cursor-pointer text-sm w-full text-left"
             :class="[
               theme === 'dark'
                 ? 'hover:bg-white/5 text-gray-400 hover:text-white'
                 : 'hover:bg-gray-100 text-gray-700 hover:text-gray-900'
             ]"
-            @click="$emit('close')"
           >
             <component 
               :is="link.icon" 
@@ -74,7 +76,7 @@
               ]"
             />
             <span class="flex-1">{{ link.name }}</span>
-          </a>
+          </button>
         </div>
 
         <!-- Socials Section -->
@@ -121,6 +123,7 @@
 
 <script setup lang="ts">
 import { ref, computed, nextTick, watch } from 'vue';
+import { useRouter } from 'vue-router';
 import { 
   Dialog, 
   DialogContent,
@@ -149,6 +152,7 @@ const props = withDefaults(defineProps<{
 });
 
 const emit = defineEmits(['close']);
+const router = useRouter();
 
 const searchQuery = ref('');
 const inputRef = ref<HTMLInputElement | null>(null);
@@ -156,8 +160,8 @@ const inputRef = ref<HTMLInputElement | null>(null);
 const navLinks = [
   { name: "Home", href: "/", icon: HomeIcon },
   { name: "Projects", href: "/projects", icon: ProjectIcon },
-  { name: "Experience", href: "/#experience", icon: BriefcaseIcon },
-  { name: "Skills", href: "/#skills", icon: CpuIcon },
+  { name: "Experience", href: "#experience", icon: BriefcaseIcon },
+  { name: "Skills", href: "#skills", icon: CpuIcon },
 ];
 
 const socialLinks = [
@@ -180,6 +184,39 @@ const filteredSocialLinks = computed(() => {
   return socialLinks.filter(link => link.name.toLowerCase().includes(q));
 });
 
+const handleNavClick = async (link: { name: string; href: string; icon: any }) => {
+  emit('close');
+  
+  // Handle regular routes
+  if (link.href.startsWith('/') && !link.href.includes('#')) {
+    router.push(link.href);
+    return;
+  }
+  
+  // Handle hash navigation (Experience, Skills)
+  if (link.href.startsWith('#')) {
+    const elementId = link.href.replace('#', '');
+    
+    // If not on home page, navigate there first
+    if (router.currentRoute.value.path !== '/') {
+      await router.push('/');
+      await new Promise(resolve => setTimeout(resolve, 500));
+    }
+    
+    // Scroll to element with offset
+    const element = document.getElementById(elementId);
+    if (element) {
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+      const navbarHeight = 80;
+      
+      window.scrollTo({
+        top: elementPosition - navbarHeight,
+        behavior: 'smooth'
+      });
+    }
+  }
+};
+
 // Focus input when opened
 watch(() => props.isOpen, (newVal) => {
   if (newVal) {
@@ -196,6 +233,8 @@ const handleEnter = () => {
   if (link) {
     if (link.href.startsWith('http')) {
       window.open(link.href, '_blank');
+    } else if (navLinks.some(nl => nl.href === link.href)) {
+      handleNavClick(link as any);
     } else {
       window.location.href = link.href;
     }

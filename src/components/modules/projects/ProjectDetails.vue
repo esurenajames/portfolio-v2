@@ -32,22 +32,10 @@
           <!-- Close Button (Mobile - Top Right) -->
           <button
             @click="closeModal"
-            class="absolute top-6 right-6 z-[1000] inline-flex items-center justify-center rounded-md p-2 text-gray-600 hover:text-black focus:outline-none"
+            class="absolute top-6 right-6 z-[1000] inline-flex items-center justify-center rounded-lg p-2 text-gray-600 hover:text-black hover:bg-black/5 focus:outline-none transition-colors"
           >
             <span class="sr-only">Close</span>
-            <svg
-              class="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
+            <X class="h-6 w-6" />
           </button>
 
           <!-- Mobile Content (Single Column) -->
@@ -162,22 +150,10 @@
           <!-- Close Button (Desktop - Top Left) -->
           <button
             @click="closeModal"
-            class="absolute top-8 left-8 z-[1000] inline-flex items-center justify-center rounded-md p-2 text-gray-600 hover:text-black focus:outline-none"
+            class="absolute top-8 left-8 z-[1000] inline-flex items-center justify-center rounded-lg p-2 text-gray-600 hover:text-black hover:bg-black/5 focus:outline-none transition-colors"
           >
             <span class="sr-only">Close</span>
-            <svg
-              class="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
+            <X class="h-6 w-6" />
           </button>
 
           <!-- Desktop Content (Split Screen) -->
@@ -295,6 +271,7 @@
 
 <script setup lang="ts">
 import { watch } from 'vue';
+import { X } from 'lucide-vue-next';
 
 interface Project {
   id: number;

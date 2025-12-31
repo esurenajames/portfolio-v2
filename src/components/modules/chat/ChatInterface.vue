@@ -6,20 +6,21 @@
         @click="goBack"
         class="flex items-center gap-2 px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
       >
-        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-        </svg>
+        <ArrowLeft class="w-5 h-5" />
         <span class="text-sm font-medium">Back</span>
       </button>
     </div>
 
     <!-- Welcome Section (shown when no messages) -->
     <div v-if="messages.length === 0" class="flex-1 flex flex-col items-center justify-center px-6 py-12">
-      <!-- Logo/Icon -->
+      <!-- Avatar -->
       <div class="mb-6">
-        <div class="w-16 h-16 bg-purple-600 rounded-2xl flex items-center justify-center">
-          wala pa
-        </div>
+        <Avatar class="w-16 h-16">
+          <AvatarImage src="" alt="Sha AI" />
+          <AvatarFallback class="bg-purple-600 text-white text-2xl font-bold">
+            S
+          </AvatarFallback>
+        </Avatar>
       </div>
 
       <!-- Welcome Text -->
@@ -31,26 +32,29 @@
       </p>
 
       <!-- Suggestion Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-4xl mb-8">
-        <button
-          v-for="suggestion in suggestions"
-          :key="suggestion.title"
-          @click="handleSuggestionClick(suggestion.prompt)"
-          class="group p-6 bg-gray-50 hover:bg-gray-100 rounded-xl text-left transition-all duration-200 border border-gray-200 hover:border-gray-300"
-        >
-          <div class="flex items-start gap-3 mb-3">
-            <div class="text-gray-700">
-              <component :is="suggestion.icon" class="w-5 h-5" />
-            </div>
-            <h3 class="font-semibold text-gray-900">{{ suggestion.title }}</h3>
-          </div>
-          <p class="text-sm text-gray-600 leading-relaxed">
-            {{ suggestion.description }}
-          </p>
-        </button>
+      <div class="w-full max-w-4xl px-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          <Card
+            v-for="suggestion in suggestions"
+            :key="suggestion.title"
+            @click="handleSuggestionClick(suggestion.prompt)"
+            class="bg-white cursor-pointer hover:shadow-md transition-all duration-200 hover:border-gray-300"
+          >
+            <CardHeader class="pb-3">
+              <CardTitle class="flex items-center gap-2 text-base text-slate-600">
+                <component :is="suggestion.icon" class="w-5 h-5 text-slate-700" />
+                {{ suggestion.title }}
+              </CardTitle>
+            </CardHeader>
+            <CardContent class="pt-0">
+              <CardDescription class="text-sm leading-relaxed">
+                {{ suggestion.description }}
+              </CardDescription>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
-
 
     <div v-else ref="messagesContainer" class="flex-1 overflow-y-auto px-6 py-8">
       <div class="max-w-4xl mx-auto space-y-6">
@@ -64,11 +68,12 @@
         
         <!-- Typing Indicator -->
         <div v-if="isTyping" class="flex items-start gap-3">
-          <div class="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
-            <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-            </svg>
-          </div>
+          <Avatar class="w-8 h-8">
+            <AvatarImage src="" alt="Sha AI" />
+            <AvatarFallback class="bg-purple-600 text-white text-sm font-bold">
+              S
+            </AvatarFallback>
+          </Avatar>
           <div class="bg-gray-100 rounded-2xl px-4 py-3">
             <div class="flex gap-1">
               <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
@@ -89,25 +94,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick } from 'vue';
+import { ref, nextTick, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { ArrowLeft, Briefcase, Code, User } from 'lucide-vue-next';
 import MessageBubble from './MessageBubble.vue';
 import ChatInput from './ChatInput.vue';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const router = useRouter();
-
-// Icons as inline SVG components
-const BriefcaseIcon = {
-  template: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>`
-};
-
-const CodeIcon = {
-  template: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>`
-};
-
-const UserIcon = {
-  template: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>`
-};
 
 interface Message {
   text: string;
@@ -123,22 +118,27 @@ const suggestions = [
   {
     title: 'Work Experience',
     description: 'Learn about James\'s professional background and career journey.',
-    icon: BriefcaseIcon,
+    icon: Briefcase,
     prompt: 'Tell me about James\'s work experience'
   },
   {
     title: 'Technical Skills',
     description: 'Discover the technologies and tools James works with.',
-    icon: CodeIcon,
+    icon: Code,
     prompt: 'What are James\'s technical skills?'
   },
   {
     title: 'About James',
     description: 'Get to know James Esurena and his passion for development.',
-    icon: UserIcon,
+    icon: User,
     prompt: 'Tell me about James Esurena'
   }
 ];
+
+onMounted(() => {
+  // Scroll to top when component mounts
+  window.scrollTo(0, 0);
+});
 
 const goBack = () => {
   router.push('/');
