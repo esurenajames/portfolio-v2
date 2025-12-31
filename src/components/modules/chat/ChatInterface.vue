@@ -93,7 +93,7 @@
               B
             </AvatarFallback>
           </Avatar>
-          <div class="bg-gray-100 rounded-2xl px-4 py-3">
+          <div class="bg-gray-100 rounded-2xl px-3 py-2">
             <div class="flex gap-1.5">
               <div class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
               <div class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 150ms"></div>
