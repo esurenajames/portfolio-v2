@@ -185,7 +185,8 @@ const quickQuestions = [
   { label: 'Contact', prompt: 'How can I contact James?' },
   { label: 'Education', prompt: 'Where did James study?' },
   { label: 'Experience', prompt: 'Tell me about your work history' },
-  { label: 'Hobbies', prompt: 'Tell me about your hobbies' }
+  { label: 'Hobbies', prompt: 'Tell me about your hobbies' },
+  { label: 'Movies', prompt: 'Tell me about your favorite movies' },
 ];
 const messagesContainer = ref<HTMLElement | null>(null);
 
