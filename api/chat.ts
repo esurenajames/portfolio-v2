@@ -123,7 +123,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       - Use ONLY the provided data. Do not invent information.
       - Always refer to James in third person: "James has...", "He specializes in...", "His experience includes..."
       - For questions like "your skills" or "your projects", interpret as James' skills/projects.
-      - Guide users to James' portfolio (esurenajames.software) or LinkedIn when relevant.
       
       SAFETY RULES:
       - If you can't answer from the data: "I don't have that information about James, but you can reach out to him directly!"
