@@ -12,17 +12,17 @@
     </div>
 
     <!-- Welcome Section (shown when no messages) -->
-    <div v-if="messages.length === 0" class="flex-1 flex flex-col items-center justify-center px-6 py-12">
-      <div class="flex flex-col md:flex-row items-center gap-6 md:gap-10 mb-8 md:mb-12">
+    <div v-if="messages.length === 0" class="flex-1 flex flex-col items-center justify-center px-4 py-4 md:px-6 md:py-12">
+      <div class="flex flex-col md:flex-row items-center gap-4 md:gap-10 mb-6 md:mb-12">
         <!-- Avatar/Greeting Image -->
         <img :src="botImage" alt="Bench AI" class="w-32 h-32 md:w-56 md:h-56 object-contain" />
         
         <div class="text-center md:text-left">
           <!-- Welcome Text -->
-          <h1 class="text-3xl md:text-6xl font-bold text-gray-900 mb-3">
+          <h1 class="text-2xl md:text-6xl font-bold text-gray-900 mb-2 md:mb-3">
             Hi, I'm Bench
           </h1>
-          <p class="text-gray-600 text-sm md:text-xl max-w-xs md:max-w-md">
+          <p class="text-gray-600 text-xs md:text-xl max-w-xs md:max-w-md">
             Your AI assistant to learn more about James Esurena. Ask me anything!
           </p>
         </div>
@@ -30,30 +30,53 @@
 
       <!-- Suggestion Cards -->
       <div class="w-full max-w-4xl px-3 md:px-6">
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-2.5 md:gap-4 mb-6 md:mb-8">
-          <Card
+        <!-- Mobile Layout: 3 cards stacked vertically, centered -->
+        <div class="flex md:hidden flex-col items-center gap-3 max-w-xs mx-auto">
+          <div
             v-for="suggestion in suggestions"
             :key="suggestion.title"
             @click="handleSuggestionClick(suggestion.prompt)"
-            class="bg-white cursor-pointer hover:shadow-md transition-all duration-200 hover:border-gray-300 shadow-sm"
+            class="w-full bg-white cursor-pointer hover:shadow-md transition-all duration-200 hover:border-gray-300 shadow-sm rounded-lg border border-gray-200 overflow-hidden"
           >
-            <CardHeader class="px-2.5 md:px-6 py-2 md:py-6 pb-1 md:pb-3">
-              <CardTitle class="flex items-center gap-1.5 text-[12px] md:text-base text-slate-700 font-bold">
-                <component :is="suggestion.icon" class="w-3.5 h-3.5 md:w-5 md:h-5 text-slate-800 shrink-0" />
-                <span class="truncate">{{ suggestion.title }}</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent class="px-2.5 md:px-6 pb-2.5 md:pb-6 pt-0">
-              <CardDescription class="text-[10px] md:text-sm leading-[1.3] md:leading-relaxed line-clamp-2 md:line-clamp-none text-slate-500">
+            <div class="px-4 py-4 pb-2">
+              <div class="flex items-center gap-1.5 text-sm text-slate-700 font-bold">
+                <component :is="suggestion.icon" class="w-3.5 h-3.5 text-slate-800 shrink-0" />
+                <span>{{ suggestion.title }}</span>
+              </div>
+            </div>
+            <div class="px-4 pb-4 pt-0">
+              <p class="text-xs leading-relaxed line-clamp-2 text-slate-500">
                 {{ suggestion.description }}
-              </CardDescription>
-            </CardContent>
-          </Card>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Desktop Layout: 3 cards in a row -->
+        <div class="hidden md:grid grid-cols-3 gap-4 mb-8">
+          <div
+            v-for="suggestion in suggestions"
+            :key="suggestion.title"
+            @click="handleSuggestionClick(suggestion.prompt)"
+            class="bg-white cursor-pointer hover:shadow-md transition-all duration-200 hover:border-gray-300 shadow-sm rounded-lg border border-gray-200 overflow-hidden"
+          >
+            <div class="px-6 py-6 pb-3">
+              <div class="flex items-center gap-2 text-base text-slate-700 font-bold">
+                <component :is="suggestion.icon" class="w-5 h-5 text-slate-800 shrink-0" />
+                <span>{{ suggestion.title }}</span>
+              </div>
+            </div>
+            <div class="px-6 pb-6 pt-0">
+              <p class="text-sm leading-relaxed text-slate-500">
+                {{ suggestion.description }}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <div v-else ref="messagesContainer" class="flex-1 overflow-y-auto px-6 py-8">
+    <div v-else ref="messagesContainer" class="flex-1 overflow-y-auto px-4 py-2 md:px-6 md:py-8">
       <div class="max-w-4xl mx-auto space-y-6">
         <MessageBubble
           v-for="(message, index) in messages"
@@ -132,7 +155,6 @@ import { useRouter } from 'vue-router';
 import { ArrowLeft, Briefcase, Code, User, ChevronDown } from 'lucide-vue-next';
 import MessageBubble from './MessageBubble.vue';
 import ChatInput from './ChatInput.vue';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import botImage from '@/assets/images/bot.png';
