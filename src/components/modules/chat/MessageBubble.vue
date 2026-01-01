@@ -18,7 +18,7 @@
             : 'bg-gray-100 text-gray-900 rounded-tl-sm'
         "
       >
-        <p class="text-sm leading-relaxed whitespace-pre-wrap">{{ message }}</p>
+        <p class="text-sm leading-relaxed whitespace-pre-wrap" v-html="parsedMessage"></p>
       </div>
       
       <!-- Timestamp and Status -->
@@ -58,6 +58,26 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   status: 'delivered'
+});
+
+const parsedMessage = computed(() => {
+  // 1. Escape HTML to prevent XSS
+  const text = props.message
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+  // 2. Linkify URLs
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  return text.replace(urlRegex, (url) => {
+    const linkClass = props.isUser 
+      ? 'underline decoration-white/30 underline-offset-2 break-all hover:decoration-white/100 transition-all font-medium'
+      : 'underline decoration-black/20 underline-offset-2 break-all hover:decoration-black/100 transition-all text-blue-600 font-medium';
+      
+    return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="${linkClass}">${url}</a>`;
+  });
 });
 
 const formattedTime = computed(() => {
