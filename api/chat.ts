@@ -78,9 +78,17 @@ const RESUME_DATA = `
     - Stack: Vue, Tailwind CSS, Laravel, Inertia.js, OpenAI
     - Description: Document and image conversion platform with AI-generated quizzes from uploaded PDFs.
 
-  - Seafood Restaurant Website
-    - Stack: Vue 3, Tailwind CSS
-    - Description: Responsive restaurant website with menu, location, and themed UI.
+  - FILEGRID (File Grid Platform) - 2025
+    - Stack: Vue 3, Shadcn Vue, Tailwind CSS, Socket.io, Laravel, MySQL
+    - Description: A robust real-time file management system featuring live updates via WebSockets, a modern interface with Shadcn UI, and secure data handling.
+    - Repos: https://github.com/esurenajames/file-grid
+    - Live: https://filegrid.vercel.app/
+
+  - SEASALT BUCKET (Restaurant Website) - 2024
+    - Stack: Vue 3, Javascript, Tailwind CSS
+    - Description: A modern landing page for a seafood restaurant featuring a dynamic menu, location finder, and gallery. Built for a responsive and appetizing user experience.
+    - Repos: https://github.com/esurenajames/seasalt-bucket
+    - Live: https://seasalt-bucket.vercel.app/
 
   Certifications:
   - AWS Academy Graduate – Cloud Foundation
