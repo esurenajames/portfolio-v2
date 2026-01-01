@@ -72,11 +72,24 @@ const parsedMessage = computed(() => {
   // 2. Linkify URLs
   const urlRegex = /(https?:\/\/[^\s]+)/g;
   return text.replace(urlRegex, (url) => {
+    // Separate trailing punctuation from the URL
+    // We match standard punctuation that might end a sentence or be used in parentheticals
+    let cleanUrl = url;
+    let trailing = '';
+    
+    // Check for common trailing punctuation that shouldn't be part of the link
+    // Examples: "link." "link," "link)"
+    const punctuationMatch = url.match(/[.,;!?)]+$/);
+    if (punctuationMatch) {
+      trailing = punctuationMatch[0];
+      cleanUrl = url.slice(0, -trailing.length);
+    }
+
     const linkClass = props.isUser 
       ? 'underline decoration-white/30 underline-offset-2 break-all hover:decoration-white/100 transition-all font-medium'
       : 'underline decoration-black/20 underline-offset-2 break-all hover:decoration-black/100 transition-all text-blue-600 font-medium';
       
-    return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="${linkClass}">${url}</a>`;
+    return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="${linkClass}">${cleanUrl}</a>${trailing}`;
   });
 });
 
