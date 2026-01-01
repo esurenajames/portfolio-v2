@@ -32,20 +32,22 @@
       <div 
         v-for="(project, index) in projects" 
         :key="project.id"
-        class="group relative bg-black p-3 rounded-lg shadow-2xl transition-all duration-500 hover:scale-[1.02]"
+        class="group relative bg-black p-3 rounded-lg shadow-2xl transition-all duration-500"
         :class="[
-          hoveredProject === project.id ? 'cursor-none' : 'cursor-pointer',
-          isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-16 opacity-0'
+          hoveredProject === project.id ? 'cursor-none' : (project.disabled ? 'cursor-not-allowed' : 'cursor-pointer'),
+          isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-16 opacity-0',
+          !project.disabled && 'hover:scale-[1.02]'
         ]"
         :style="{ transitionDelay: `${index * 100}ms` }"
-        @click="handleProjectClick(project)"
+        @click="!project.disabled && handleProjectClick(project)"
       >
         <!-- Project Image Container (Static) -->
         <div 
           class="relative aspect-[16/9] rounded-lg overflow-hidden border border-white/10"
-          @mouseenter="handleMouseEnter(project.id)"
+          :class="{ 'opacity-50 grayscale': project.disabled }"
+          @mouseenter="!project.disabled && handleMouseEnter(project.id)"
           @mouseleave="handleMouseLeave"
-          @mousemove="handleMouseMove($event, project.id)"
+          @mousemove="!project.disabled && handleMouseMove($event, project.id)"
         >
           <img 
             :src="project.image" 
@@ -53,10 +55,20 @@
             class="w-full h-full object-cover transition-all duration-700"
             :class="{ 'blur-sm scale-105': hoveredProject === project.id }"
           />
+
+          <!-- Disabled Overlay -->
+           <div 
+            v-if="project.disabled" 
+            class="absolute inset-0 flex items-center justify-center bg-black/40"
+          >
+            <span class="text-white font-black tracking-widest text-xl border-2 border-white px-4 py-2 uppercase">
+              Coming Soon
+            </span>
+          </div>
           
           <!-- Cursor-Following GIF Preview (Constrained within container) -->
           <div 
-            v-if="hoveredProject === project.id"
+            v-if="hoveredProject === project.id && !project.disabled"
             class="absolute pointer-events-none z-10 transition-opacity duration-300"
             :style="{
               left: `${cursorPosition.x}px`,
@@ -80,20 +92,20 @@
           <!-- Top Row: Logo, Name, Category, Year -->
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-3">
-              <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center overflow-hidden">
+              <div class="w-8 h-8 flex items-center justify-center overflow-hidden">
                 <img 
                   v-if="project.logo" 
                   :src="project.logo" 
                   :alt="`${project.title} logo`"
-                  class="w-5 h-5 object-contain"
+                  class="w-full h-full object-contain"
                 />
-                <span v-else class="text-xs font-black text-slate-900 uppercase">{{ project.title.charAt(0) }}</span>
+                <span v-else class="text-xs font-black text-slate-900 uppercase bg-white w-full h-full rounded-full flex items-center justify-center">{{ project.title.charAt(0) }}</span>
               </div>
               <span class="text-lg font-slate-900 text-white tracking-tighter uppercase">{{ project.title }}</span>
             </div>
             
             <div class="flex items-center gap-4 text-sm font-black tracking-widest text-white/60 uppercase">
-              <span>PRODUCT</span>
+              <span>{{ project.category }}</span>
               <span class="text-white">{{ project.year }}</span>
             </div>
           </div>
@@ -140,6 +152,7 @@ interface Project {
   liveUrl?: string;
   githubUrl?: string;
   gallery?: string[];
+  disabled?: boolean;
 }
 
 interface Props {

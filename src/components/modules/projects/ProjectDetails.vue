@@ -44,9 +44,18 @@
             <div class="w-full border-b border-black/5">
               <div class="p-8 pt-16">
                 <!-- Project Title -->
-                <h1 class="text-4xl font-black tracking-tight text-black mb-6 leading-[0.9]">
-                  {{ project.title }}
-                </h1>
+                <div class="flex items-center gap-4 mb-6">
+                  <div v-if="project.logo" class="w-12 h-12 flex-shrink-0">
+                    <img 
+                      :src="project.logo" 
+                      :alt="`${project.title} logo`"
+                      class="w-full h-full object-contain"
+                    />
+                  </div>
+                  <h1 class="text-4xl font-black tracking-tight text-black leading-[0.9]">
+                    {{ project.title }}
+                  </h1>
+                </div>
 
                 <!-- Project Meta -->
                 <div class="flex items-center gap-3 mb-8 text-sm">
@@ -163,9 +172,18 @@
               <div class="h-full overflow-y-auto">
                 <div class="min-h-full flex flex-col justify-center p-12 lg:p-16 xl:p-20">
                   <!-- Project Title -->
-                  <h1 class="text-5xl lg:text-6xl font-black tracking-tight text-black mb-6 leading-[0.9]">
-                    {{ project.title }}
-                  </h1>
+                  <div class="flex items-center gap-6 mb-6">
+                    <div v-if="project.logo" class="w-16 h-16 flex-shrink-0">
+                      <img 
+                        :src="project.logo" 
+                        :alt="`${project.title} logo`"
+                        class="w-full h-full object-contain"
+                      />
+                    </div>
+                    <h1 class="text-5xl lg:text-6xl font-black tracking-tight text-black leading-[0.9]">
+                      {{ project.title }}
+                    </h1>
+                  </div>
 
                   <!-- Project Meta -->
                   <div class="flex items-center gap-3 mb-8 text-sm">

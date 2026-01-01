@@ -20,6 +20,24 @@ import Layout from '@/layouts/Layout.vue';
 import ProjectView from '@/components/modules/projects/ProjectView.vue';
 import ProjectDetails from '@/components/modules/projects/ProjectDetails.vue';
 import bikeGif from '@/assets/gifs/bike.gif';
+import fileGridHome from '@/assets/projects/filegrid/Home.webp';
+import fileGridGif from '@/assets/projects/filegrid/GIF.gif';
+import fileGridFeatures from '@/assets/projects/filegrid/Features.webp';
+import fileGridAbout from '@/assets/projects/filegrid/About.webp';
+import fileGridBlog from '@/assets/projects/filegrid/Blog.webp';
+import fileGridBlog1 from '@/assets/projects/filegrid/Blog 1.webp';
+import fileGridHowItWorks from '@/assets/projects/filegrid/How it works.webp';
+import fileGridSession from '@/assets/projects/filegrid/Session.webp';
+import fileGridIcon from '@/assets/projects/filegrid/icon.svg';
+import seaSaltHome from '@/assets/projects/seasalt/Home.webp';
+import seaSaltGif from '@/assets/projects/seasalt/GIF.gif';
+import seaSaltLogo from '@/assets/projects/seasalt/logo.png';
+import seaSaltAbout from '@/assets/projects/seasalt/About.webp';
+import seaSaltDine from '@/assets/projects/seasalt/Dine.webp';
+import seaSaltGallery from '@/assets/projects/seasalt/Gallery.webp';
+import seaSaltLocations from '@/assets/projects/seasalt/Locations.webp';
+import seaSaltMenu from '@/assets/projects/seasalt/Menu.webp';
+import seaSaltTestimony from '@/assets/projects/seasalt/Testimony.webp';
 
 const route = useRoute();
 
@@ -40,6 +58,7 @@ interface Project {
   liveUrl?: string;
   githubUrl?: string;
   gallery?: string[];
+  disabled?: boolean;
 }
 
 // Project Details Modal State
@@ -47,6 +66,7 @@ const isProjectDetailsOpen = ref(false);
 const selectedProject = ref<Project | null>(null);
 
 const openProjectDetails = (project: Project) => {
+  if (project.disabled) return;
   selectedProject.value = project;
   isProjectDetailsOpen.value = true;
 };
@@ -60,6 +80,51 @@ const closeProjectDetails = () => {
 
 // All 6 projects
 const allProjects = ref<Project[]>([
+  {
+    id: 7,
+    title: 'FILEGRID',
+    name: 'File Grid Platform',
+    category: 'Web Application',
+    year: '2025',
+    description: 'A robust real-time file management system built with Laravel and Vue.js. Features live updates using WebSockets, a modern interface with Shadcn UI, and secure data handling with MySQL.',
+    image: fileGridHome,
+    gif: fileGridGif,
+    logo: fileGridIcon,
+    techStack: ['Vue 3', 'Shadcn Vue', 'Tailwind CSS', 'Socket.io', 'Laravel', 'MySQL'],
+    gallery: [
+      fileGridFeatures,
+      fileGridAbout,
+      fileGridBlog,
+      fileGridBlog1,
+      fileGridHowItWorks,
+      fileGridSession,
+    ],
+    liveUrl: 'https://filegrid.vercel.app/',
+    githubUrl: 'https://github.com/esurenajames/file-grid'
+  },
+  {
+    id: 1,
+    title: 'SEASALT',
+    name: 'Seasalt Bucket',
+    category: 'Restaurant Website',
+    year: '2024',
+    description: 'A modern landing page for Seasalt Bucket, featuring a dynamic menu, location finder, and gallery. Built with Vue 3 and Tailwind CSS for a responsive and appetizing user experience.',
+    image: seaSaltHome,
+    gif: seaSaltGif,
+    logo: seaSaltLogo,
+    techStack: ['Vue 3', 'Javascript', 'Tailwind CSS'],
+    gallery: [
+      seaSaltMenu,
+      seaSaltDine,
+      seaSaltLocations,
+      seaSaltGallery,
+      seaSaltAbout,
+      seaSaltTestimony,
+      seaSaltHome
+    ],
+    liveUrl: 'https://seasalt-bucket.vercel.app/',
+    githubUrl: 'https://github.com/esurenajames/seasalt-bucket'
+  },
   {
     id: 1,
     title: 'SWEETS',
@@ -77,7 +142,8 @@ const allProjects = ref<Project[]>([
       'https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&q=80&w=1200'
     ],
     liveUrl: '#',
-    githubUrl: '#'
+    githubUrl: '#',
+    disabled: true
   },
   {
     id: 2,
@@ -96,26 +162,8 @@ const allProjects = ref<Project[]>([
       'https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&q=80&w=1200'
     ],
     liveUrl: '#',
-    githubUrl: '#'
-  },
-  {
-    id: 3,
-    title: 'ECOMMERCE',
-    name: 'Fashion Store',
-    category: 'E-Commerce',
-    year: '2024',
-    description: 'A full-featured e-commerce platform with product catalog, shopping cart, and secure checkout. Includes admin dashboard for inventory management and order tracking.',
-    image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=1000',
-    gif: bikeGif,
-    logo: null,
-    techStack: ['React', 'Next.js', 'Stripe', 'PostgreSQL', 'Prisma'],
-    gallery: [
-      'https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&q=80&w=1200',
-      'https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&q=80&w=1200',
-      'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=1200'
-    ],
-    liveUrl: '#',
-    githubUrl: '#'
+    githubUrl: '#',
+    disabled: true
   },
   {
     id: 4,
@@ -134,7 +182,8 @@ const allProjects = ref<Project[]>([
       'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200'
     ],
     liveUrl: '#',
-    githubUrl: '#'
+    githubUrl: '#',
+    disabled: true
   },
   {
     id: 5,
@@ -153,7 +202,8 @@ const allProjects = ref<Project[]>([
       'https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?auto=format&fit=crop&q=80&w=1200'
     ],
     liveUrl: '#',
-    githubUrl: '#'
+    githubUrl: '#',
+    disabled: true
   },
   {
     id: 6,
@@ -172,7 +222,8 @@ const allProjects = ref<Project[]>([
       'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&q=80&w=1200'
     ],
     liveUrl: '#',
-    githubUrl: '#'
+    githubUrl: '#',
+    disabled: true
   }
 ]);
 </script>
