@@ -80,7 +80,7 @@
 
         <div class="relative w-full aspect-video bg-zinc-900 rounded-2xl border border-white/5 overflow-hidden flex items-center justify-center">
           <img 
-            src="@/assets/gifs/bike.gif" 
+            :src="buildingImg" 
             class="w-full h-full object-cover"
             alt="Building"
           />
@@ -114,7 +114,7 @@
         <div class="relative group">
           <div class="relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
             <img 
-              src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200"
+              :src="impactImg"
               class="w-full aspect-[4/3] object-cover"
               alt="Impact Showcase"
             />
@@ -236,9 +236,9 @@
 
               <div class="relative w-full aspect-video md:aspect-square bg-[#0a0a0a] rounded-2xl border border-white/5 overflow-hidden flex items-center justify-center group">
                  <img 
-                  src="@/assets/gifs/bike.gif" 
+                  :src="buildingImg" 
                   class="relative w-full aspect-[4/5] object-cover rounded-2xl transition-all duration-700"
-                  alt="Vision"
+                  alt="Building"
                  />
                  <div class="absolute inset-0 bg-[#5B7553]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
@@ -253,7 +253,7 @@
                    <div class="absolute -inset-4 bg-gradient-to-br from-[#5B7553]/30 to-transparent blur-3xl opacity-50 group-hover:opacity-70 transition-opacity"></div>
                    <div class="relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
                       <img 
-                         src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200"
+                         :src="impactImg"
                          class="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105"
                          alt="Impact Showcase"
                       />
@@ -325,6 +325,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useElementBounding, useWindowSize, useScroll } from '@vueuse/core';
+import buildingImg from '@/assets/images/building.jpeg';
+import impactImg from '@/assets/images/impact.jpeg';
 
 const sectionRef = ref<HTMLElement | null>(null);
 const thinkingSectionRef = ref<HTMLElement | null>(null);

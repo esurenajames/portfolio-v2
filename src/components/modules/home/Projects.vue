@@ -21,7 +21,7 @@
           :class="windowWidth < 768 ? '' : 'text-gray-900'"
           :style="windowWidth < 768 ? { color: mobileTextColor } : {}"
         >
-          '25
+          '26
         </span>
       </div>
     </div>

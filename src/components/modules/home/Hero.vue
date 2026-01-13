@@ -59,7 +59,7 @@
               class="flex flex-col sm:flex-row gap-4 transition-opacity duration-700"
               :style="{ opacity: scrollProgress > 0.6 ? 1 : 0 }"
             >
-               <button class="px-6 md:px-8 py-2.5 md:py-3 bg-[#5B7553] text-gray-50 font-bold rounded-md hover:bg-[#4a6143] transition-colors cursor-pointer border border-[#5B7553] text-sm md:text-base">
+               <button @click="scrollToProjects" class="px-6 md:px-8 py-2.5 md:py-3 bg-[#5B7553] text-gray-50 font-bold rounded-md hover:bg-[#4a6143] transition-colors cursor-pointer border border-[#5B7553] text-sm md:text-base">
                   My Works
                </button>
                <button @click="handleEmail()" class="px-6 md:px-8 py-2.5 md:py-3 bg-black/5 border border-black/10 text-slate-900 font-medium rounded-md hover:bg-black/10 transition-colors cursor-pointer text-sm md:text-base flex items-center justify-center">
@@ -590,6 +590,13 @@ onUnmounted(() => {
 
 const handleEmail = () => {
   window.open('mailto:esurenajames@gmail.com', '_blank');
+};
+
+const scrollToProjects = () => {
+  const projectsSection = document.getElementById('projects');
+  if (projectsSection) {
+    projectsSection.scrollIntoView({ behavior: 'smooth' });
+  }
 };
 </script>
 

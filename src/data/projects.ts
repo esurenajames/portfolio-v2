@@ -19,6 +19,15 @@ import seaSaltLocations from '@/assets/projects/seasalt/Locations.webp';
 import seaSaltMenu from '@/assets/projects/seasalt/Menu.webp';
 import seaSaltTestimony from '@/assets/projects/seasalt/Testimony.webp';
 
+import monoHero from '@/assets/projects/mono/Hero.webp';
+import monoShop from '@/assets/projects/mono/Shop.webp';
+import monoProduct from '@/assets/projects/mono/Product.webp';
+import monoCheckout from '@/assets/projects/mono/Checkout.webp';
+import monoReceipt from '@/assets/projects/mono/Receipt.webp';
+import monoAbout from '@/assets/projects/mono/About.webp';
+import monoHeadphones from '@/assets/projects/mono/Headphones.webp';
+import monoGif from '@/assets/projects/mono/GIF.gif';
+
 export interface Project {
   id: number;
   title: string;
@@ -37,6 +46,28 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+  {
+    id: 8,
+    title: 'MONO',
+    name: 'MONO Audio Experience',
+    category: 'E-commerce',
+    year: '2026',
+    description: 'A high-performance, aesthetically driven e-commerce platform designed for premium audio equipment. Features an immersive 3D hero section, dynamic product navigation, and a smart checkout experience.',
+    image: monoHero,
+    gif: monoGif,
+    logo: null,
+    techStack: ['Next.js 15', 'React 19', 'TypeScript', 'Tailwind CSS', 'GSAP', 'Zod'],
+    gallery: [
+      monoShop,
+      monoProduct,
+      monoCheckout,
+      monoReceipt,
+      monoAbout,
+      monoHeadphones,
+    ],
+    liveUrl: 'https://mono-audiophile.vercel.app/',
+    githubUrl: 'https://github.com/esurenajames/mono'
+  },
   {
     id: 7,
     title: 'FILEGRID',
