@@ -27,6 +27,7 @@ import monoReceipt from '@/assets/projects/mono/Receipt.webp';
 import monoAbout from '@/assets/projects/mono/About.webp';
 import monoHeadphones from '@/assets/projects/mono/Headphones.webp';
 import monoGif from '@/assets/projects/mono/GIF.gif';
+import favicon from '@/assets/projects/mono/favicon.ico';
 
 export interface Project {
   id: number;
@@ -55,7 +56,7 @@ export const projects: Project[] = [
     description: 'A high-performance, aesthetically driven e-commerce platform designed for premium audio equipment. Features an immersive 3D hero section, dynamic product navigation, and a smart checkout experience.',
     image: monoHero,
     gif: monoGif,
-    logo: null,
+    logo: favicon,
     techStack: ['Next.js 15', 'React 19', 'TypeScript', 'Tailwind CSS', 'GSAP', 'Zod'],
     gallery: [
       monoShop,
