@@ -70,6 +70,12 @@ const RESUME_DATA = `
     - Skills: Operational Planning, People Management, Partnership Development, Team Coordination, Event Execution, Process Management, Community Engagement, Project Coordination
 
   Projects:
+  - MONO (MONO Audio Experience) - 2026
+    - Stack: Next.js 15, React 19, TypeScript, Tailwind CSS, GSAP, Zod
+    - Description: A high-performance, aesthetically driven e-commerce platform designed for premium audio equipment. Features an immersive 3D hero section, dynamic product navigation, and a smart checkout experience.
+    - Repos: https://github.com/esurenajames/mono
+    - Live: https://mono-audiophile.vercel.app/
+
   - Barangay Fund Management and Procurement System
     - Stack: Laravel, Vue 3, Inertia.js, shadcn, TypeScript, Tailwind CSS
     - Description: Full-stack system with role-based access control, reusable UI components, and scalable architecture.
@@ -98,7 +104,7 @@ const RESUME_DATA = `
 
   Technical Skills:
   - Languages: JavaScript, TypeScript, PHP, Java, C++, HTML, CSS, SQL
-  - Frameworks: Vue, Laravel, React Native, Tailwind CSS, Quasar, Inertia.js, Express.js, Bootstrap
+  - Frameworks: Vue, Laravel, Next.js, React, React Native, Tailwind CSS, Quasar, Inertia.js, Express.js, Bootstrap
   - Developer Tools: Git, GitHub, GitLab, VS Code, Postman, npm, NVM, WAMP, XAMPP
   - Libraries & Platforms: Node.js, Axios, Alpine.js, Livewire, Vuex, MySQL, MariaDB, OpenAI
   - Other Skills: Basic SEO, AI Integration, Tool Calling
