@@ -132,7 +132,7 @@ export const projects: Project[] = [
     category: 'Design System',
     year: '2026',
     description: 'A comprehensive collection of reusable UI components built with Vue 3 and Tailwind CSS. Designed for speed, accessibility, and modern aesthetics.',
-    image: 'https://placehold.co/600x400/1a1a1a/ffffff?text=Vue+UI',
+    image: 'https://placehold.co/600x400/1a1a1a/ffffff?text=GEM+UI',
     techStack: ['Vue', 'TypeScript', 'Tailwind CSS'],
     liveUrl: '#',
     githubUrl: '#'
