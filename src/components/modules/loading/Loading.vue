@@ -31,36 +31,64 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import { projects } from '@/data/projects';
 
 const isLoaded = ref(false);
 const progress = ref(0);
 
 const emit = defineEmits(['complete']);
 
-onMounted(() => {
+onMounted(async () => {
   window.scrollTo(0, 0);
-  const duration = 3000; 
+  const preloadAssets = async () => {
+    const assetPromises = projects.flatMap(project => {
+      const assets = [];
+      if (project.gif) assets.push(project.gif);
+      if (project.image && typeof project.image === 'string') assets.push(project.image);
+      return assets;
+    }).map(src => {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.src = src;
+        img.onload = resolve;
+        img.onerror = resolve;
+      });
+    });
+    
+    await Promise.all(assetPromises);
+  };
+
+  const minDuration = 3000;
   const startTime = Date.now();
   
+  // Visual animation loop
+  let animationFrame = 0;
   const animate = () => {
     const elapsed = Date.now() - startTime;
-    const rawProgress = Math.min(elapsed / duration, 1);
-
+    // Animate up to 95% based on minDuration
+    const rawProgress = Math.min(elapsed / minDuration, 0.95);
     progress.value = rawProgress * 100;
     
-    if (rawProgress < 1) {
-      requestAnimationFrame(animate);
-    } else {
-      progress.value = 100;
-
-      setTimeout(() => {
-        isLoaded.value = true;
-        emit('complete');
-      }, 600);
+    if (progress.value < 100 && !isLoaded.value) {
+      animationFrame = requestAnimationFrame(animate);
     }
   };
-  
   requestAnimationFrame(animate);
+
+  // Wait for both minimum time and asset loading
+  await Promise.all([
+    new Promise(resolve => setTimeout(resolve, minDuration)),
+    preloadAssets()
+  ]);
+
+  // Complete
+  cancelAnimationFrame(animationFrame);
+  progress.value = 100;
+  
+  setTimeout(() => {
+    isLoaded.value = true;
+    emit('complete');
+  }, 500);
 });
 </script>
 

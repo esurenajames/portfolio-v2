@@ -1,5 +1,4 @@
 
-import bikeGif from '@/assets/gifs/bike.gif';
 import fileGridHome from '@/assets/projects/filegrid/Home.webp';
 import fileGridGif from '@/assets/projects/filegrid/GIF.gif';
 import fileGridFeatures from '@/assets/projects/filegrid/Features.webp';
@@ -115,103 +114,27 @@ export const projects: Project[] = [
     githubUrl: 'https://github.com/esurenajames/seasalt-bucket'
   },
   {
-    id: 1,
-    title: 'SWEETS',
-    name: 'Sweet Coffee Shop',
-    category: 'Web Application',
-    year: '2025',
-    description: 'A modern coffee shop website featuring an elegant design, smooth animations, and a seamless user experience. Built with Vue.js and styled with Tailwind CSS for a responsive and beautiful interface.',
-    image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80&w=1000',
-    gif: bikeGif,
-    logo: null,
-    techStack: ['Vue.js', 'Tailwind CSS', 'Node.js', 'MongoDB', 'Express'],
-    gallery: [
-      'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&q=80&w=1200',
-      'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&q=80&w=1200',
-      'https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&q=80&w=1200'
-    ],
+    id: 9,
+    title: 'BOARDLY',
+    name: 'Boardly - AI Kanban Board',
+    category: 'Productivity Tool',
+    year: '2026',
+    description: 'An intelligent Kanban board powered by AI. Features smart task management, automated organization, and seamless collaboration.',
+    image: 'https://placehold.co/600x400/1a1a1a/ffffff?text=Boardly',
+    techStack: ['Next.js', 'Supabase', 'React', 'GSAP', 'OpenAI', 'Tailwind CSS'],
     liveUrl: '#',
-    githubUrl: '#',
-    disabled: true
+    githubUrl: '#'
   },
   {
-    id: 2,
-    title: 'PORTFOLIO',
-    name: 'Personal Portfolio',
-    category: 'Portfolio Website',
-    year: '2025',
-    description: 'A stunning personal portfolio showcasing projects and skills with cutting-edge animations and interactions. Features a unique horizontal scroll experience and dynamic content presentation.',
-    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=1000',
-    gif: bikeGif,
-    logo: null,
-    techStack: ['Vue 3', 'TypeScript', 'Vite', 'GSAP', 'Framer Motion'],
-    gallery: [
-      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200',
-      'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=1200',
-      'https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&q=80&w=1200'
-    ],
+    id: 10,
+    title: 'GEM UI',
+    name: 'Vue UI Component Library',
+    category: 'Design System',
+    year: '2026',
+    description: 'A comprehensive collection of reusable UI components built with Vue 3 and Tailwind CSS. Designed for speed, accessibility, and modern aesthetics.',
+    image: 'https://placehold.co/600x400/1a1a1a/ffffff?text=Vue+UI',
+    techStack: ['Vue', 'TypeScript', 'Tailwind CSS'],
     liveUrl: '#',
-    githubUrl: '#',
-    disabled: true
+    githubUrl: '#'
   },
-  {
-    id: 4,
-    title: 'DASHBOARD',
-    name: 'Analytics Platform',
-    category: 'SaaS Product',
-    year: '2024',
-    description: 'A comprehensive analytics dashboard with real-time data visualization, custom reports, and team collaboration features. Built for scalability and performance.',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1000',
-    gif: bikeGif,
-    logo: null,
-    techStack: ['Vue 3', 'D3.js', 'Firebase', 'Chart.js', 'Tailwind'],
-    gallery: [
-      'https://images.unsplash.com/photo-1543286386-713bdd548da4?auto=format&fit=crop&q=80&w=1200',
-      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200',
-      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200'
-    ],
-    liveUrl: '#',
-    githubUrl: '#',
-    disabled: true
-  },
-  {
-    id: 5,
-    title: 'SOCIAL',
-    name: 'Community App',
-    category: 'Social Network',
-    year: '2024',
-    description: 'A modern social networking platform with real-time messaging, content sharing, and community features. Focuses on user engagement and seamless interactions.',
-    image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=1000',
-    gif: bikeGif,
-    logo: null,
-    techStack: ['React Native', 'Socket.io', 'Redis', 'AWS', 'GraphQL'],
-    gallery: [
-      'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=1200',
-      'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?auto=format&fit=crop&q=80&w=1200',
-      'https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?auto=format&fit=crop&q=80&w=1200'
-    ],
-    liveUrl: '#',
-    githubUrl: '#',
-    disabled: true
-  },
-  {
-    id: 6,
-    title: 'FITNESS',
-    name: 'Workout Tracker',
-    category: 'Health & Fitness',
-    year: '2024',
-    description: 'A comprehensive fitness tracking application with workout plans, progress monitoring, and nutrition guidance. Helps users achieve their health goals with data-driven insights.',
-    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=1000',
-    gif: bikeGif,
-    logo: null,
-    techStack: ['Flutter', 'Firebase', 'ML Kit', 'HealthKit', 'SQLite'],
-    gallery: [
-      'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&q=80&w=1200',
-      'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=1200',
-      'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&q=80&w=1200'
-    ],
-    liveUrl: '#',
-    githubUrl: '#',
-    disabled: true
-  }
 ];
