@@ -22,7 +22,7 @@
         <span 
           class="text-5xl md:text-9xl font-black tracking-tighter font-roboto leading-none text-gray-900"
         >
-          '25
+          '26
         </span>
       </div>
     </div>
